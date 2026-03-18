@@ -108,6 +108,8 @@ const QB = {
   ],
 
   math: [
+    { id: 'm-new-1', section: 'math', q: 'What is 458 + 322?', opts: ['770', '780', '800', '810'], ans: '780', hint: 'Add the hundreds first!', exp: '400+300=700, 58+22=80. So 780!' },
+    { id: 'm-new-2', section: 'math', q: 'Round 452 to the nearest ten.', opts: ['450', '460', '400', '500'], ans: '450', hint: 'Look at the ones digit.', exp: 'Since 2 is less than 5, we round down to 450.' },
     // Section A: MCQ
     { id:'m01', section:'Section A: MCQ', tag:'numbers', q:'Value of digit 6 in 4,632?', opts:['6','60','600','6000'], ans:2, exp:'hundreds place → <strong>600</strong>' },
     { id:'m02', section:'Section A: MCQ', tag:'numbers', q:'Round 4,567 to nearest hundred?', opts:['4500','4600','4570','5000'], ans:1, exp:'tens digit 6≥5 → round up → <strong>4,600</strong>' },
@@ -1279,7 +1281,7 @@ function TopicSelectScreen({ subject, onSelect, onBack }) {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
       <div className="p-5 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
-        <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+        <button onClick={() => window.location.href = 'index.html'} className="text-white/70 hover:text-white text-xl">🏠</button>
         <h1 className="text-xl font-bold">Choose Topic — Drill Mode</h1>
       </div>
 
