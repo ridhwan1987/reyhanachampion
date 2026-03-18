@@ -1324,10 +1324,17 @@ function TopicSelectScreen({ subject, onSelect, onBack }) {
   }[subject] || [];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
-      <div className="p-5 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
-        <button onClick={() => window.location.href = 'index.html'} className="text-white/70 hover:text-white text-xl">🏠</button>
-        <h1 className="text-xl font-bold">Choose Topic — Drill Mode</h1>
+    <div className="p-5 flex items-center justify-between" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
+        <div className="flex items-center gap-3">
+          <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+          <h1 className="text-xl font-bold">Choose Topic</h1>
+        </div>
+        <button 
+          onClick={() => window.location.href = 'index.html'} 
+          className="bg-white/20 hover:bg-white/30 px-3 py-1 rounded-lg text-sm font-bold flex items-center gap-1"
+        >
+          🏠 Home
+        </button>
       </div>
 
       <div className="flex-1 p-6 max-w-lg mx-auto w-full space-y-3">
