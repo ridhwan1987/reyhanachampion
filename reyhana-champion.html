@@ -1,1302 +1,2603 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Reyhana Champion ⭐</title>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Nunito:wght@400;700&family=Lilita+One&family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+
   <style>
+
     body { font-family: 'Nunito', system-ui, sans-serif; }
+
     .font-baloo { font-family: 'Baloo 2', sans-serif; }
+
     .font-lilita { font-family: 'Lilita One', cursive; }
+
     .font-poppins { font-family: 'Poppins', sans-serif; }
+
     @keyframes pop { 0%{transform:scale(0.8);opacity:0} 100%{transform:scale(1);opacity:1} }
+
     .pop { animation: pop 0.25s ease-out; }
+
     @keyframes confetti-fall {
+
       0%   { transform: translateY(-20px) rotate(0deg); opacity:1; }
+
       100% { transform: translateY(100vh) rotate(720deg); opacity:0; }
+
     }
+
     .confetti-piece { position:fixed; width:10px; height:10px; border-radius:2px; animation: confetti-fall 2s ease-in forwards; pointer-events:none; z-index:9999; }
+
     @keyframes pulse-ring {
+
       0%   { transform: scale(0.8); opacity:1; }
+
       100% { transform: scale(2); opacity:0; }
+
     }
+
     .pulse-ring { animation: pulse-ring 1.5s ease-out; }
+
   </style>
+
 </head>
+
 <body class="bg-slate-50">
+
 <div id="root"></div>
 
+
+
 <script type="text/babel">
+
 const { useState, useEffect, useRef, useCallback } = React;
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // QUESTION BANKS
+
 // ═══════════════════════════════════════════════════════════════
+
 const QB = {
+
   english: [
+
     // Grammar MCQ
+
     { id:'e01', section:'Grammar MCQ', tag:'grammar', q:'She ___ to school every day.', opts:['goes','go','going','gone'], ans:0, hint:'Is she singular?', exp:'she/he/it → <strong>goes</strong>' },
+
     { id:'e02', section:'Grammar MCQ', tag:'grammar', q:'Yesterday, we ___ to the zoo.', opts:['go','goes','went','going'], ans:2, hint:'Yesterday signals past tense', exp:'Past tense of go = <strong>went</strong>' },
+
     { id:'e03', section:'Grammar MCQ', tag:'grammar', q:'She was tired, ___ she did not give up.', opts:['so','because','but','and'], ans:2, hint:'Two contrasting ideas', exp:'<strong>But</strong> connects contrasting ideas' },
+
     { id:'e04', section:'Grammar MCQ', tag:'grammar', q:'The children ___ playing in the park.', opts:['is','am','are','was'], ans:2, hint:'Children = plural', exp:'Children is plural → <strong>are</strong>' },
+
     { id:'e05', section:'Grammar MCQ', tag:'grammar', q:'I have ___ my homework already.', opts:['finish','finishes','finished','finishing'], ans:3, hint:'After have, use past participle', exp:'have + <strong>finished</strong>' },
+
     { id:'e06', section:'Grammar MCQ', tag:'grammar', q:'She put the book ___ the table.', opts:['at','on','in','under'], ans:1, hint:'On a flat surface', exp:'Use <strong>on</strong> for surfaces' },
+
     { id:'e07', section:'Grammar MCQ', tag:'grammar', q:'Each of the students ___ a textbook.', opts:['have','has','having','are'], ans:1, hint:'Each is always singular', exp:'Each → singular → <strong>has</strong>' },
+
     { id:'e08', section:'Grammar MCQ', tag:'grammar', q:"She is your sister, ___ she?", opts:["isn't","is","wasn't","aren't"], ans:0, hint:'Positive statement → negative tag', exp:'is → <strong>isn\'t she?</strong>' },
 
+
+
     // Vocabulary
+
     { id:'e09', section:'Vocabulary', tag:'vocab', q:'Which word means the same as enormous?', opts:['tiny','massive','ancient','narrow'], ans:1, hint:'Very very big', exp:'<strong>Massive</strong> = extremely large' },
+
     { id:'e10', section:'Vocabulary', tag:'vocab', q:'The opposite of ancient is ___', opts:['old','historical','modern','antique'], ans:2, hint:'Ancient=very old, opposite?', exp:'<strong>Modern</strong> = new/current' },
+
     { id:'e11', section:'Vocabulary', tag:'vocab', q:'The puppy looked at Mia with pleading eyes. Pleading means ___', opts:['angry','begging','sleepy','playful'], ans:1, hint:'What does a puppy do when it wants something?', exp:'<strong>Pleading</strong> = begging/asking desperately' },
+
     { id:'e12', section:'Vocabulary', tag:'vocab', q:'Which word means the same as brave?', opts:['timid','clever','courageous','careful'], ans:2, hint:'Brave = not afraid', exp:'<strong>Courageous</strong> = brave' },
+
     { id:'e13', section:'Vocabulary', tag:'vocab', q:"Hand in your worksheets. Hand in means ___", opts:['throw away','submit','pick up','write on'], ans:1, hint:'What do you do with homework?', exp:'<strong>Hand in</strong> = submit to someone' },
+
     { id:'e14', section:'Vocabulary', tag:'vocab', q:'A ___ of fish swam past.', opts:['pack','flock','school','herd'], ans:2, hint:'Collective noun for fish', exp:'A <strong>school</strong> of fish' },
+
     { id:'e15', section:'Vocabulary', tag:'vocab', q:'The old bridge was so rickety it swayed. Rickety means ___', opts:['wide','tall','unstable','beautiful'], ans:2, hint:'It sways — what does that say about it?', exp:'<strong>Rickety</strong> = unstable/poorly built' },
+
     { id:'e16', section:'Vocabulary', tag:'vocab', q:'She completed the test ___', opts:['quick','quickest','quickly','more quick'], ans:2, hint:'Describes HOW — what word type?', exp:'Need adverb → <strong>quickly</strong> (-ly)' },
 
+
+
     // Visual Text (shared passage about Science Camp)
+
     { id:'e17', section:'Visual Text', tag:'visual', passage:'📢 SCIENCE CAMP 2025 | Organiser: Greenfield Primary School Science Club | Date: Saturday, 12 April 2025 | Time: 8:00 a.m. – 4:00 p.m. | Venue: School Hall & Science Labs | Activities: Hands-on experiments, Science treasure hunt, Poster-making competition | Fee: $5 per student (includes lunch) | Open to: All Primary 3 and 4 students | Register by: 5 April 2025 | Contact: Ms Tan at scisclub@gps.edu.sg', q:'Who is organising the camp?', opts:['The principal','The Science Club','Ms Tan class','P3 teachers'], ans:1 },
+
     { id:'e18', section:'Visual Text', tag:'visual', passage:'📢 SCIENCE CAMP 2025 | Organiser: Greenfield Primary School Science Club | Date: Saturday, 12 April 2025 | Time: 8:00 a.m. – 4:00 p.m. | Venue: School Hall & Science Labs | Activities: Hands-on experiments, Science treasure hunt, Poster-making competition | Fee: $5 per student (includes lunch) | Open to: All Primary 3 and 4 students | Register by: 5 April 2025 | Contact: Ms Tan at scisclub@gps.edu.sg', q:'How long does the camp last?', opts:['4 hours','6 hours','8 hours','10 hours'], ans:2, exp:'8am to 4pm = 8 hours' },
+
     { id:'e19', section:'Visual Text', tag:'visual', passage:'📢 SCIENCE CAMP 2025 | Organiser: Greenfield Primary School Science Club | Date: Saturday, 12 April 2025 | Time: 8:00 a.m. – 4:00 p.m. | Venue: School Hall & Science Labs | Activities: Hands-on experiments, Science treasure hunt, Poster-making competition | Fee: $5 per student (includes lunch) | Open to: All Primary 3 and 4 students | Register by: 5 April 2025 | Contact: Ms Tan at scisclub@gps.edu.sg', q:'Which is TRUE?', opts:['Free for all','Lunch included in $5','P3 only','On a weekday'], ans:1 },
+
     { id:'e20', section:'Visual Text', tag:'visual', passage:'📢 SCIENCE CAMP 2025 | Organiser: Greenfield Primary School Science Club | Date: Saturday, 12 April 2025 | Time: 8:00 a.m. – 4:00 p.m. | Venue: School Hall & Science Labs | Activities: Hands-on experiments, Science treasure hunt, Poster-making competition | Fee: $5 per student (includes lunch) | Open to: All Primary 3 and 4 students | Register by: 5 April 2025 | Contact: Ms Tan at scisclub@gps.edu.sg', q:'Main purpose of this notice?', opts:['Explain science','Invite students to camp','Announce results','Describe the lab'], ans:1 },
+
     { id:'e21', section:'Visual Text', tag:'visual', passage:'📢 SCIENCE CAMP 2025 | Organiser: Greenfield Primary School Science Club | Date: Saturday, 12 April 2025 | Time: 8:00 a.m. – 4:00 p.m. | Venue: School Hall & Science Labs | Activities: Hands-on experiments, Science treasure hunt, Poster-making competition | Fee: $5 per student (includes lunch) | Open to: All Primary 3 and 4 students | Register by: 5 April 2025 | Contact: Ms Tan at scisclub@gps.edu.sg', q:'Register by?', opts:['12 April','5 April','1 April','30 March'], ans:1 },
 
+
+
     // Grammar Cloze (shared passage about Priya and Snowball)
+
     { id:'e22', section:'Grammar Cloze', tag:'cloze', passage:'Every morning, Priya (1)___ up early to feed her rabbit, Snowball. Snowball (2)___ a white fluffy rabbit with pink ears. He (3)___ like eating carrots and lettuce. Yesterday, Priya noticed that Snowball (4)___ not eating. She (5)___ worried and called her mother.', q:'(1) Priya ___ up early', opts:['wake','wakes','waking','woken'], ans:1, exp:'she = singular → <strong>wakes</strong>' },
+
     { id:'e23', section:'Grammar Cloze', tag:'cloze', passage:'Every morning, Priya (1)___ up early to feed her rabbit, Snowball. Snowball (2)___ a white fluffy rabbit with pink ears. He (3)___ like eating carrots and lettuce. Yesterday, Priya noticed that Snowball (4)___ not eating. She (5)___ worried and called her mother.', q:'(2) Snowball ___ a white rabbit', opts:['are','am','is','be'], ans:2, exp:'Singular → <strong>is</strong>' },
+
     { id:'e24', section:'Grammar Cloze', tag:'cloze', passage:'Every morning, Priya (1)___ up early to feed her rabbit, Snowball. Snowball (2)___ a white fluffy rabbit with pink ears. He (3)___ like eating carrots and lettuce. Yesterday, Priya noticed that Snowball (4)___ not eating. She (5)___ worried and called her mother.', q:'(3) He ___ like eating carrots', opts:['do','does','doing','did'], ans:1, exp:'he = singular → <strong>does</strong>' },
+
     { id:'e25', section:'Grammar Cloze', tag:'cloze', passage:'Every morning, Priya (1)___ up early to feed her rabbit, Snowball. Snowball (2)___ a white fluffy rabbit with pink ears. He (3)___ like eating carrots and lettuce. Yesterday, Priya noticed that Snowball (4)___ not eating. She (5)___ worried and called her mother.', q:'(4) Snowball ___ not eating (yesterday)', opts:['is','are','was','were'], ans:2, exp:'Yesterday = past, singular → <strong>was</strong>' },
+
     { id:'e26', section:'Grammar Cloze', tag:'cloze', passage:'Every morning, Priya (1)___ up early to feed her rabbit, Snowball. Snowball (2)___ a white fluffy rabbit with pink ears. He (3)___ like eating carrots and lettuce. Yesterday, Priya noticed that Snowball (4)___ not eating. She (5)___ worried and called her mother.', q:'(5) She ___ worried', opts:['become','becomes','became','becoming'], ans:2, exp:'Past tense → <strong>became</strong>' },
+
     { id:'e27', section:'Grammar Cloze', tag:'cloze', passage:'The cat sat on the mat. It was a sunny day.', q:'She put ___ umbrella by the door', opts:['a','an','the','some'], ans:1, exp:'Before vowel sound → <strong>an</strong>' },
+
     { id:'e28', section:'Grammar Cloze', tag:'cloze', passage:'The cat sat on the mat. It was a sunny day.', q:'There is not ___ milk left', opts:['many','few','much','little'], ans:2, exp:'Uncountable noun → <strong>much</strong>' },
 
+
+
     // Editing (shared passage)
+
     { id:'e29', section:'Editing', tag:'editing', passage:'Last Saturday, our class (A)went on a field trip to the Botanic Gardens. The weather was (B)perfectly. We (C)saw many beautiful flowers. Our teacher (D)teached us the names of plants. Everyone (E)enjoyed the trip.', q:'Which has an error?', opts:['(A)went','(B)perfectly','(C)saw','(D)teached'], ans:3, exp:'Irregular past tense: teach → <strong>taught</strong>' },
+
     { id:'e30', section:'Editing', tag:'editing', passage:'Ali (A)recieved a gift. (B)unwrapped it carefully. Inside (C)was a (D)beautiful book. Which is misspelt?', q:'Which is misspelt?', opts:['(A)recieved','(B)unwrapped','(C)was','(D)beautiful'], ans:0, exp:'i before e except after c → <strong>received</strong>' },
+
     { id:'e31', section:'Editing', tag:'editing', passage:'Mia and her family (A)goes to the park.', q:'Which has an error?', opts:['(A)goes','(B)bring','(C)enjoys','(D)have'], ans:0, exp:'Mia and family = plural → <strong>go</strong>' },
+
     { id:'e32', section:'Editing', tag:'editing', passage:'The cat sit on the mat. The birds fly in the sky.', q:'Find and correct the error in: "The dog are playing."', opts:['The dog is playing','The dogs are playing','The dog am playing','No error'], ans:0, exp:'Singular dog → <strong>is</strong>' },
 
+
+
     // Comprehension
+
     { id:'e33', section:'Comprehension', tag:'comp', passage:'Mr Lee was a kind baker. Every morning, he woke up before sunrise to bake fresh bread. The smell drew people to his shop. One rainy evening, a hungry boy came. Without hesitation, Mr Lee gave him two loaves and warm soup. "Someone once helped me," Mr Lee said. "Now it is my turn."', q:'What time did Mr Lee wake up?', opts:['After sunrise','Before sunrise','At noon','At midnight'], ans:1 },
+
     { id:'e34', section:'Comprehension', tag:'comp', passage:'Mr Lee was a kind baker. Every morning, he woke up before sunrise to bake fresh bread. The smell drew people to his shop. One rainy evening, a hungry boy came. Without hesitation, Mr Lee gave him two loaves and warm soup. "Someone once helped me," Mr Lee said. "Now it is my turn."', q:'Why did Mr Lee help the boy?', opts:['Wanted payment','Told by police','Was helped before/paying it forward','Too much bread'], ans:2 },
+
     { id:'e35', section:'Comprehension', tag:'comp', passage:'Mr Lee was a kind baker. Every morning, he woke up before sunrise to bake fresh bread. The smell drew people to his shop. One rainy evening, a hungry boy came. Without hesitation, Mr Lee gave him two loaves and warm soup. "Someone once helped me," Mr Lee said. "Now it is my turn."', q:'"Drawing people to his shop" — drawing means ___', opts:['sketching','attracting','colouring','designing'], ans:1 },
+
     { id:'e36', section:'Comprehension', tag:'comp', passage:'Mr Lee was a kind baker. Every morning, he woke up before sunrise to bake fresh bread. The smell drew people to his shop. One rainy evening, a hungry boy came. Without hesitation, Mr Lee gave him two loaves and warm soup. "Someone once helped me," Mr Lee said. "Now it is my turn."', q:'Which word best describes Mr Lee?', opts:['Strict','Generous and warm-hearted','Shy','Ambitious'], ans:1 },
+
     { id:'e37', section:'Comprehension', tag:'comp', passage:'Meilin and her brother spent the afternoon planting a vegetable garden. They dug holes and placed seeds carefully. "These will grow into tomatoes and cucumbers," their grandmother said. Weeks later, they saw tiny green shoots. Meilin clapped her hands with joy. "Plants take so much care," she said, "but it is so worth it."', q:'What did they plant?', opts:['Flowers and herbs','Tomatoes and cucumbers','Beans and carrots','Potatoes'], ans:1 },
+
     { id:'e38', section:'Comprehension', tag:'comp', passage:'Meilin and her brother spent the afternoon planting a vegetable garden. They dug holes and placed seeds carefully. "These will grow into tomatoes and cucumbers," their grandmother said. Weeks later, they saw tiny green shoots. Meilin clapped her hands with joy. "Plants take so much care," she said, "but it is so worth it."', q:'How did Meilin feel seeing the shoots?', opts:['Confused','Joyful — clapped hands','Proud','Tired'], ans:1 },
+
     // Grammar MCQ extras
+
     { id:'e39', section:'Grammar MCQ', tag:'grammar', q:'The book ___ on the shelf since last year.', opts:['is','are','has been','have been'], ans:2, hint:'One book (singular) + time since past → which tense?', exp:'Singular subject + "since" → present perfect: <strong>has been</strong>' },
+
     { id:'e40', section:'Grammar MCQ', tag:'grammar', q:'___ of the two girls won the prize?', opts:['Who','Whom','Which','What'], ans:2, hint:'Choosing between two specific people — which word do we use?', exp:'Use <strong>Which</strong> when choosing from a defined group of two.' },
+
     { id:'e41', section:'Grammar MCQ', tag:'grammar', q:'He runs ___ than his brother.', opts:['fast','faster','fastest','more faster'], ans:1, hint:'Comparing two people — what form?', exp:'Comparing two → comparative form: <strong>faster</strong>' },
+
     // Vocabulary extras
+
     { id:'e42', section:'Vocabulary', tag:'vocab', q:'The teacher spoke in a stern voice. Stern means ___', opts:['gentle','funny','serious and strict','excited'], ans:2, hint:'A stern teacher does not joke around.', exp:'<strong>Stern</strong> = serious, strict, and firm.' },
+
     { id:'e43', section:'Vocabulary', tag:'vocab', q:'Which is a simile? "She ran ___"', opts:['very quickly','like the wind','in a hurry','to school'], ans:1, hint:'A simile uses "like" or "as" to compare.', exp:'"<strong>Like the wind</strong>" is a simile — comparing her running to the speed of wind.' },
+
     // Comprehension extras
+
     { id:'e44', section:'Comprehension', tag:'comp', passage:'Every year, the residents of Kampung Baru held a gotong-royong. Old and young worked side by side, cleaning drains, painting fences, and planting flowers. "This is what makes us a community," said Mr Hassan, wiping sweat from his brow.', q:'What is a gotong-royong?', opts:['A type of food','A community clean-up event','A school activity','A type of dance'], ans:1, hint:'Read what the residents do during it.', exp:'A <strong>gotong-royong</strong> is a community clean-up where everyone works together.' },
+
     { id:'e45', section:'Comprehension', tag:'comp', passage:'Every year, the residents of Kampung Baru held a gotong-royong. Old and young worked side by side, cleaning drains, painting fences, and planting flowers. "This is what makes us a community," said Mr Hassan, wiping sweat from his brow.', q:'What does "side by side" suggest?', opts:['They stood in a line','They worked together equally','They competed with each other','They were tired'], ans:1, exp:'"<strong>Side by side</strong>" suggests equality and togetherness — everyone contributing equally.' },
+
     // Editing extras  
+
     { id:'e46', section:'Editing', tag:'editing', passage:'Tom and his friend (A)was walking to school. They (B)saw a lost puppy. It (C)looks frightened. Tom (D)picked it up gently.', q:'Which has an error?', opts:['(A)was','(B)saw','(C)looks','(D)picked'], ans:0, exp:'Tom AND his friend = plural subject → <strong>were</strong> walking' },
+
     { id:'e47', section:'Editing', tag:'editing', passage:'She (A)writed a letter to her pen pal. It (B)took her one hour to finish. She (C)put it in an envelope and (D)sealed it carefully.', q:'Which has an error?', opts:['(A)writed','(B)took','(C)put','(D)sealed'], ans:0, exp:'"Write" is irregular: write → <strong>wrote</strong>, not "writed"' },
+
     // Grammar Cloze extras
+
     { id:'e48', section:'Grammar Cloze', tag:'cloze', q:'The monkeys ___ (swing/swings/swinging/swung) from branch to branch yesterday.', opts:['swing','swings','swinging','swung'], ans:3, hint:'Yesterday = past tense. Irregular verb?', exp:'"Swing" is irregular: swing → <strong>swung</strong> (past)' },
 
 
+
+
+
   ],
+
+
 
   math: [
+
     // Section A: MCQ
+
     { id:'m01', section:'Section A: MCQ', tag:'numbers', q:'Value of digit 6 in 4,632?', opts:['6','60','600','6000'], ans:2, exp:'hundreds place → <strong>600</strong>' },
+
     { id:'m02', section:'Section A: MCQ', tag:'numbers', q:'Round 4,567 to nearest hundred?', opts:['4500','4600','4570','5000'], ans:1, exp:'tens digit 6≥5 → round up → <strong>4,600</strong>' },
+
     { id:'m03', section:'Section A: MCQ', tag:'fractions', q:'Which fraction is largest: ½, ⅜, 2/5, ⅓?', opts:['½','⅜','2/5','⅓'], ans:0, exp:'½=0.5 is largest' },
+
     { id:'m04', section:'Section A: MCQ', tag:'time', q:'Movie: 2:45pm + 1h 30min = ?', opts:['4:05pm','4:15pm','3:45pm','4:45pm'], ans:1, exp:'2:45+1h=3:45; +30min=<strong>4:15pm</strong>' },
+
     { id:'m05', section:'Section A: MCQ', tag:'measurement', q:'2m 45cm + 1m 80cm = ?', opts:['3m25cm','4m25cm','3m15cm','4m15cm'], ans:1, exp:'45+80=125cm=1m25cm; total=<strong>4m25cm</strong>' },
+
     { id:'m06', section:'Section A: MCQ', tag:'money', q:'Book $14.50 + pen $6.80 = ?', opts:['$21.30','$20.30','$21.80','$20.80'], ans:0 },
+
     { id:'m07', section:'Section A: MCQ', tag:'geometry', q:'Square side 9cm — perimeter?', opts:['18cm','27cm','36cm','81cm'], ans:2, exp:'4×9=<strong>36cm</strong>' },
+
     { id:'m08', section:'Section A: MCQ', tag:'fractions', q:'Siti ate ⅜ pizza. How much left?', opts:['⅜','⅝','½','2/8'], ans:1, exp:'1−⅜=<strong>⅝</strong>' },
+
     { id:'m09', section:'Section A: MCQ', tag:'numbers', q:'5×9 + 3×4 = ?', opts:['57','67','72','44'], ans:0, exp:'45+12=<strong>57</strong>' },
+
     { id:'m10', section:'Section A: MCQ', tag:'geometry', q:'Rectangle 10cm×5cm — perimeter?', opts:['15cm','30cm','50cm','25cm'], ans:1, exp:'2×(10+5)=<strong>30cm</strong>' },
 
+
+
     // Section B: Short Answer
+
     { id:'m11', section:'Section B: Short Answer', tag:'numbers', q:'1,000 more than 8,435?', type:'text', ans:'9435' },
+
     { id:'m12', section:'Section B: Short Answer', tag:'fractions', q:'¼ of 84?', type:'text', ans:'21' },
+
     { id:'m13', section:'Section B: Short Answer', tag:'time', q:'How many minutes in 2h 15min?', type:'text', ans:'135' },
+
     { id:'m14', section:'Section B: Short Answer', tag:'numbers', q:'How many tens in 350?', type:'text', ans:'35' },
+
     { id:'m15', section:'Section B: Short Answer', tag:'money', q:'Change from $20 after spending $13.45?', type:'text', ans:'6.55', unitPre:'$' },
+
     { id:'m16', section:'Section B: Short Answer', tag:'geometry', q:'Rectangle 12cm × 7cm — area?', type:'text', ans:'84', unit:'cm²' },
+
     { id:'m17', section:'Section B: Short Answer', tag:'fractions', q:'⅓ + ⅓ = ?', type:'text', ans:'2/3' },
+
     { id:'m18', section:'Section B: Short Answer', tag:'numbers', q:'7×8 = ?', type:'text', ans:'56' },
+
     { id:'m19', section:'Section B: Short Answer', tag:'time', q:'School 7:30am to 1:30pm — duration?', type:'text', ans:'6', unit:'hours' },
+
     { id:'m20', section:'Section B: Short Answer', tag:'numbers', q:'A number × itself = 49. What is it?', type:'text', ans:'7' },
 
+
+
     // Section C: Word Problems
+
     { id:'m21', section:'Section C: Word Problems', tag:'laq', q:'Ahmad has 48 stickers. He gives ¼ to his friend. How many does he give away?', type:'text', ans:'12', marks:1, exp:'¼×48=<strong>12</strong>' },
+
     { id:'m22', section:'Section C: Word Problems', tag:'laq', q:'Ahmad has 48 stickers. He gives ¼ to his friend. How many does he have left?', type:'text', ans:'36', marks:2, exp:'48−12=<strong>36</strong>' },
+
     { id:'m23', section:'Section C: Word Problems', tag:'laq', q:'A box has 6 rows of 8 apples. How many apples total?', type:'text', ans:'48', marks:1, exp:'6×8=<strong>48</strong>' },
+
     { id:'m24', section:'Section C: Word Problems', tag:'laq', q:'96 students divided equally into 8 groups. How many students per group?', type:'text', ans:'12', marks:1, exp:'96÷8=<strong>12</strong>' },
+
     { id:'m25', section:'Section C: Word Problems', tag:'laq', q:'Ali saved $5 a week for 8 weeks, then spent $18. How much did he save in total?', type:'text', ans:'40', unitPre:'$', marks:1, exp:'5×8=<strong>$40</strong>' },
+
     { id:'m26', section:'Section C: Word Problems', tag:'laq', q:'Ali saved $5 a week for 8 weeks, then spent $18. How much does he have left?', type:'text', ans:'22', unitPre:'$', marks:2, exp:'$40−$18=<strong>$22</strong>' },
+
     { id:'m31', section:'Section B: Short Answer', tag:'numbers', type:'text', q:'What is 9 × 7?', ans:'63', hint:'9 times table', exp:'9 × 7 = <strong>63</strong>' },
+
     { id:'m32', section:'Section B: Short Answer', tag:'measurement', type:'text', q:'Perimeter of a square with side 8cm?', ans:'32', unit:'cm', hint:'4 sides × 8', exp:'4 × 8 = <strong>32 cm</strong>' },
+
     { id:'m33', section:'Section B: Short Answer', tag:'fractions', type:'text', q:'What is ½ + ¼? Give as a fraction.', ans:'3/4', hint:'Make denominators the same.', exp:'2/4 + 1/4 = <strong>3/4</strong>' },
+
     { id:'m34', section:'Section B: Short Answer', tag:'numbers', type:'text', q:'72 ÷ 9 = ?', ans:'8', hint:'9 times table', exp:'9 × 8 = 72, so 72÷9 = <strong>8</strong>' },
+
     { id:'m35', section:'Section B: Short Answer', tag:'money', type:'text', q:'5 pens at $1.20 each. Total?', ans:'6.00', unitPre:'$', hint:'5 × 1.20', exp:'5 × $1.20 = <strong>$6.00</strong>' },
+
     { id:'m36', section:'Section B: Short Answer', tag:'numbers', type:'text', q:'What is the value of the digit 4 in 8,479?', ans:'400', hint:'Count from right: ones, tens, hundreds', exp:'The 4 is in the hundreds place → <strong>400</strong>' },
+
     { id:'m37', section:'Section B: Short Answer', tag:'time', type:'text', q:'Party starts 3:30pm, lasts 2.5 hours. End time?', ans:'6:00pm', hint:'3:30 + 2h = 5:30; + 30min = ?', exp:'3:30pm + 2h30min = <strong>6:00pm</strong>' },
+
     { id:'m38', section:'Section B: Short Answer', tag:'fractions', type:'text', q:'⅔ of 24?', ans:'16', hint:'24÷3=8, then ×2', exp:'⅔ × 24 = 2 × 8 = <strong>16</strong>' },
+
     { id:'m39', section:'Section C: Word Problems', tag:'laq', type:'text', marks:1, passage:'A baker bakes 8 trays of cookies with 12 cookies each.', q:'(a) How many cookies are there altogether?', ans:'96', exp:'8 × 12 = <strong>96 cookies</strong>' },
+
     { id:'m40', section:'Section C: Word Problems', tag:'laq', type:'text', marks:2, passage:'A baker bakes 8 trays of cookies with 12 cookies each. He packs them equally into 6 boxes.', q:'(b) How many cookies are in each box?', ans:'16', exp:'96 ÷ 6 = <strong>16 cookies</strong>' },
+
     { id:'m41', section:'Section C: Word Problems', tag:'laq', type:'text', marks:1, passage:'Siti had $45. She spent $18.60 at the bookshop.', q:'(a) How much did she have left?', ans:'26.40', unitPre:'$', exp:'$45 − $18.60 = <strong>$26.40</strong>' },
+
     { id:'m42', section:'Section C: Word Problems', tag:'laq', type:'text', marks:2, passage:'Siti had $45. She spent $18.60 at the bookshop. Then she spent half of what was left on food.', q:'(b) How much did she spend on food?', ans:'13.20', unitPre:'$', exp:'$26.40 ÷ 2 = <strong>$13.20</strong>' },
+
     { id:'m43', section:'Section C: Word Problems', tag:'laq', type:'text', marks:2, passage:'A rectangle has perimeter 36cm. Its length is 11cm.', q:'(a) What is its width?', ans:'7', unit:'cm', exp:'2×(11+w)=36 → 11+w=18 → w=<strong>7 cm</strong>' },
+
     { id:'m44', section:'Section C: Word Problems', tag:'laq', type:'text', marks:2, passage:'A rectangle has perimeter 36cm. Its length is 11cm and width is 7cm.', q:'(b) What is its area?', ans:'77', unit:'cm²', exp:'11 × 7 = <strong>77 cm²</strong>' },
 
+
+
   ],
+
+
 
   gepmath: [
+
     // Topic 0: Number Patterns
+
     { id:'gp01', topic:'Number Patterns', diff:1, q:'3,7,11,15,___?', opts:['17','19','21','23'], ans:1, hint:'+? each time', exp:['Diff=4 each time','15+4=19 ✓'] },
+
     { id:'gp02', topic:'Number Patterns', diff:1, q:'2,4,8,16,___?', opts:['24','28','32','34'], ans:2, hint:'×? each time', exp:['Rule: ×2','16×2=32 ✓'] },
+
     { id:'gp03', topic:'Number Patterns', diff:1, q:'1,4,9,16,25,___?', opts:['30','34','36','49'], ans:2, hint:'These are special numbers — squares!', exp:['Square numbers: 1²=1,2²=4,3²=9...','6²=36 ✓'] },
+
     { id:'gp04', topic:'Number Patterns', diff:2, q:'5,8,13,21,34,___?', opts:['52','55','57','60'], ans:1, hint:'Add the two previous terms!', exp:['8=5+3? No — 13=5+8 ✓','21=8+13 ✓','Next: 21+34=55 ✓'] },
+
     { id:'gp05', topic:'Number Patterns', diff:2, q:'Pattern: △△○, △△○, △△○. How many △ in first 15 shapes?', opts:['8','10','12','15'], ans:1, hint:'How many △ in each group of 3?', exp:['Each group of 3 has 2 △','15÷3=5 groups','5×2=10 △ ✓'] },
+
     { id:'gp06', topic:'Number Patterns', diff:2, q:'Sequence: 100,91,82,73,... What is the 8th term?', opts:['27','36','37','45'], ans:0, hint:'Find the rule first. What changes each time?', exp:['Rule: −9 each time','Terms: 100,91,82,73,64,55,46,37','8th term = 37 ✓'] },
+
     { id:'gp07', topic:'Number Patterns', diff:3, q:'Dots: Row1=1, Row2=3, Row3=6, Row4=10. What is Row 6?', opts:['15','18','21','28'], ans:2, hint:'How much does each row add compared to the last?', exp:['Added: +2,+3,+4,... pattern','Row5=10+5=15, Row6=15+6=21 ✓'] },
+
     { id:'gp08', topic:'Number Patterns', diff:3, q:'First 5 terms sum to 40. Each term is 3 more than previous. What is term 1?', opts:['2','4','6','8'], ans:0, hint:'If first term=a, write the 5 terms and add them.', exp:['Terms: a, a+3, a+6, a+9, a+12','Sum=5a+30=40','5a=10, a=2. Verify: 2+5+8+11+14=40 ✓'] },
 
+
+
     // Topic 1: Clever Problem Sums
+
     { id:'gp09', topic:'Clever Problem Sums', diff:1, q:'Tom has 3 times as many marbles as Ben. Together they have 48. How many does Tom have?', opts:['12','24','36','48'], ans:2, hint:'If Ben=1 unit, Tom=3 units. Total=4 units=48.', exp:['1 unit=48÷4=12','Tom=3×12=36 ✓'] },
+
     { id:'gp10', topic:'Clever Problem Sums', diff:1, q:'A bag of rice costs $3 more than a bag of flour. Together $17. Cost of rice?', opts:['$7','$10','$12','$14'], ans:1, hint:'If flour=F, rice=F+3. Together=2F+3=17.', exp:['2F+3=17','2F=14, F=7','Rice=7+3=$10 ✓'] },
+
     { id:'gp11', topic:'Clever Problem Sums', diff:1, q:'Divide 60 sweets into 2 groups so one group has 12 more. Smaller group?', opts:['18','24','30','36'], ans:1, hint:'Small+Large=60, Large=Small+12.', exp:['2×Small+12=60','2×Small=48, Small=24 ✓'] },
+
     { id:'gp12', topic:'Clever Problem Sums', diff:2, q:'Amir had $50. He spent ⅖ on a book and ⅓ of the remainder on food. How much left?', opts:['$16','$20','$22','$24'], ans:1, hint:'First find ⅖ of $50. Then find ⅓ of what remains.', exp:['Spent on book: ⅖×50=$20','Remainder: $30','Food: ⅓×30=$10','Left: 30-10=$20 ✓'] },
+
     { id:'gp13', topic:'Clever Problem Sums', diff:2, q:'30 animals: chickens and rabbits. Total legs=84. How many rabbits?', opts:['8','10','12','14'], ans:2, hint:'Assume all chickens (2 legs). Extra legs come from rabbits (4 legs each).', exp:['If all chickens: 30×2=60 legs','Extra legs: 84-60=24','Each rabbit adds 2 extra legs: 24÷2=12 rabbits ✓'] },
+
     { id:'gp14', topic:'Clever Problem Sums', diff:2, q:'Think of a number. Multiply by 2, add 6, divide by 3, subtract 1. Result is 9. What was the number?', opts:['8','10','12','14'], ans:2, hint:'Work backwards using inverse operations.', exp:['9+1=10','10×3=30','30−6=24','24÷2=12 ✓'] },
+
     { id:'gp15', topic:'Clever Problem Sums', diff:3, q:'Ali has 5 more than twice Ben stickers. Ben has 4 more than half of Cora. Cora has 20. How many does Ali have?', opts:['25','27','29','33'], ans:3, hint:'Find Ben first using Cora, then find Ali.', exp:['Cora=20','Ben=½×20+4=10+4=14','Ali=2×14+5=28+5=33 ✓'] },
+
     { id:'gp16', topic:'Clever Problem Sums', diff:3, q:'If each child gets 4 sweets, 3 are left over. If each gets 5, need 2 more. How many children?', opts:['3','4','5','6'], ans:2, hint:'Set up two equations.', exp:['4C+3=total','5C-2=total','4C+3=5C-2','C=5 ✓'] },
 
+
+
     // Topic 2: Logic & Spatial
+
     { id:'gp17', topic:'Logic & Spatial', diff:1, q:'How many squares in a 3×3 grid (count ALL sizes)?', opts:['9','12','14','16'], ans:2, hint:'Count 1×1, then 2×2, then 3×3 separately.', exp:['1×1: 9','2×2: 4','3×3: 1','Total: 14 ✓'] },
+
     { id:'gp18', topic:'Logic & Spatial', diff:1, q:'5 friends shake hands with each other once. Total handshakes?', opts:['8','10','12','20'], ans:1, hint:'Each person shakes with everyone else. Use 1+2+3+4.', exp:['Person 1: 4 handshakes','Person 2: 3 new','1+2+3+4=10 ✓'] },
+
     { id:'gp19', topic:'Logic & Spatial', diff:1, q:'18 like Art, 15 like Music, 8 like both. How many like at least one?', opts:['20','25','30','33'], ans:1, hint:"Don't count the both group twice.", exp:['18+15=33, but 8 counted twice','33-8=25 ✓'] },
+
     { id:'gp20', topic:'Logic & Spatial', diff:2, q:'How many rectangles (including squares) in a 2×3 grid?', opts:['12','15','18','20'], ans:2, hint:'Choose 2 horizontal lines from 3, and 2 vertical from 4.', exp:['Horizontal pairs: C(3,2)=3','Vertical pairs: C(4,2)=6','3×6=18 ✓'] },
+
     { id:'gp21', topic:'Logic & Spatial', diff:2, q:'Fill magic square: top=[2,_,6], middle=[7,5,3]. Find missing.', opts:['4','6','8','9'], ans:0, hint:'Each row sums to same total. Find the total from the middle row.', exp:['Middle row: 7+5+3=15','Top row: 2+?+6=15','?=15-8=7... correct: 2+7+6=15 ✓'] },
+
     { id:'gp22', topic:'Logic & Spatial', diff:2, q:'Digits 1,2,3,4 each used once. Form largest even number less than 4000.', opts:['3412','3214','2431','3241'], ans:0, hint:'Must be even (ends in 2 or 4) and less than 4000 (starts with 1,2,3).', exp:['Starts with 3 (not 4, must be <4000)','Must end in 2 or 4','Largest: 3412 (ends in 2, uses 3,4,1,2) ✓'] },
+
     { id:'gp23', topic:'Logic & Spatial', diff:3, q:'Alice, Bob, Cara in a row. Alice not next to Bob. Bob not on right. How many arrangements?', opts:['1','2','3','4'], ans:0, hint:'List all 6 arrangements and eliminate.', exp:['Only CBA: C-B-A satisfies all conditions ✓'] },
+
     { id:'gp24', topic:'Logic & Spatial', diff:3, q:'4×4 grid: how many squares of ALL sizes?', opts:['20','30','36','40'], ans:1, hint:'Count n×n squares: (4-n+1)² for each size n.', exp:['1×1: 4²=16','2×2: 3²=9','3×3: 2²=4','4×4: 1²=1','Total: 16+9+4+1=30 ✓'] },
 
+
+
     // Topic 3: Mental Maths
+
     { id:'gp25', topic:'Mental Maths', diff:1, q:'99 × 7 = ?', opts:['686','693','700','707'], ans:1, hint:'99×7 = 100×7 − 7', exp:['100×7=700','700−7=693 ✓'] },
+
     { id:'gp26', topic:'Mental Maths', diff:1, q:'Last digit of 3⁴?', opts:['1','3','7','9'], ans:0, hint:'3¹=3, 3²=9, 3³=27, 3⁴=?', exp:['3¹=3, 3²=9, 3³=27, 3⁴=81','Last digit: 1 ✓'] },
+
     { id:'gp27', topic:'Mental Maths', diff:1, q:'Which is divisible by 9: 243, 256, 271, 289?', opts:['243','256','271','289'], ans:0, hint:'Sum the digits. If sum÷9, number÷9.', exp:['243: 2+4+3=9 ✓','9÷9=1 → divisible by 9 ✓'] },
+
     { id:'gp28', topic:'Mental Maths', diff:2, q:'25×48 using shortcut?', opts:['1100','1200','1250','1300'], ans:1, hint:'25×4=100. How can you use that?', exp:['25×48=25×4×12=100×12=1200 ✓'] },
+
     { id:'gp29', topic:'Mental Maths', diff:2, q:'A number leaves remainder 3 when ÷7, remainder 1 when ÷4. Smallest?', opts:['17','21','24','31'], ans:0, hint:'List numbers: 3 mod 7 = 3,10,17,24... which also gives remainder 1 when ÷4?', exp:['3 mod 7: 3,10,17,24...','17÷4=4 rem 1 ✓','Smallest = 17 ✓'] },
+
     { id:'gp30', topic:'Mental Maths', diff:2, q:'Sum of 1+2+3+...+20?', opts:['190','200','210','220'], ans:2, hint:'Pair up: 1+20, 2+19... how many pairs?', exp:['Pairs: (1+20)+(2+19)+...=10 pairs of 21','10×21=210 ✓'] },
+
     { id:'gp31', topic:'Mental Maths', diff:3, q:'999×999 = ?', opts:['997001','998001','999001','996001'], ans:1, hint:'(1000−1)²=1000²−2×1000+1', exp:['(1000−1)²','=1,000,000−2,000+1','=998,001 ✓'] },
+
     { id:'gp32', topic:'Mental Maths', diff:3, q:'How many 3-digit numbers have digit sum = 5?', opts:['12','15','18','21'], ans:1, hint:'List systematically: 500, 410, 401, 320, 302, 311, 230, 203, 212, 221, 140, 104, 113, 131, 122...', exp:['Systematic count: 15 numbers ✓'] },
 
+
+
     // Topic 4: Fractions & Measurement
+
     { id:'gp33', topic:'Fractions & Measurement', diff:1, q:'A jug holds 1 litre. It is ¾ full. How many ml of water?', opts:['250','500','750','800'], ans:2, hint:'¾ of 1000ml', exp:['¾×1000=750ml ✓'] },
+
     { id:'gp34', topic:'Fractions & Measurement', diff:1, q:'⅗ of a ribbon = 24cm. Total length?', opts:['32cm','40cm','48cm','60cm'], ans:1, hint:'⅗=24cm, so 1/5=? then ×5', exp:['⅕=24÷3=8cm','Whole=5×8=40cm ✓'] },
+
     { id:'gp35', topic:'Fractions & Measurement', diff:1, q:'Rectangle: length=3× width. Width=4cm. Area?', opts:['24cm²','36cm²','48cm²','72cm²'], ans:2, hint:'Find length first, then area.', exp:['Length=3×4=12cm','Area=12×4=48cm² ✓'] },
+
     { id:'gp36', topic:'Fractions & Measurement', diff:2, q:'Square and rectangle same perimeter. Square side=6cm. Rectangle 8cm long. Width?', opts:['2cm','4cm','6cm','8cm'], ans:1, hint:'Find square perimeter first. Then use rectangle formula.', exp:['Square perimeter=4×6=24cm','Rectangle: 2(8+w)=24','8+w=12, w=4cm ✓'] },
+
     { id:'gp37', topic:'Fractions & Measurement', diff:2, q:'Tank is ⅖ full (160 litres). How many more litres to fill completely?', opts:['160','200','240','320'], ans:2, hint:'Find the full capacity first.', exp:['⅖=160L → full=160÷2×5=400L','To fill: 400−160=240L ✓'] },
+
     { id:'gp38', topic:'Fractions & Measurement', diff:2, q:'½ of Ali money = ⅔ of Ben. Ali=$60. How much does Ben have?', opts:['$40','$45','$50','$60'], ans:1, hint:'Find ½ of $60 first. Then find Ben total.', exp:['½×60=$30=⅔×Ben','Ben=$30×3/2=$45 ✓'] },
+
     { id:'gp39', topic:'Fractions & Measurement', diff:3, q:'House shape: square 6cm sides, triangle height 4cm on top. Total area?', opts:['48cm²','54cm²','60cm²','72cm²'], ans:0, hint:'Area = square area + triangle area', exp:['Square: 6×6=36cm²','Triangle: ½×6×4=12cm²','Total: 36+12=48cm² ✓'] },
+
     { id:'gp40', topic:'Fractions & Measurement', diff:3, q:'Fence: 3 sides only (1 side is wall). Total fence=18m. Area=40m². Find dimensions.', opts:['3m×12m','4m×10m','5m×8m','6m×6m'], ans:1, hint:'2w+l=18. w×l=40.', exp:['2w+l=18, w×l=40','Try w=4: l=18−8=10, area=40 ✓','Dimensions: 4m×10m ✓'] },
+
   ],
+
+
 
   science: [
+
     // Diversity
+
     { id:'s01', topic:'Diversity of Living Things', q:'Which is NOT a characteristic of living things?', opts:['They grow','They reproduce','They are made of metal','They respond to changes'], ans:3, exp:'Living things grow, reproduce, and respond to stimuli. Metal is not a life characteristic.' },
+
     { id:'s02', topic:'Diversity of Living Things', q:'Which animal is a mammal?', opts:['Eagle','Lizard','Dolphin','Frog'], ans:2, exp:'Dolphins breathe air, give birth to live young, and feed them milk.' },
+
     { id:'s03', topic:'Diversity of Living Things', q:'Plants make food using ___', opts:['Water only','Sunlight & CO₂','Soil & rain','Sunlight, water & CO₂'], ans:3, exp:'Photosynthesis uses sunlight, water, and carbon dioxide.' },
+
     { id:'s04', topic:'Diversity of Living Things', q:'Which of the following is an insect?', opts:['Spider','Crab','Butterfly','Worm'], ans:2, exp:'Insects have 6 legs and 3 body parts. Butterflies are insects.' },
+
     { id:'s05', topic:'Diversity of Living Things', q:'How do fish breathe?', opts:['Through lungs','Through skin','Through gills','Through their mouth'], ans:2, exp:'Fish absorb oxygen from water through gills.' },
+
     { id:'s06', topic:'Diversity of Living Things', q:'Which is a feature of reptiles?', opts:['Warm-blooded','Covered in scales','Have fur','Feed young with milk'], ans:1, exp:'Reptiles are cold-blooded and covered in scales.' },
+
     { id:'s07', topic:'Diversity of Living Things', q:'Which animal lays eggs?', opts:['Cow','Whale','Penguin','Kangaroo'], ans:2, exp:'Penguins are birds and lay eggs. Cows, whales, and kangaroos give birth to live young.' },
+
     { id:'s08', topic:'Diversity of Living Things', q:'What do herbivores eat?', opts:['Meat','Plants','Both meat and plants','Nothing'], ans:1, exp:'Herbivores are animals that eat only plants. Examples: cows, rabbits, deer.' },
 
+
+
     // Materials
+
     { id:'s09', topic:'Materials', q:'Which material is the best conductor of heat?', opts:['Wood','Plastic','Metal','Rubber'], ans:2, exp:'Metals conduct heat well — that is why pots are made of metal.' },
+
     { id:'s10', topic:'Materials', q:'Which is a property of rubber?', opts:['Hard','Transparent','Flexible','Magnetic'], ans:2, exp:'Rubber is flexible — it can bend and stretch without breaking.' },
+
     { id:'s11', topic:'Materials', q:'A raincoat should be made of material that is ___', opts:['Waterproof','Transparent','Heavy','Rough'], ans:0, exp:'A raincoat must prevent water from soaking through.' },
+
     { id:'s12', topic:'Materials', q:'Which material allows light to pass through completely?', opts:['Wood','Glass','Metal','Brick'], ans:1, exp:'Glass is transparent — light passes through completely.' },
+
     { id:'s13', topic:'Materials', q:'Which property describes how easily something bends?', opts:['Hardness','Flexibility','Conductivity','Transparency'], ans:1, exp:'Flexibility describes how easily a material bends.' },
+
     { id:'s14', topic:'Materials', q:'Which material is transparent?', opts:['Wood','Paper','Plastic wrap','Cloth'], ans:2, exp:'Plastic wrap is transparent — you can see through it.' },
+
     { id:'s15', topic:'Materials', q:'Which material is a good insulator of heat?', opts:['Metal','Water','Plastic foam','Copper'], ans:2, exp:'Plastic foam does not let heat pass through easily — it is a good insulator.' },
+
     { id:'s16', topic:'Materials', q:'A saucepan handle is made of plastic to ___', opts:['Look nice','Prevent burns','Save money','Last longer'], ans:1, exp:'Plastic is a poor conductor of heat, so it protects your hand from heat.' },
 
+
+
     // Magnets
+
     { id:'s17', topic:'Magnets', q:'Which material is attracted to a magnet?', opts:['Plastic spoon','Wooden ruler','Iron nail','Glass cup'], ans:2, exp:'Magnets attract iron, steel, nickel, and cobalt.' },
+
     { id:'s18', topic:'Magnets', q:'What happens when two north poles are brought together?', opts:['They attract','They repel','Nothing happens','They stick'], ans:1, exp:'Like poles repel. Unlike poles attract.' },
+
     { id:'s19', topic:'Magnets', q:'Where is a magnet strongest?', opts:['In the middle','At the poles','At the sides','Same throughout'], ans:1, exp:'Magnets are strongest at their two poles (ends).' },
+
     { id:'s20', topic:'Magnets', q:'A compass needle points north because ___', opts:['Earth has gravity','Earth is like a giant magnet','The sun attracts it','The needle is heavy'], ans:1, exp:'Earth behaves like a giant magnet, causing compass needles to point north.' },
+
     { id:'s21', topic:'Magnets', q:'Which of the following is NOT magnetic?', opts:['Steel','Nickel','Cobalt','Aluminium'], ans:3, exp:'Aluminium is not magnetic. Magnetic materials: iron, steel, nickel, cobalt.' },
+
     { id:'s22', topic:'Magnets', q:'What happens when a south pole and a north pole are brought together?', opts:['They repel','They attract','Nothing happens','They bounce'], ans:1, exp:'Unlike poles attract. A south pole and a north pole attract each other.' },
+
     { id:'s23', topic:'Magnets', q:'A magnet can attract iron through ___', opts:['Paper','Water','Plastic','All of the above'], ans:3, exp:'Magnetic force can pass through many materials.' },
+
     { id:'s24', topic:'Magnets', q:'Which metal is NOT attracted to a magnet?', opts:['Iron','Steel','Gold','Cobalt'], ans:2, exp:'Gold is not magnetic. Magnetic metals include iron, steel, cobalt, and nickel.' },
 
+
+
     // Life Cycles
+
     { id:'s25', topic:'Life Cycles', q:'Correct life cycle of a butterfly?', opts:['Egg→Larva→Adult→Pupa','Egg→Pupa→Larva→Adult','Egg→Larva→Pupa→Adult','Larva→Egg→Pupa→Adult'], ans:2, exp:'Butterfly: Egg → Caterpillar (Larva) → Pupa (Chrysalis) → Adult.' },
+
     { id:'s26', topic:'Life Cycles', q:'A tadpole grows into a ___', opts:['Fish','Toad','Lizard','Newt'], ans:1, exp:'Tadpoles are the larval stage of frogs and toads.' },
+
     { id:'s27', topic:'Life Cycles', q:'Which animal undergoes INCOMPLETE metamorphosis?', opts:['Butterfly','Grasshopper','Beetle','Housefly'], ans:1, exp:'Grasshopper: Egg → Nymph → Adult (no pupa stage).' },
+
     { id:'s28', topic:'Life Cycles', q:'Mosquito larvae are also called ___', opts:['Pupae','Wrigglers','Nymphs','Hatchlings'], ans:1, exp:'Mosquito larvae are called wrigglers due to how they move in water.' },
+
     { id:'s29', topic:'Life Cycles', q:'A frog begins its life as a ___', opts:['Tadpole','Nymph','Egg','Adult'], ans:0, exp:'Frogs lay eggs in water, which hatch into tadpoles with tails and gills.' },
+
     { id:'s30', topic:'Life Cycles', q:'Which stage comes after the pupa in a butterfly life cycle?', opts:['Larva','Adult','Egg','Nymph'], ans:1, exp:'The butterfly emerges from the pupa (chrysalis) as an adult.' },
+
     { id:'s31', topic:'Life Cycles', q:'What do we call the larval stage of a butterfly?', opts:['Nymph','Caterpillar','Pupae','Tadpole'], ans:1, exp:'The larval stage of a butterfly is the caterpillar, which eats leaves.' },
+
     { id:'s32', topic:'Life Cycles', q:'A grasshopper passes through how many stages in its life cycle?', opts:['2','3','4','5'], ans:1, exp:'Grasshopper has 3 stages: Egg, Nymph, Adult (incomplete metamorphosis).' },
 
+
+
     // Mixed Review
+
     { id:'s33', topic:'Mixed Review', q:'Which gas do plants take in during photosynthesis?', opts:['Oxygen','Nitrogen','Carbon dioxide','Hydrogen'], ans:2, exp:'Plants absorb CO₂ during photosynthesis.' },
+
     { id:'s34', topic:'Mixed Review', q:'Which is a carnivore?', opts:['Cow','Rabbit','Tiger','Elephant'], ans:2, exp:'Tigers eat only meat — they are carnivores.' },
+
     { id:'s35', topic:'Mixed Review', q:'What is the function of roots in a plant?', opts:['Make food','Absorb water/minerals & anchor plant','Carry water to leaves only','Produce seeds'], ans:1, exp:'Roots absorb water and minerals and anchor the plant in soil.' },
+
     { id:'s36', topic:'Mixed Review', q:'Which of the following is a non-living thing?', opts:['Mushroom','Bacteria','Rock','Fern'], ans:2, exp:'Rocks do not grow, reproduce, or respond to changes.' },
+
     { id:'s37', topic:'Mixed Review', q:'Which sense organ do we use to smell?', opts:['Eyes','Ears','Nose','Tongue'], ans:2, exp:'The nose is our sense organ for smell.' },
+
     { id:'s38', topic:'Mixed Review', q:'What do we call animals that eat both plants and meat?', opts:['Herbivores','Carnivores','Omnivores','Insectivores'], ans:2, exp:'Omnivores eat both plants and meat. Examples: bears, pigs, humans.' },
+
     { id:'s39', topic:'Mixed Review', q:'Which plant part is responsible for photosynthesis?', opts:['Roots','Stem','Leaves','Flowers'], ans:2, exp:'Leaves are where photosynthesis takes place using chlorophyll.' },
+
     { id:'s40', topic:'Mixed Review', q:'What is a decomposer?', opts:['An animal that eats plants','An animal that eats meat','An organism that breaks down dead matter','A producer'], ans:2, exp:'Decomposers like fungi and bacteria break down dead organisms.' },
+
 { id:'s26', section:'Diversity of Living Things', tag:'diversity', q:'Which animal lays eggs AND can live on land and in water?', opts:['Frog','Fish','Snake','Rabbit'], ans:0, exp:'Frogs are amphibians — they lay eggs in water and live on both land and water.' },
+
     { id:'s27', section:'Diversity of Living Things', tag:'diversity', q:'Which is NOT a vertebrate (animal with backbone)?', opts:['Eagle','Snake','Butterfly','Frog'], ans:2, exp:'Butterflies are insects — invertebrates with no backbone.' },
+
     { id:'s28', section:'Materials', tag:'materials', q:'Which property makes glass useful for windows?', opts:['It is hard','It is transparent','It is waterproof','It is flexible'], ans:1, exp:'Glass is <strong>transparent</strong> — light passes through, so we can see outside.' },
+
     { id:'s29', section:'Materials', tag:'materials', q:'A frying pan handle is made of plastic because plastic is ___', opts:['a good conductor','magnetic','a poor conductor of heat','transparent'], ans:2, exp:'Plastic is a <strong>poor conductor of heat</strong> — it stays cool when the pan is hot.' },
+
     { id:'s30', section:'Magnets', tag:'magnets', q:'A magnet is brought near a steel pin. What happens?', opts:['The pin repels','The pin is attracted','Nothing happens','The pin melts'], ans:1, exp:'Steel is magnetic — the pin is <strong>attracted</strong> to the magnet.' },
+
     { id:'s31', section:'Magnets', tag:'magnets', q:'Which shape of magnet has clearly marked N and S poles at its ends?', opts:['Ring magnet','Bar magnet','Horseshoe magnet','Disc magnet'], ans:1, exp:'A <strong>bar magnet</strong> has clearly marked N at one end and S at the other.' },
+
     { id:'s32', section:'Life Cycles', tag:'lifecycles', q:'Which stage of a butterfly stays inside a case and does not move or eat?', opts:['Egg','Larva','Pupa','Adult'], ans:2, exp:'The <strong>pupa</strong> (chrysalis) is the resting stage where the caterpillar transforms.' },
+
     { id:'s33', section:'Life Cycles', tag:'lifecycles', q:'What is the correct life cycle of a frog?', opts:['Egg→Tadpole→Froglet→Frog','Egg→Frog→Tadpole→Froglet','Tadpole→Egg→Frog→Froglet','Egg→Froglet→Tadpole→Frog'], ans:0, exp:'Frog: <strong>Egg → Tadpole → Froglet → Adult Frog</strong>' },
+
     { id:'s34', section:'Mixed Review', tag:'mixed', q:'Which organ pumps blood around the body?', opts:['Lungs','Brain','Heart','Stomach'], ans:2, exp:'The <strong>heart</strong> pumps blood around the body through blood vessels.' },
+
     { id:'s35', section:'Mixed Review', tag:'mixed', q:'What do we call animals that eat both plants and animals?', opts:['Herbivores','Carnivores','Omnivores','Decomposers'], ans:2, exp:'<strong>Omnivores</strong> eat both plants and animals (e.g. humans, bears).' },
+
     { id:'s36', section:'Mixed Review', tag:'mixed', q:'Which process do plants use to make food?', opts:['Respiration','Photosynthesis','Digestion','Reproduction'], ans:1, exp:'<strong>Photosynthesis</strong>: plants use sunlight + CO₂ + water to make food.' },
+
     { id:'s37', section:'Diversity of Living Things', tag:'diversity', q:'What do all mammals have in common?', opts:['They lay eggs','They have scales','They feed young with milk','They live in water'], ans:2, exp:'All <strong>mammals</strong> feed their young with milk.' },
+
     { id:'s38', section:'Materials', tag:'materials', q:'Which material is used to make electrical wires because it conducts electricity?', opts:['Rubber','Plastic','Copper','Wood'], ans:2, exp:'<strong>Copper</strong> is a good conductor of electricity and is used in wires.' },
+
     { id:'s39', section:'Magnets', tag:'magnets', q:'Can a magnet attract through paper?', opts:['No, never','Yes, through thin non-magnetic materials','Only through wood','Only through water'], ans:1, exp:'Magnets can attract <strong>through thin non-magnetic materials</strong> like paper.' },
+
     { id:'s40', section:'Life Cycles', tag:'lifecycles', q:'A housefly undergoes complete metamorphosis. Order: Egg → ___ → Pupa → Adult', opts:['Nymph','Larva (maggot)','Froglet','Wriggler'], ans:1, exp:'Housefly: Egg → <strong>Larva (maggot)</strong> → Pupa → Adult fly.' },
+
+
 
   ],
 
+
+
   malay: [
+
     // Perbendaharaan Kata
+
     { id:'b01', topic:'Perbendaharaan Kata', q:'Apakah maksud perkataan "gigih"?', opts:['Malas','Berusaha bersungguh-sungguh','Takut','Gembira'], ans:1, exp:'"Gigih" bermaksud tidak berputus asa dan terus berusaha.' },
+
     { id:'b02', topic:'Perbendaharaan Kata', q:'Antonim (lawan kata) bagi "murah" ialah ___', opts:['Mahal','Baru','Lama','Kecil'], ans:0, exp:'Lawan kata "murah" ialah "mahal".' },
+
     { id:'b03', topic:'Perbendaharaan Kata', q:'Sinonim bagi "cantik" ialah ___', opts:['Hodoh','Indah','Kotor','Sempit'], ans:1, exp:'"Indah" dan "cantik" mempunyai maksud yang sama — elok dan menarik.' },
+
     { id:'b04', topic:'Perbendaharaan Kata', q:'Maksud peribahasa "bagai aur dengan tebing" ialah ___', opts:['Sering bergaduh','Saling bantu-membantu','Tidak peduli','Berjauhan'], ans:1, exp:'Peribahasa ini bermaksud hubungan yang saling memerlukan dan membantu.' },
+
     { id:'b05', topic:'Perbendaharaan Kata', q:'Perkataan "dermawan" bermaksud ___', opts:['Kedekut','Pemurah dan suka memberi','Pemarah','Penakut'], ans:1, exp:'"Dermawan" bermaksud pemurah dan suka membantu orang lain.' },
+
     { id:'b06', topic:'Perbendaharaan Kata', q:'Perkataan manakah yang bermaksud "sangat takut"?', opts:['Gembira','Gerun','Lapar','Mengantuk'], ans:1, exp:'"Gerun" bermaksud sangat takut atau gentar.' },
+
     { id:'b07', topic:'Perbendaharaan Kata', q:'Apakah maksud "bergotong-royong"?', opts:['Belajar bersama','Bekerja bersama-sama','Bermain bersama','Makan bersama'], ans:1, exp:'"Bergotong-royong" bermaksud bekerjasama untuk mencapai sesuatu tujuan.' },
+
     { id:'b08', topic:'Perbendaharaan Kata', q:'Apakah maksud "bersungguh-sungguh"?', opts:['Bermain','Melakukan dengan sepenuh hati','Tidur','Bermalas-malasan'], ans:1, exp:'"Bersungguh-sungguh" bermaksud melakukan sesuatu dengan penuh usaha dan dedikasi.' },
 
+
+
     // Tatabahasa
+
     { id:'b09', topic:'Tatabahasa', q:'Pilih kata hubung yang sesuai: "Dia rajin belajar ___ dia mendapat keputusan yang baik."', opts:['tetapi','lalu','walaupun','sebab'], ans:3, exp:'"Sebab" menunjukkan hubungan sebab dan akibat.' },
+
     { id:'b10', topic:'Tatabahasa', q:'Imbuhan yang sesuai untuk "tulis" supaya bermaksud "hasil tulisan"?', opts:['ber-tulis','me-nulis','ter-tulis','tu-lisan'], ans:3, exp:'"Tulisan" (tulis + -an) bermaksud hasil daripada menulis.' },
+
     { id:'b11', topic:'Tatabahasa', q:'Pilih ayat yang betul tanda bacaannya:', opts:['Apakah nama awak.','Apakah nama awak?','Apakah nama awak!','apakah nama awak?'], ans:1, exp:'Ayat soal menggunakan tanda soal (?). Mulakan dengan huruf besar.' },
+
     { id:'b12', topic:'Tatabahasa', q:'Manakah ayat yang menggunakan kata kerja yang betul?', opts:['Dia berlari laju sekali.','Dia berlari dengan laju sekali.','Dia berlaris laju sekali.','Dia berlari laju dengan sekali.'], ans:0, exp:'"Berlari" adalah kata kerja yang betul di sini.' },
+
     { id:'b13', topic:'Tatabahasa', q:'Imbuhan manakah yang bermaksud "sudah" atau "selesai"?', opts:['ber-','ter-','me-','di-'], ans:1, exp:'"Ter-" menunjukkan bahawa sesuatu telah selesai atau berlaku tanpa sengaja.' },
+
     { id:'b14', topic:'Tatabahasa', q:'Pilih imbuhan yang sesuai untuk "ambil":', opts:['ber-ambil','me-ambil','ter-ambil','di-ambil'], ans:1, exp:'"Mengambil" adalah bentuk yang betul daripada kata "ambil".' },
+
     { id:'b15', topic:'Tatabahasa', q:'Ayat manakah yang menggunakan tanda koma dengan betul?', opts:['Saya suka membaca, menulis, dan melukis.','Saya suka membaca menulis dan melukis.','Saya suka membaca, menulis dan melukis','Saya suka membaca, menulis, dan, melukis.'], ans:0, exp:'Tanda koma memisahkan item dalam satu senarai.' },
 
+
+
     // Pemahaman
+
     { id:'b16', topic:'Pemahaman', q:'Baca: "Hafiz suka membaca buku setiap malam." Apakah hobi Hafiz?', opts:['Menonton TV','Membaca buku','Bermain komputer','Bersukan'], ans:1, exp:'Petikan menyebut Hafiz suka membaca buku.' },
+
     { id:'b17', topic:'Pemahaman', q:'Baca: "Walaupun hujan lebat, Amirah tetap pergi ke sekolah." "Walaupun" menunjukkan ___', opts:['Sebab','Akibat','Pertentangan','Urutan'], ans:2, exp:'"Walaupun" menunjukkan pertentangan — hujan tapi dia tetap pergi.' },
+
     { id:'b18', topic:'Pemahaman', q:'Baca: "Encik Rahman seorang guru yang penyayang. Murid-muridnya sangat menyukainya." Beliau digambarkan sebagai ___', opts:['Garang dan tegas','Penyayang dan disukai','Bising','Malas'], ans:1, exp:'Petikan menyebut beliau "penyayang" dan murid-murid "sangat menyukainya".' },
+
     { id:'b19', topic:'Pemahaman', q:'Baca: "Ibu memasak nasi kuning yang wangi. Bau itu menyebabkan semua orang menjadi lapar." Apa yang disebabkan oleh bau nasi kuning?', opts:['Ibu marah','Semua orang lapar','Rumah bersih','Pintu terbuka'], ans:1, exp:'Petikan mengatakan bau nasi kuning menyebabkan semua orang lapar.' },
+
     { id:'b20', topic:'Pemahaman', q:'Baca: "Siti dan kawannya pergi ke perpustakaan. Mereka membaca buku cerita." Ke manakah Siti pergi?', opts:['Ke sekolah','Ke perpustakaan','Ke taman','Ke rumah'], ans:1, exp:'Petikan jelas menyatakan mereka pergi ke perpustakaan.' },
+
     { id:'b21', topic:'Pemahaman', q:'Apakah maksud "usaha tangga kejayaan"?', opts:['Tangga yang tinggi','Berusaha adalah kunci kejayaan','Kejayaan datang sendiri','Tangga menuju ke pejabat'], ans:1, exp:'Peribahasa ini bermaksud kita perlu berusaha keras untuk berjaya.' },
+
     { id:'b22', topic:'Pemahaman', q:'Baca: "Ahmad berbakat dalam melukis. Dia sering memenangkan pertandingan seni." Apa keupayaan Ahmad?', opts:['Olahraga','Melukis','Bernyanyi','Menari'], ans:1, exp:'Petikan menunjukkan Ahmad berbakat dalam melukis dan sering menang.' },
 
+
+
     // Isi Tempat Kosong
+
     { id:'b23', topic:'Isi Tempat Kosong', q:'"Ali ___ bola di padang dengan rakan-rakannya."', opts:['menendang','memakan','membaca','menulis'], ans:0, exp:'"Menendang bola" — kata kerja yang sesuai dengan "bola".' },
+
     { id:'b24', topic:'Isi Tempat Kosong', q:'"Ibu ___ kuih di dapur untuk hari raya."', opts:['memasak','menulis','berlari','berenang'], ans:0, exp:'"Memasak" adalah aktiviti di dapur.' },
+
     { id:'b25', topic:'Isi Tempat Kosong', q:'"Para pelajar ___ dengan tekun untuk peperiksaan."', opts:['bermain','belajar','tidur','berlari'], ans:1, exp:'"Belajar dengan tekun" bermaksud belajar dengan bersungguh-sungguh.' },
+
     { id:'b26', topic:'Isi Tempat Kosong', q:'"Kakak saya ___ sebuah novel tebal dalam masa dua hari."', opts:['memakan','menonton','menghabiskan','menulis'], ans:2, exp:'"Menghabiskan novel" bermaksud membacanya hingga selesai.' },
+
     { id:'b27', topic:'Isi Tempat Kosong', q:'"Apakah maksud "menjaga kebersihan"?', opts:['Membuat kerja keras','Memastikan sesuatu kekal bersih','Belajar rajin','Bermain dengan rakan'], ans:1, exp:'"Menjaga kebersihan" bermaksud memastikan persekitaran sentiasa bersih.' },
+
     { id:'b28', topic:'Isi Tempat Kosong', q:'"Ani ___ di sekolah setiap hari."', opts:['tidur','belajar','berlari','makan'], ans:1, exp:'"Belajar" adalah aktiviti yang dilakukan di sekolah.' },
+
     { id:'b29', topic:'Isi Tempat Kosong', q:'"Dia ___ air untuk menyiram bunga-bunga."', opts:['minum','mengambil','menulis','melompat'], ans:1, exp:'"Mengambil air" atau "membawa air" adalah sesuai untuk menyiram bunga.' },
+
     { id:'b30', topic:'Isi Tempat Kosong', q:'"Kami ___ permainan tradisional di taman."', opts:['menonton','bermain','membaca','menulis'], ans:1, exp:'"Bermain" adalah aktiviti yang dilakukan dengan permainan.' },
+
     { id:'b31', section:'Perbendaharaan Kata', tag:'perbendaharaan', q:'Apakah maksud perkataan "rajin"?', opts:['Malas','Suka bekerja keras','Suka bermain','Mengantuk'], ans:1, exp:'"<strong>Rajin</strong>" bermaksud suka bekerja keras dan bersungguh-sungguh.' },
+
     { id:'b32', section:'Perbendaharaan Kata', tag:'perbendaharaan', q:'Lawan kata "gembira" ialah ___', opts:['Sedih','Marah','Takut','Lapar'], ans:0, exp:'Lawan kata "<strong>gembira</strong>" ialah "<strong>sedih</strong>".' },
+
     { id:'b33', section:'Perbendaharaan Kata', tag:'perbendaharaan', q:'Sinonim bagi "berani" ialah ___', opts:['Takut','Pengecut','Gagah berani','Lemah'], ans:2, exp:'"<strong>Gagah berani</strong>" ialah sinonim bagi "berani".' },
+
     { id:'b34', section:'Tatabahasa', tag:'tatabahasa', q:'Pilih kata kerja yang betul: "Adik ___ nasi goreng tadi."', opts:['memakan','dimakan','makan','makanan'], ans:0, exp:'"<strong>Memakan</strong>" ialah kata kerja aktif yang betul di sini.' },
+
     { id:'b35', section:'Tatabahasa', tag:'tatabahasa', q:'Ayat manakah yang betul?', opts:['Dia pergi ke sekolah semalam.','Dia pergi ke sekolah esok semalam.','Dia akan pergi ke sekolah semalam.','Dia pergi esok semalam.'], ans:0, exp:'"Semalam" menunjukkan masa lampau. Ayat pertama adalah betul.' },
+
     { id:'b36', section:'Pemahaman', tag:'pemahaman', q:'Baca: "Aminah belajar setiap hari kerana dia ingin berjaya." Mengapa Aminah belajar setiap hari?', opts:['Kerana dia bosan','Kerana dia ingin berjaya','Kerana guru menyuruh','Kerana rakan-rakannya belajar'], ans:1, exp:'Petikan menyatakan Aminah belajar "<strong>kerana dia ingin berjaya</strong>".' },
+
     { id:'b37', section:'Pemahaman', tag:'pemahaman', q:'Baca: "Walaupun penat, Ali tetap membantu ibunya memasak." Perkataan "Walaupun" menunjukkan ___', opts:['Sebab','Akibat','Pertentangan','Urutan'], ans:2, exp:'"<strong>Walaupun</strong>" menunjukkan pertentangan — penat tapi tetap membantu.' },
+
     { id:'b38', section:'Isi Tempat Kosong', tag:'cloze', q:'"Ibu saya ___ pakaian di dalam bilik air."', opts:['memasak','membasuh','membaca','menyanyi'], ans:1, exp:'"<strong>Membasuh</strong> pakaian" — aktiviti yang dilakukan di bilik air.' },
+
     { id:'b39', section:'Isi Tempat Kosong', tag:'cloze', q:'"Ayah ___ kereta setiap hujung minggu."', opts:['membasuh','memakan','berlari','menulis'], ans:0, exp:'"<strong>Membasuh</strong> kereta" — kata kerja yang betul.' },
+
     { id:'b40', section:'Perbendaharaan Kata', tag:'perbendaharaan', q:'Maksud "tekun" ialah ___', opts:['Malas','Bersungguh-sungguh','Suka tidur','Garang'], ans:1, exp:'"<strong>Tekun</strong>" bermaksud berusaha dengan bersungguh-sungguh.' },
+
   ]
+
 };
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // CONFIG
+
 // ═══════════════════════════════════════════════════════════════
+
 const CFG = {
+
   english: { label:'English', emoji:'📖', hdr:'#1a2744', sky:'#38bdf8', bg:'#f0f7ff', btn:'bg-blue-500 hover:bg-blue-600' },
+
   math:    { label:'Mathematics', emoji:'🔢', hdr:'#0d9488', sky:'#22d3ee', bg:'#f0fdf4', btn:'bg-teal-500 hover:bg-teal-600' },
+
   gepmath: { label:'Math Pro (GEP)', emoji:'🦊', hdr:'#9333ea', sky:'#c084fc', bg:'#faf5ff', btn:'bg-purple-500 hover:bg-purple-600' },
+
   science: { label:'Science', emoji:'🔬', hdr:'#dc2626', sky:'#fca5a5', bg:'#fef2f2', btn:'bg-red-500 hover:bg-red-600' },
+
   malay:   { label:'Bahasa Melayu', emoji:'🌙', hdr:'#ea580c', sky:'#fdba74', bg:'#fef3c7', btn:'bg-amber-500 hover:bg-amber-600' },
+
 };
+
 const PARENT_PIN = '1234';
+
 const RC_PREFIX = 'rc2_';
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // MATH: TEACH → LEARN → PRACTICE PANELS
+
 // ═══════════════════════════════════════════════════════════════
+
 const MATH_TEACH = {
+
   'Section A: MCQ': {
+
     title: 'Section A: Multiple Choice',
+
     emoji: '📝',
+
     color: '#0d9488',
+
     bg: '#f0fdf4',
+
     tip: '💡 Read ALL 4 options before picking. Even if A looks right — always check B, C, D!',
+
     concepts: [
+
       { icon: '🔢', label: 'Place Value', text: 'Thousands > Hundreds > Tens > Ones. To round, look at the NEXT digit — 5 or more means round UP.' },
+
       { icon: '⏰', label: 'Time Problems', text: 'Add hours and minutes separately. If minutes go over 60, carry 1 hour. E.g. 2:45 + 1h 30min → 3:45 + 30min = 4:15pm.' },
+
       { icon: '🍕', label: 'Fractions', text: 'To compare fractions, use the same denominator. ½ > ⅜ because 4/8 > 3/8. To find a fraction of a number: divide by bottom, multiply by top.' },
+
       { icon: '📐', label: 'Shapes & Perimeter', text: 'Perimeter = add ALL sides. For a square: 4 × side. For a rectangle: 2 × (length + width).' },
+
     ],
+
     example: { q: 'Square with side 9cm — perimeter?', steps: ['Perimeter = 4 × side', '= 4 × 9cm = 36cm ✓'] }
+
   },
+
   'Section B: Short Answer': {
+
     title: 'Section B: Short Answer',
+
     emoji: '✏️',
+
     color: '#0d9488',
+
     bg: '#f0fdf4',
+
     tip: '💡 Just type the NUMBER — the unit is already shown next to the box for you!',
+
     concepts: [
+
       { icon: '🔢', label: 'Read Carefully', text: 'Check what the question asks for. Is it a number, a fraction, or a time? Type only the number part — the unit is shown for you.' },
+
       { icon: '📐', label: 'Area vs Perimeter', text: 'Area = length × width (answer in cm² or m²). Perimeter = sum of all sides (answer in cm or m). They are different!' },
+
       { icon: '💰', label: 'Money', text: 'For money answers, the $ sign is already shown. Just type the number — e.g. type 6.55, not $6.55.' },
+
       { icon: '✅', label: 'Check Your Work', text: 'After calculating, ask yourself: does this answer make sense? A class can\'t have 500 students, and a pencil can\'t cost $999.' },
+
     ],
+
     example: { q: 'Rectangle 12cm × 7cm — area?', steps: ['Area = length × width', '= 12 × 7 = 84', 'Type 84 (the cm² is shown for you!)'] }
+
   },
+
   'Section C: Word Problems': {
+
     title: 'Section C: Word Problems',
+
     emoji: '📖',
+
     color: '#0d9488',
+
     bg: '#f0fdf4',
+
     tip: '💡 Read the question TWICE. Circle the key numbers and underline what is being asked.',
+
     concepts: [
+
       { icon: '📋', label: 'Step by Step', text: 'Break every word problem into small steps. Do ONE calculation at a time. Never try to do everything in your head at once.' },
+
       { icon: '🔍', label: 'Find the Question', text: 'Before calculating, ask: "What number does the question want?" Look for words like total, left, each, altogether, how many, how much.' },
+
       { icon: '💰', label: 'Money Answers', text: 'If the answer is money, just type the number (e.g. 26.40). The $ is already shown next to the box.' },
+
       { icon: '✅', label: 'Does It Make Sense?', text: 'If 48 apples are split into 6 boxes, each box can\'t have MORE than 48. Always sanity-check your answer!' },
+
     ],
+
     example: { q: 'A box has 6 rows of 8 apples. How many altogether?', steps: ['Step 1: 6 rows × 8 apples each', '= 6 × 8 = 48 apples ✓'] }
+
   }
+
 };
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // HELPERS
+
 // ═══════════════════════════════════════════════════════════════
+
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 
+
+
 function generateQuiz(subject, n = 10) {
+
   return shuffle(QB[subject]).slice(0, Math.min(n, QB[subject].length)).map(q => ({
+
     ...q, shuffledOpts: q.opts ? shuffle(q.opts) : []
+
   }));
+
 }
 
+
+
 function saveResult(subject, mode, score, total, breakdown) {
+
   const all = JSON.parse(localStorage.getItem(RC_PREFIX + 'results') || '[]');
+
   all.push({
+
     iso: new Date().toISOString(),
+
     date: new Date().toLocaleDateString('en-SG', { day:'numeric', month:'short' }),
+
     subject, mode, score, total,
+
     pct: Math.round((score / total) * 100),
+
     breakdown
+
   });
+
   localStorage.setItem(RC_PREFIX + 'results', JSON.stringify(all));
+
 }
+
+
 
 function getResults() { return JSON.parse(localStorage.getItem(RC_PREFIX + 'results') || '[]'); }
 
+
+
 function subjectStats(sub) {
+
   const rs = getResults().filter(r => r.subject === sub);
+
   if (!rs.length) return null;
+
   const avg = Math.round(rs.reduce((a,b) => a + b.pct, 0) / rs.length);
+
   const best = Math.max(...rs.map(r => r.pct));
+
   const perfectDrills = rs.filter(r => r.mode === 'drill' && r.pct === 100).length;
+
   const count = rs.length;
+
   return { avg, best, count, perfectDrills };
+
 }
+
+
 
 function getWallet() {
+
   const wallet = JSON.parse(localStorage.getItem(RC_PREFIX + 'wallet') || '{"earned":0,"paid":0}');
+
   return wallet;
+
 }
+
+
 
 function addReward(subject, topic) {
+
   const wallet = getWallet();
+
   wallet.earned += 2;
+
   localStorage.setItem(RC_PREFIX + 'wallet', JSON.stringify(wallet));
+
   const rewards = JSON.parse(localStorage.getItem(RC_PREFIX + 'rewards') || '[]');
+
   rewards.push({ iso: new Date().toISOString(), date: new Date().toLocaleDateString('en-SG'), subject, topic, amount: 2 });
+
   localStorage.setItem(RC_PREFIX + 'rewards', JSON.stringify(rewards));
+
 }
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // CONFETTI
-// ═══════════════════════════════════════════════════════════════
-function Confetti() {
-  const pieces = Array.from({ length: 30 }, (_, i) => ({
-    id: i,
-    left: Math.random() * 100,
-    delay: Math.random() * 1.2,
-    color: ['#f59e0b','#3b82f6','#10b981','#ec4899','#a855f7','#f97316'][i % 6],
-    size: 8 + Math.random() * 8
-  }));
-  return (
-    <>
-      {pieces.map(p => (
-        <div key={p.id} className="confetti-piece" style={{
-          left:`${p.left}%`, top:`-20px`, background:p.color,
-          width:`${p.size}px`, height:`${p.size}px`,
-          animationDelay:`${p.delay}s`
-        }} />
-      ))}
-    </>
-  );
-}
 
 // ═══════════════════════════════════════════════════════════════
-// SCREEN: HOME
-// ═══════════════════════════════════════════════════════════════
-function HomeScreen({ onSelect, onProgress, onParent }) {
-  const wallet = getWallet();
+
+function Confetti() {
+
+  const pieces = Array.from({ length: 30 }, (_, i) => ({
+
+    id: i,
+
+    left: Math.random() * 100,
+
+    delay: Math.random() * 1.2,
+
+    color: ['#f59e0b','#3b82f6','#10b981','#ec4899','#a855f7','#f97316'][i % 6],
+
+    size: 8 + Math.random() * 8
+
+  }));
+
   return (
+
+    <>
+
+      {pieces.map(p => (
+
+        <div key={p.id} className="confetti-piece" style={{
+
+          left:`${p.left}%`, top:`-20px`, background:p.color,
+
+          width:`${p.size}px`, height:`${p.size}px`,
+
+          animationDelay:`${p.delay}s`
+
+        }} />
+
+      ))}
+
+    </>
+
+  );
+
+}
+
+
+
+// ═══════════════════════════════════════════════════════════════
+
+// SCREEN: HOME
+
+// ═══════════════════════════════════════════════════════════════
+
+function HomeScreen({ onSelect, onProgress, onParent }) {
+
+  const wallet = getWallet();
+
+  return (
+
     <div className="min-h-screen bg-gradient-to-br from-violet-100 via-pink-50 to-amber-50 flex flex-col items-center justify-center p-6">
+
       <div className="text-center mb-6">
+
         <div className="text-7xl mb-2">⭐</div>
+
         <h1 className="text-4xl font-bold text-violet-700">Reyhana Champion!</h1>
+
         <img src="reyhanapic.JPG" alt="Reyhana" className="mx-auto mt-3 w-28 h-28 rounded-full object-cover shadow-md" />
+
         <p className="text-gray-500 mt-1 text-sm">Choose a subject to practise</p>
+
         <div className="text-sm mt-2 text-gray-600">
+
           <span>💰 Wallet: ${wallet.earned} earned</span>
+
         </div>
+
       </div>
+
+
 
       <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-6">
+
         {Object.entries(CFG).map(([key, cfg]) => {
+
           if (key === 'gepmath') return null;
+
           const st = subjectStats(key);
+
           return (
+
             <div key={key}>
+
               <button onClick={() => onSelect(key, 'quiz')}
+
                 className="w-full rounded-2xl p-4 flex flex-col items-center gap-2 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
+
                 style={{ backgroundColor: cfg.bg, borderLeft: `4px solid ${cfg.hdr}` }}>
+
                 <span className="text-4xl">{cfg.emoji}</span>
+
                 <span className="font-semibold text-gray-700 text-xs text-center">{cfg.label}</span>
+
                 <span className="text-xs text-gray-500">Quiz</span>
+
                 {st ? <span className="text-xs text-gray-600">Avg {st.avg}%</span> : null}
+
               </button>
+
             </div>
+
           );
+
         })}
+
       </div>
+
+
 
       <div className="flex gap-3 w-full max-w-sm">
+
         <button onClick={onProgress} className="flex-1 bg-white shadow rounded-xl p-3 text-center hover:shadow-md transition-all">
+
           <div className="text-2xl">📊</div>
+
           <div className="text-xs font-semibold text-gray-700">My Progress</div>
+
         </button>
+
         <button onClick={() => onSelect('gepmath', 'quiz')} className="flex-1 bg-white shadow rounded-xl p-3 text-center hover:shadow-md transition-all">
+
           <div className="text-2xl">🦊</div>
+
           <div className="text-xs font-semibold text-gray-700">Math Pro</div>
+
         </button>
+
       </div>
+
+
 
       <button onClick={onParent} className="mt-6 text-sm text-gray-400 hover:text-gray-600 underline">
+
         🔒 Parent Dashboard
+
       </button>
+
     </div>
+
   );
+
 }
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // SCREEN: SUBJECT SELECT (Quiz vs Drill)
+
 // ═══════════════════════════════════════════════════════════════
+
 function SubjectSelectScreen({ subject, onMode, onBack }) {
+
   const cfg = CFG[subject];
+
   const topics = {
+
     english: ['Grammar MCQ', 'Vocabulary', 'Visual Text', 'Grammar Cloze', 'Editing', 'Comprehension'],
+
     math: ['Section A: MCQ', 'Section B: Short Answer', 'Section C: Word Problems'],
+
     science: ['Diversity of Living Things', 'Materials', 'Magnets', 'Life Cycles', 'Mixed Review'],
+
     malay: ['Perbendaharaan Kata', 'Tatabahasa', 'Pemahaman', 'Isi Tempat Kosong'],
+
     gepmath: ['Number Patterns', 'Clever Problem Sums', 'Logic & Spatial', 'Mental Maths', 'Fractions & Measurement'],
+
   }[subject] || [];
 
+
+
   return (
+
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
+
       <div className="p-5 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
+
         <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+
         <div className="flex-1">
+
           <h1 className="text-xl font-bold">{cfg.emoji} {cfg.label}</h1>
+
         </div>
+
       </div>
+
+
 
       <div className="flex-1 flex flex-col items-center justify-center p-6">
+
         <div className="text-center mb-8">
+
           <div className="text-6xl mb-3">{cfg.emoji}</div>
+
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Choose Mode</h2>
+
           <p className="text-gray-500 text-sm">Quiz or Drill?</p>
+
         </div>
+
+
 
         <div className="flex gap-4 flex-col w-full max-w-sm">
+
           <button onClick={() => onMode('quiz')}
+
             className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
+
             <div className="text-5xl mb-2">📝</div>
+
             <h3 className="text-xl font-bold text-gray-800">Quiz Mode</h3>
+
             <p className="text-xs text-gray-500 mt-1">Take a full quiz with instant feedback</p>
+
           </button>
+
+
 
           <button onClick={() => onMode('drill')}
+
             className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
+
             <div className="text-5xl mb-2">⚡</div>
+
             <h3 className="text-xl font-bold text-gray-800">Drill Mode</h3>
+
             <p className="text-xs text-gray-500 mt-1">Master a topic until perfect! Earn $2</p>
+
           </button>
+
         </div>
+
       </div>
+
     </div>
+
   );
+
 }
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // SCREEN: QUIZ (for all subjects including GEP)
+
 // ═══════════════════════════════════════════════════════════════
+
 function MathTeachPanel({ section, cfg, onDone }) {
+
   const t = MATH_TEACH[section];
+
   if (!t) { onDone(); return null; }
+
   return (
+
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: t.bg }}>
+
       <div className="p-4" style={{ backgroundColor: t.color }}>
+
         <div className="text-white font-bold text-sm">{t.emoji} {t.title}</div>
+
       </div>
+
       <div className="flex-1 p-5 flex flex-col gap-4 max-w-lg mx-auto w-full overflow-y-auto">
+
         {/* TEACH */}
+
         <div className="bg-white rounded-2xl p-5 shadow-sm border-l-4" style={{ borderColor: t.color }}>
+
           <div className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: t.color }}>📚 Teach — Key Ideas</div>
+
           <div className="flex flex-col gap-3">
+
             {t.concepts.map((c, i) => (
+
               <div key={i} className="bg-gray-50 rounded-xl p-3">
+
                 <div className="font-bold text-sm mb-1">{c.icon} {c.label}</div>
+
                 <div className="text-xs text-gray-600 leading-relaxed">{c.text}</div>
+
               </div>
+
             ))}
+
           </div>
+
         </div>
+
         {/* LEARN */}
+
         <div className="bg-white rounded-2xl p-5 shadow-sm border-l-4" style={{ borderColor: '#f59e0b' }}>
+
           <div className="text-xs font-bold uppercase tracking-wide mb-3 text-amber-600">🔍 Learn — Worked Example</div>
+
           <div className="font-semibold text-sm text-gray-800 mb-3">{t.example.q}</div>
+
           <div className="flex flex-col gap-2">
+
             {t.example.steps.map((s, i) => (
+
               <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
+
                 <span className="flex-shrink-0 w-5 h-5 rounded-full text-white flex items-center justify-center text-xs font-bold" style={{ backgroundColor: t.color }}>{i+1}</span>
+
                 <span>{s}</span>
+
               </div>
+
             ))}
+
           </div>
+
         </div>
+
         {/* TIP */}
+
         <div className="rounded-xl p-4 text-sm font-medium" style={{ backgroundColor: t.color + '15', color: t.color, border: `1px solid ${t.color}40` }}>{t.tip}</div>
+
         {/* PRACTICE button */}
+
         <button onClick={onDone}
+
           className="w-full text-white font-bold py-4 rounded-2xl text-base shadow-md transition-all hover:opacity-90"
+
           style={{ backgroundColor: t.color }}>
+
           ✏️ Start Practice!
+
         </button>
+
       </div>
+
     </div>
+
   );
+
 }
+
+
 
 function QuizScreen({ subject, onDone, onBack }) {
+
   const [questions] = useState(() => {
+
     if (subject === 'gepmath') {
+
       return shuffle(QB.gepmath).slice(0, 40).map(q => ({
+
         ...q, shuffledOpts: q.opts ? shuffle(q.opts) : []
+
       }));
+
     }
+
     if (subject === 'math') {
+
       // Sort by section so Teach→Practice flows naturally: A → B → C
+
       const sectionOrder = ['Section A: MCQ', 'Section B: Short Answer', 'Section C: Word Problems'];
+
       const result = [];
+
       sectionOrder.forEach(sec => {
+
         const secQs = QB.math.filter(q => q.section === sec);
+
         const n = sec === 'Section A: MCQ' ? 14 : sec === 'Section B: Short Answer' ? 14 : 12;
+
         shuffle(secQs).slice(0, n).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
+
       });
+
       return result;
+
     }
+
     return generateQuiz(subject, 40);
+
   });
+
   const [idx, setIdx] = useState(0);
+
   const [selected, setSel] = useState(null);
+
   const [showHint, setShowHint] = useState(false);
+
   const answersRef = useRef([]);
+
   const [inputVal, setInputVal] = useState('');
+
   const taughtSections = useRef(new Set());
+
   const [showTeachFor, setShowTeachFor] = useState(() => {
+
     // For math, show first section's teach panel on start
+
     if (subject === 'math' && questions[0]?.section && MATH_TEACH[questions[0].section]) {
+
       return questions[0].section;
+
     }
+
     return null;
+
   });
+
   const cfg = CFG[subject];
+
   const q = questions[idx];
 
+
+
   function dismissTeach() {
+
     taughtSections.current.add(showTeachFor);
+
     setShowTeachFor(null);
+
   }
+
+
 
   function pick(opt) {
+
     if (selected !== null) return;
+
     setSel(opt);
+
     answersRef.current = [...answersRef.current, { q, chosen: opt, correct: opt === q.ans || (typeof q.ans === 'number' && q.opts[q.ans] === opt) }];
+
   }
+
+
 
   function checkTextAnswer() {
+
     if (!inputVal.trim() || selected !== null) return;
+
     const userVal = inputVal.trim().toLowerCase().replace(/\s/g, '');
+
     const ansVal = String(q.ans).toLowerCase().replace(/\s/g, '');
+
     const correct = userVal === ansVal;
+
     setSel(inputVal.trim());
+
     answersRef.current = [...answersRef.current, { q, chosen: inputVal.trim(), correct }];
+
   }
 
+
+
   function next() {
+
     if (idx + 1 >= questions.length) {
+
       const allA = answersRef.current;
+
       const score = allA.filter(a => a.correct).length;
+
       const bd = {};
+
       allA.forEach(a => {
+
         const section = a.q.section || a.q.topic || 'General';
+
         if (!bd[section]) bd[section] = { correct:0, total:0 };
+
         bd[section].total++;
+
         if (a.correct) bd[section].correct++;
+
       });
+
       onDone(score, questions.length, bd);
+
     } else {
+
       const nextQ = questions[idx + 1];
+
       setIdx(i => i + 1);
+
       setSel(null);
+
       setShowHint(false);
+
       setInputVal('');
+
       // Show teach panel when entering a new section (math only)
+
       if (subject === 'math' && nextQ?.section && MATH_TEACH[nextQ.section] && !taughtSections.current.has(nextQ.section)) {
+
         setShowTeachFor(nextQ.section);
+
       }
+
     }
+
   }
+
+
 
   // Show teach panel if needed
+
   if (showTeachFor) {
+
     return <MathTeachPanel section={showTeachFor} cfg={cfg} onDone={dismissTeach} />;
+
   }
+
+
 
   const pct = (idx / questions.length) * 100;
+
   const isCorrect = q.opts
+
     ? (selected === q.ans || (typeof q.ans === 'number' && q.opts[q.ans] === selected))
+
     : (selected !== null && selected.toLowerCase() === String(q.ans).toLowerCase());
 
+
+
   // Display label for text answers (e.g. "$ 26.40" or "7 cm")
+
   const answerDisplay = q.unitPre ? `${q.unitPre}${q.ans}` : q.unit ? `${q.ans} ${q.unit}` : q.ans;
 
+
+
   return (
+
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
+
       <div className="p-4 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
+
         <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+
         <div className="flex-1">
+
           <div className="flex justify-between text-xs mb-1.5 text-white/80">
+
             <span>{cfg.emoji} {cfg.label}</span>
+
             <span>Q{idx+1}/{questions.length}</span>
+
           </div>
+
           <div className="w-full bg-white/30 rounded-full h-2">
+
             <div className="bg-white h-2 rounded-full transition-all duration-500" style={{ width:`${pct}%` }} />
+
           </div>
+
         </div>
+
       </div>
+
+
 
       <div className="flex-1 p-5 flex flex-col gap-4 max-w-lg mx-auto w-full pop">
+
         {q.section && (
+
           <div className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full w-fit" style={{ backgroundColor: cfg.sky + '20', color: cfg.hdr }}>
+
             {q.section || q.topic}
+
           </div>
+
         )}
+
+
 
         {q.passage && (
+
           <div className="bg-white rounded-2xl p-4 shadow-sm border-l-4" style={{ borderColor: cfg.hdr }}>
+
             <p className="text-xs text-gray-600 italic">{q.passage}</p>
+
           </div>
+
         )}
+
+
 
         <div className="bg-white rounded-2xl p-5 shadow-sm">
+
           <p className="text-base font-semibold text-gray-800 leading-relaxed">{q.q}</p>
+
         </div>
+
+
 
         <div className="flex flex-col gap-3">
+
           {q.opts && q.shuffledOpts.map((opt, i) => {
+
             let cls = 'bg-white border-2 border-gray-200 text-gray-700 hover:border-gray-400 cursor-pointer';
+
             if (selected !== null) {
+
               const answerOpt = q.ans !== undefined ? (typeof q.ans === 'number' ? q.opts[q.ans] : q.ans) : q.opts[0];
+
               if (opt === answerOpt) cls = 'bg-green-50 border-2 border-green-500 text-green-800';
+
               else if (opt === selected && opt !== answerOpt) cls = 'bg-red-50 border-2 border-red-400 text-red-700';
+
               else cls = 'bg-white border-2 border-gray-200 text-gray-400 opacity-50';
+
             }
+
             return (
+
               <button key={i} onClick={() => pick(opt)}
+
                 className={`${cls} rounded-xl p-4 text-left font-medium transition-all text-sm`}>
+
                 <span className="text-gray-400 mr-2 font-normal">{['A','B','C','D'][i]}.</span>{opt}
+
               </button>
+
             );
+
           })}
 
+
+
         {!q.opts && (
+
           <div className="flex flex-col gap-3">
+
             <div className="flex items-center gap-2">
+
               {q.unitPre && (
+
                 <span className="flex-shrink-0 text-lg font-bold px-4 py-4 rounded-xl border-2 border-teal-200 bg-teal-50 text-teal-700">{q.unitPre}</span>
+
               )}
+
               <input
+
                 type="text"
+
                 value={inputVal}
+
                 onChange={e => setInputVal(e.target.value)}
+
                 onKeyDown={e => e.key === 'Enter' && selected === null && checkTextAnswer()}
+
                 disabled={selected !== null}
+
                 placeholder="Type number..."
+
                 className="flex-1 border-2 border-gray-300 rounded-xl p-4 text-base focus:outline-none focus:border-teal-500 bg-white"
+
               />
+
               {q.unit && (
+
                 <span className="flex-shrink-0 text-sm font-bold px-4 py-4 rounded-xl border-2 border-teal-200 bg-teal-50 text-teal-700">{q.unit}</span>
+
               )}
+
             </div>
+
             {selected === null && (
+
               <button onClick={checkTextAnswer}
+
                 className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 rounded-xl">
+
                 Check ✓
+
               </button>
+
             )}
+
           </div>
+
         )}
+
         </div>
 
+
+
         {selected !== null && (
+
           <div className={`rounded-xl p-4 pop ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+
             <p className="font-semibold mb-1 text-sm">
+
               {isCorrect ? '✅ Correct!' : `❌ Answer: ${answerDisplay}`}
+
             </p>
+
             {q.exp && <p className="text-xs text-gray-600" dangerouslySetInnerHTML={{ __html: q.exp }} />}
+
           </div>
+
         )}
+
+
 
         {selected === null && q.hint && (
+
           <button onClick={() => setShowHint(!showHint)} className="text-xs text-blue-600 hover:text-blue-700 font-semibold">
+
             {showHint ? '💡 Hide hint' : '💡 Show hint'}
+
           </button>
+
         )}
+
         {showHint && q.hint && (
+
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-3">
+
             <p className="text-xs text-blue-800">{q.hint}</p>
+
           </div>
+
         )}
+
+
 
         {selected !== null && (
+
           <button onClick={next} className={`${cfg.btn} text-white font-bold py-3 rounded-xl transition-all pop`}>
+
             {idx + 1 >= questions.length ? 'See Results 🎉' : 'Next →'}
+
           </button>
+
         )}
+
       </div>
+
     </div>
+
   );
+
 }
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // SCREEN: DRILL MODE
+
 // ═══════════════════════════════════════════════════════════════
+
 function DrillScreen({ subject, topic, onDone, onBack }) {
+
   const [questions] = useState(() => {
+
     const filtered = QB[subject].filter(q => (q.topic || q.section) === topic);
+
     return shuffle(filtered).slice(0, 10).map(q => ({
+
       ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [], originalIdx: QB[subject].indexOf(q)
+
     }));
+
   });
+
   const [queue, setQueue] = useState([...Array(10).keys()]);
+
   const [idx, setIdx] = useState(0);
+
   const [selected, setSel] = useState(null);
+
   const [inputVal, setInputVal] = useState('');
+
   const cfg = CFG[subject];
+
   const qIdx = queue[idx];
+
   const q = questions[qIdx];
 
+
+
   function pick(opt) {
+
     if (selected !== null) return;
+
     setSel(opt);
+
     const isCorrect = opt === q.ans || (typeof q.ans === 'number' && q.opts[q.ans] === opt);
 
+
+
     if (!isCorrect) {
+
       // Move to back of queue if wrong
+
       const newQueue = [...queue.slice(1), qIdx];
+
       setQueue(newQueue);
+
       setIdx(0);
+
       setSel(null);
+
     }
+
   }
+
+
 
   function checkTextAnswer() {
+
     if (!inputVal.trim() || selected !== null) return;
+
     const userVal = inputVal.trim().toLowerCase().replace(/\s/g, '');
+
     const ansVal = String(q.ans).toLowerCase().replace(/\s/g, '');
+
     const correct = userVal === ansVal;
+
     setSel(inputVal.trim());
 
+
+
     if (!correct) {
+
       // Move to back of queue if wrong
+
       const newQueue = [...queue.slice(1), qIdx];
+
       setQueue(newQueue);
+
       setIdx(0);
+
       setSel(null);
+
     }
+
   }
 
+
+
   function next() {
+
     if (queue.length === 1 && selected !== null) {
+
       // Perfect! Last question answered correctly
+
       onDone(true);
+
     } else if (selected !== null && queue.length > 1) {
+
       setIdx(0);
+
       setSel(null);
+
       setInputVal('');
+
     } else if (queue.length === 0) {
+
       onDone(true);
+
     }
+
   }
+
+
 
   if (!q) return <div className="min-h-screen flex items-center justify-center text-gray-600">Loading...</div>;
 
+
+
   const pct = ((10 - queue.length) / 10) * 100;
 
+
+
   return (
+
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
+
       <div className="p-4 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
+
         <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+
         <div className="flex-1">
+
           <div className="flex justify-between text-xs mb-1.5 text-white/80">
+
             <span>{cfg.emoji} Drill: {topic}</span>
+
             <span>{10 - queue.length}/{10} correct</span>
+
           </div>
+
           <div className="w-full bg-white/30 rounded-full h-2">
+
             <div className="bg-white h-2 rounded-full transition-all duration-500" style={{ width:`${pct}%` }} />
+
           </div>
+
         </div>
+
       </div>
+
+
 
       <div className="flex-1 p-5 flex flex-col gap-4 max-w-lg mx-auto w-full pop">
+
         <div className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full w-fit" style={{ backgroundColor: cfg.sky + '20', color: cfg.hdr }}>
+
           {10 - queue.length}/10 Correct
+
         </div>
+
+
 
         <div className="bg-white rounded-2xl p-5 shadow-sm">
+
           <p className="text-base font-semibold text-gray-800 leading-relaxed">{q.q}</p>
+
         </div>
+
+
 
         <div className="flex flex-col gap-3">
+
           {q.opts && q.shuffledOpts.map((opt, i) => {
+
             let cls = 'bg-white border-2 border-gray-200 text-gray-700 hover:border-gray-400 cursor-pointer';
+
             if (selected !== null) {
+
               const answerOpt = q.ans !== undefined ? (typeof q.ans === 'number' ? q.opts[q.ans] : q.ans) : q.opts[0];
+
               if (opt === answerOpt) cls = 'bg-green-50 border-2 border-green-500 text-green-800';
+
               else if (opt === selected && opt !== answerOpt) cls = 'bg-red-50 border-2 border-red-400 text-red-700';
+
               else cls = 'bg-white border-2 border-gray-200 text-gray-400 opacity-50';
+
             }
+
             return (
+
               <button key={i} onClick={() => pick(opt)}
+
                 className={`${cls} rounded-xl p-4 text-left font-medium transition-all text-sm`}>
+
                 <span className="text-gray-400 mr-2 font-normal">{['A','B','C','D'][i]}.</span>{opt}
+
               </button>
+
             );
+
           })}
+
+
 
         {!q.opts && (
+
           <div className="flex flex-col gap-3">
+
             <div className="flex items-center gap-2">
+
               {q.unitPre && (
+
                 <span className="flex-shrink-0 text-lg font-bold px-4 py-4 rounded-xl border-2 border-teal-200 bg-teal-50 text-teal-700">{q.unitPre}</span>
+
               )}
+
               <input
+
                 type="text"
+
                 value={inputVal}
+
                 onChange={e => setInputVal(e.target.value)}
+
                 onKeyDown={e => e.key === 'Enter' && selected === null && checkTextAnswer()}
+
                 disabled={selected !== null}
+
                 placeholder="Type number..."
+
                 className="flex-1 border-2 border-gray-300 rounded-xl p-4 text-base focus:outline-none focus:border-teal-500 bg-white"
+
               />
+
               {q.unit && (
+
                 <span className="flex-shrink-0 text-sm font-bold px-4 py-4 rounded-xl border-2 border-teal-200 bg-teal-50 text-teal-700">{q.unit}</span>
+
               )}
+
             </div>
+
             {selected === null && (
+
               <button onClick={checkTextAnswer}
+
                 className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 rounded-xl">
+
                 Check ✓
+
               </button>
+
             )}
+
           </div>
+
         )}
+
         </div>
+
+
 
         {selected !== null && (() => {
+
           const drillAnsDisplay = q.unitPre ? `${q.unitPre}${q.ans}` : q.unit ? `${q.ans} ${q.unit}` : q.ans;
+
           const isRight = q.opts
+
             ? (selected === q.ans || (typeof q.ans === 'number' && q.opts[q.ans] === selected))
+
             : (selected.toLowerCase().replace(/\s/g,'') === String(q.ans).toLowerCase().replace(/\s/g,''));
+
           return (
+
             <div className={`rounded-xl p-4 pop ${isRight ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+
               <p className="font-semibold mb-1 text-sm">{isRight ? '✅ Correct!' : `❌ Answer: ${drillAnsDisplay}`}</p>
+
               {q.exp && <p className="text-xs text-gray-600" dangerouslySetInnerHTML={{ __html: q.exp }} />}
+
             </div>
+
           );
+
         })()}
 
+
+
         {selected !== null && (
+
           <button onClick={next} className={`${cfg.btn} text-white font-bold py-3 rounded-xl transition-all pop`}>
+
             {queue.length === 1 ? '✅ Next (Final)' : 'Continue →'}
+
           </button>
+
         )}
+
       </div>
+
     </div>
+
   );
+
 }
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // SCREEN: RESULTS
+
 // ═══════════════════════════════════════════════════════════════
+
 function ResultsScreen({ subject, score, total, breakdown, mode, onHome, onRetry }) {
+
   const cfg = CFG[subject];
+
   const pct = Math.round((score / total) * 100);
+
   const star = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '👍' : '💪';
+
   const msg = pct >= 90 ? 'Outstanding!' : pct >= 70 ? 'Great job!' : pct >= 50 ? 'Good effort!' : 'Keep going!';
+
   const showConf = pct >= 70 || (mode === 'drill' && pct === 100);
+
   const isPerfect = mode === 'drill' && pct === 100;
 
+
+
   useEffect(() => {
+
     saveResult(subject, mode, score, total, breakdown);
+
     if (isPerfect) {
+
       addReward(subject, 'drill');
+
     }
+
   }, []);
 
+
+
   return (
+
     <div className="min-h-screen flex flex-col items-center justify-center p-6" style={{ backgroundColor: cfg.bg }}>
+
       {showConf && <Confetti />}
+
       <div className="bg-white rounded-3xl shadow-lg p-7 w-full max-w-sm text-center pop">
+
         <div className="text-6xl mb-2">{isPerfect ? '🌟' : star}</div>
+
         <h2 className="text-4xl font-bold text-gray-800">{score}/{total}</h2>
+
         <p className={`text-lg font-semibold mt-1 ${pct >= 70 ? 'text-emerald-600' : 'text-orange-500'}`}>
+
           {pct}% — {msg}
+
         </p>
+
         {isPerfect && (
+
           <div className="mt-3 bg-yellow-100 rounded-lg p-2">
+
             <p className="text-sm font-bold text-yellow-800">🎉 Perfect! +$2 to your wallet</p>
+
           </div>
+
         )}
+
         <p className="text-gray-400 text-xs mt-2 mb-5">Score saved automatically ✓</p>
 
+
+
         <div className="text-left mb-5">
+
           <p className="font-semibold text-gray-600 text-xs uppercase tracking-wide mb-2">Topic Breakdown</p>
+
           {Object.entries(breakdown || {}).map(([topic, d]) => {
+
             const p = Math.round((d.correct / d.total) * 100);
+
             const col = p >= 80 ? 'bg-emerald-500' : p >= 60 ? 'bg-amber-400' : 'bg-red-400';
+
             return (
+
               <div key={topic} className="mb-2.5">
+
                 <div className="flex justify-between text-xs text-gray-500 mb-1">
+
                   <span>{topic}</span><span>{d.correct}/{d.total}</span>
+
                 </div>
+
                 <div className="w-full bg-gray-100 rounded-full h-2">
+
                   <div className={`${col} h-2 rounded-full transition-all`} style={{ width:`${p}%` }} />
+
                 </div>
+
               </div>
+
             );
+
           })}
+
         </div>
+
+
 
         <div className="flex gap-3">
+
           <button onClick={onRetry} className={`flex-1 ${cfg.btn} text-white font-semibold py-3 rounded-xl`}>Try Again</button>
+
           <button onClick={onHome} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl">Home</button>
+
         </div>
+
       </div>
+
     </div>
+
   );
+
 }
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // SCREEN: PROGRESS
+
 // ═══════════════════════════════════════════════════════════════
+
 function ProgressScreen({ onBack }) {
+
   const wallet = getWallet();
+
   return (
+
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100 pb-8">
+
       <div className="bg-purple-600 text-white p-6 flex items-center justify-between">
+
         <div className="flex items-center gap-3">
+
           <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+
           <h1 className="text-2xl font-bold">My Progress</h1>
+
         </div>
+
       </div>
 
+
+
       <div className="max-w-lg mx-auto p-6 space-y-6">
+
         <div className="bg-white rounded-2xl p-6 shadow-md text-center">
+
           <div className="text-5xl mb-2">💰</div>
+
           <h2 className="text-3xl font-bold text-gray-800">${wallet.earned}</h2>
+
           <p className="text-sm text-gray-500 mt-1">Earned from perfect drills</p>
+
         </div>
 
+
+
         {Object.entries(CFG).map(([key, cfg]) => {
+
           if (key === 'gepmath') return null;
+
           const st = subjectStats(key);
+
           if (!st) return null;
+
           return (
+
             <div key={key} className="bg-white rounded-2xl p-6 shadow-md">
+
               <div className="flex items-center justify-between mb-4">
+
                 <h3 className="text-xl font-bold text-gray-800">{cfg.emoji} {cfg.label}</h3>
+
               </div>
+
               <div className="grid grid-cols-3 gap-3 text-center mb-4">
+
                 <div className="bg-blue-50 rounded-lg p-3">
+
                   <div className="text-2xl font-bold text-blue-600">{st.avg}%</div>
+
                   <div className="text-xs text-gray-500">Avg Score</div>
+
                 </div>
+
                 <div className="bg-green-50 rounded-lg p-3">
+
                   <div className="text-2xl font-bold text-green-600">{st.count}</div>
+
                   <div className="text-xs text-gray-500">Quizzes</div>
+
                 </div>
+
                 <div className="bg-yellow-50 rounded-lg p-3">
+
                   <div className="text-2xl font-bold text-yellow-600">{st.perfectDrills}</div>
+
                   <div className="text-xs text-gray-500">Perfect</div>
+
                 </div>
+
               </div>
+
               <div className="flex flex-wrap gap-1">
+
                 {Array(st.perfectDrills).fill(0).map((_, i) => (
+
                   <span key={i} className="text-lg">⭐</span>
+
                 ))}
+
               </div>
+
             </div>
+
           );
+
         })}
+
+
 
         <div className="bg-white rounded-2xl p-6 shadow-md">
+
           <h3 className="text-xl font-bold text-gray-800 mb-4">🦊 Math Pro (GEP)</h3>
+
           {(() => {
+
             const st = subjectStats('gepmath');
+
             if (!st) return <p className="text-gray-500 text-sm">Not started yet</p>;
+
             return (
+
               <div className="grid grid-cols-3 gap-3 text-center">
+
                 <div className="bg-blue-50 rounded-lg p-3">
+
                   <div className="text-2xl font-bold text-blue-600">{st.avg}%</div>
+
                   <div className="text-xs text-gray-500">Avg</div>
+
                 </div>
+
                 <div className="bg-green-50 rounded-lg p-3">
+
                   <div className="text-2xl font-bold text-green-600">{st.count}</div>
+
                   <div className="text-xs text-gray-500">Quizzes</div>
+
                 </div>
+
               </div>
+
             );
+
           })()}
+
         </div>
+
       </div>
+
     </div>
+
   );
+
 }
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // SCREEN: PARENT DASHBOARD
+
 // ═══════════════════════════════════════════════════════════════
+
 function ParentDashboard({ onBack }) {
+
   const [pin, setPin] = useState('');
+
   const [open, setOpen] = useState(false);
+
   const [err, setErr] = useState('');
 
+
+
   function tryPin() {
+
     if (pin === PARENT_PIN) { setOpen(true); setErr(''); }
+
     else setErr('Incorrect PIN. Try again.');
+
   }
+
+
 
   if (!open) return (
+
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
+
       <button onClick={onBack} className="self-start text-gray-400 hover:text-gray-600 mb-6 text-sm">← Back</button>
+
       <div className="bg-white rounded-2xl shadow p-8 w-full max-w-xs text-center">
+
         <div className="text-4xl mb-3">🔒</div>
+
         <h2 className="text-xl font-bold text-gray-700 mb-4">Parent Dashboard</h2>
+
         <input type="password" placeholder="Enter PIN"
+
           value={pin} onChange={e => setPin(e.target.value)}
+
           onKeyDown={e => e.key === 'Enter' && tryPin()}
+
           className="w-full border-2 border-gray-200 rounded-xl p-3 text-center text-xl mb-3 focus:outline-none focus:border-violet-400 tracking-widest" />
+
         {err && <p className="text-red-500 text-sm mb-2">{err}</p>}
+
         <button onClick={tryPin} className="w-full bg-violet-500 hover:bg-violet-600 text-white font-bold py-3 rounded-xl">Unlock</button>
+
         <p className="text-gray-400 text-xs mt-3">Default PIN: 1234</p>
+
       </div>
+
     </div>
+
   );
+
+
 
   const wallet = getWallet();
+
   const all = getResults();
 
+
+
   return (
+
     <div className="min-h-screen bg-gray-50 pb-12">
+
       <div className="bg-violet-600 text-white p-5 flex items-center justify-between">
+
         <div className="flex items-center gap-3">
+
           <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+
           <h1 className="text-lg font-bold">Dashboard</h1>
+
         </div>
+
       </div>
+
+
 
       <div className="max-w-lg mx-auto p-6 space-y-6">
+
         <div className="grid grid-cols-2 gap-4">
+
           <div className="bg-white rounded-2xl p-4 shadow text-center">
+
             <div className="text-3xl">💰</div>
+
             <div className="text-2xl font-bold text-violet-600">${wallet.earned}</div>
+
             <div className="text-xs text-gray-500">Earned</div>
+
           </div>
+
           <div className="bg-white rounded-2xl p-4 shadow text-center">
+
             <div className="text-3xl">✅</div>
+
             <div className="text-2xl font-bold text-emerald-600">{all.length}</div>
+
             <div className="text-xs text-gray-500">Sessions</div>
+
           </div>
+
         </div>
+
+
 
         {Object.entries(CFG).map(([key, cfg]) => {
+
           if (key === 'gepmath') return null;
+
           const st = subjectStats(key);
+
           if (!st) return null;
+
           return (
+
             <div key={key} className="bg-white rounded-2xl p-5 shadow">
+
               <h3 className="text-lg font-bold text-gray-800 mb-3">{cfg.emoji} {cfg.label}</h3>
+
               <div className="space-y-2 text-sm">
+
                 <p><strong>Average:</strong> {st.avg}%</p>
+
                 <p><strong>Best:</strong> {st.best}%</p>
+
                 <p><strong>Sessions:</strong> {st.count}</p>
+
                 <p><strong>Perfect Drills:</strong> {st.perfectDrills}</p>
+
               </div>
+
             </div>
+
           );
+
         })}
 
+
+
         <div className="bg-white rounded-2xl p-5 shadow">
+
           <h3 className="text-lg font-bold text-gray-800 mb-3">Recent Sessions</h3>
+
           <div className="space-y-2">
+
             {all.slice().reverse().slice(0, 10).map((r, i) => (
+
               <div key={i} className="flex justify-between text-sm py-2 border-b last:border-0">
+
                 <span className="text-gray-600">{r.date} — {r.subject}</span>
+
                 <span className={`font-bold ${r.pct >= 70 ? 'text-emerald-600' : 'text-red-500'}`}>{r.pct}%</span>
+
               </div>
+
             ))}
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   );
+
 }
 
+
+
 // ═══════════════════════════════════════════════════════════════
+
 // APP ROOT
+
 // ═══════════════════════════════════════════════════════════════
+
 function App() {
+
   const [screen, setScreen] = useState('home');
+
   const [subject, setSubj] = useState(null);
+
   const [mode, setMode] = useState(null);
+
   const [topic, setTopic] = useState(null);
+
   const [result, setResult] = useState(null);
 
+
+
   function startMode(s, m) {
+
     if (m === 'drill') {
+
       setSubj(s);
+
       setMode('select-topic');
+
       setScreen('select-topic');
+
     } else {
+
       setSubj(s);
+
       setMode('quiz');
+
       setScreen('quiz');
+
     }
+
   }
+
+
 
   function onSelectTopic(t) {
+
     setTopic(t);
+
     setScreen('drill');
+
   }
+
+
 
   function onDone(score, total, breakdown, drillMode = false) {
+
     setResult({ score, total, breakdown });
+
     setScreen('result');
+
   }
+
+
 
   function onDrillPerfect() {
+
     setResult({ score: 10, total: 10, breakdown: { [topic]: { correct: 10, total: 10 } } });
+
     setScreen('result');
+
   }
 
+
+
   return (
+
     <>
+
       {screen === 'home' && <HomeScreen onSelect={startMode} onProgress={() => setScreen('progress')} onParent={() => setScreen('parent')} />}
+
       {screen === 'select-topic' && (
+
         <TopicSelectScreen subject={subject} onSelect={onSelectTopic} onBack={() => setScreen('home')} />
+
       )}
+
       {screen === 'quiz' && <QuizScreen subject={subject} onDone={onDone} onBack={() => setScreen('home')} />}
+
       {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => setScreen('select-topic')} />}
+
       {screen === 'result' && result && (
+
         <ResultsScreen
+
           subject={subject}
+
           score={result.score}
+
           total={result.total}
+
           breakdown={result.breakdown}
+
           mode={mode}
+
           onHome={() => setScreen('home')}
+
           onRetry={() => {
+
             if (mode === 'drill') setScreen('select-topic');
+
             else setScreen('quiz');
+
           }}
+
         />
+
       )}
+
       {screen === 'progress' && <ProgressScreen onBack={() => setScreen('home')} />}
+
       {screen === 'parent' && <ParentDashboard onBack={() => setScreen('home')} />}
+
     </>
+
   );
+
 }
+
+
 
 function TopicSelectScreen({ subject, onSelect, onBack }) {
+
   const cfg = CFG[subject];
+
   const topics = {
+
     english: ['Grammar MCQ', 'Vocabulary', 'Visual Text', 'Grammar Cloze', 'Editing', 'Comprehension'],
+
     math: ['Section A: MCQ', 'Section B: Short Answer', 'Section C: Word Problems'],
+
     science: ['Diversity of Living Things', 'Materials', 'Magnets', 'Life Cycles', 'Mixed Review'],
+
     malay: ['Perbendaharaan Kata', 'Tatabahasa', 'Pemahaman', 'Isi Tempat Kosong'],
+
     gepmath: ['Number Patterns', 'Clever Problem Sums', 'Logic & Spatial', 'Mental Maths', 'Fractions & Measurement'],
+
   }[subject] || [];
 
+
+
   return (
+
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
+
       <div className="p-5 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
+
         <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+
         <h1 className="text-xl font-bold">Choose Topic — Drill Mode</h1>
+
       </div>
+
+
 
       <div className="flex-1 p-6 max-w-lg mx-auto w-full space-y-3">
+
         {topics.map(t => (
+
           <button key={t} onClick={() => onSelect(t)}
+
             className="w-full bg-white rounded-2xl p-4 shadow hover:shadow-md transition-all text-left font-semibold text-gray-800 hover:scale-105 active:scale-95"
+
             style={{ borderLeft: `4px solid ${cfg.hdr}` }}>
+
             {t}
+
           </button>
+
         ))}
+
       </div>
+
     </div>
+
   );
+
 }
 
+
+
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
 </script>
+
 </body>
+
 </html>
