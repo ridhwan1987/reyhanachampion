@@ -1366,13 +1366,13 @@ function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, on
   const pct = Math.round((score / total) * 100);
   const star = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '👍' : '💪';
   const msg = pct >= 90 ? 'Outstanding!' : pct >= 70 ? 'Great job!' : pct >= 50 ? 'Good effort!' : 'Keep going!';
-  const showConf = pct >= 70 || (mode === 'drill' && pct === 100);
-  const isPerfect = mode === 'drill' && pct === 100;
+  const isPerfect = pct === 100;
+  const showConf = pct >= 70 || isPerfect;
 
   useEffect(() => {
     saveResult(subject, mode, score, total, breakdown);
     if (isPerfect) {
-      addReward(subject, 'drill');
+      addReward(subject, mode);
     }
   }, []);
 
@@ -1387,7 +1387,7 @@ function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, on
         </p>
         {isPerfect && (
           <div className="mt-3 bg-yellow-100 rounded-lg p-2">
-            <p className="text-sm font-bold text-yellow-800">🎉 Perfect! +$2 to your wallet</p>
+            <p className="text-sm font-bold text-yellow-800">🎉 Perfect {mode === 'quiz' ? 'Quiz' : 'Drill'}! +$2 to your wallet</p>
           </div>
         )}
         {subject === 'malay' && revealCount > 0 && (
