@@ -104,6 +104,18 @@ const QB = {
     // Grammar Cloze extras
     { id:'e48', section:'Grammar Cloze', tag:'cloze', q:'The monkeys ___ (swing/swings/swinging/swung) from branch to branch yesterday.', opts:['swing','swings','swinging','swung'], ans:3, hint:'Yesterday = past tense. Irregular verb?', exp:'"Swing" is irregular: swing → <strong>swung</strong> (past)' },
 
+    // ── NEW medium/hard quiz-only questions ──
+    { id:'e49', section:'Grammar MCQ', tag:'grammar', difficulty:'medium', pool:'quiz', q:'Neither Ali nor his friends ___ ready yet.', opts:['was','were','is','are'], ans:1, hint:'Neither…nor → take the number of the noun closest to the verb', exp:'Closest noun = "friends" (plural) → <strong>were</strong>' },
+    { id:'e50', section:'Grammar MCQ', tag:'grammar', difficulty:'medium', pool:'quiz', q:'The report ___ by the students yesterday.', opts:['write','wrote','was written','is written'], ans:2, hint:'The report cannot write itself — passive voice', exp:'Passive past: <strong>was written</strong>' },
+    { id:'e51', section:'Vocabulary', tag:'vocab', difficulty:'medium', pool:'quiz', q:'The explorer ventured into the dense jungle. Ventured means ___', opts:['ran away from','went bravely into','fell into','swam across'], ans:1, hint:'Venture = brave entry into something unknown', exp:'<strong>Ventured</strong> = went bravely into an unknown or dangerous place.' },
+    { id:'e52', section:'Vocabulary', tag:'vocab', difficulty:'medium', pool:'quiz', q:'She was elated when she won the prize. Elated means ___', opts:['worried','very unhappy','extremely happy','confused'], ans:2, hint:'She just won something good!', exp:'<strong>Elated</strong> = extremely happy and joyful' },
+    { id:'e53', section:'Vocabulary', tag:'vocab', difficulty:'hard', pool:'quiz', q:'He was so famished he ate everything on the table. Famished means ___', opts:['tired','extremely hungry','bored','full'], ans:1, hint:'Context clue: he ate EVERYTHING', exp:'<strong>Famished</strong> = extremely hungry; starving.' },
+    { id:'e54', section:'Grammar Cloze', tag:'cloze', difficulty:'medium', pool:'quiz', q:'She is the tallest ___ all the students in her class.', opts:['among','between','across','through'], ans:0, hint:'Tallest in a group of more than 2 people', exp:'Use <strong>among</strong> for a group of three or more. "Between" is for exactly two.' },
+    { id:'e55', section:'Grammar Cloze', tag:'cloze', difficulty:'medium', pool:'quiz', q:'He had barely sat down ___ the phone rang.', opts:['when','while','since','although'], ans:0, hint:'"Barely…when" or "hardly…when" — what pair is correct?', exp:'<strong>Barely…when</strong> shows two things happening very close together.' },
+    { id:'e56', section:'Editing', tag:'editing', difficulty:'hard', pool:'quiz', passage:'The teacher (A)distributed the papers careful. She (B)reminded the class (C)to check their work (D)thorough.', q:'Which word has an error?', opts:['(A)distributed','(B)reminded','(C)to check','(D)thorough'], ans:3, exp:'"Thorough" is an adjective. Here we need an adverb: <strong>thoroughly</strong>.' },
+    { id:'e57', section:'Editing', tag:'editing', difficulty:'hard', pool:'quiz', passage:'Neither of the answers (A)are correct. You (B)should (C)check (D)carefully.', q:'Which word has an error?', opts:['(A)are','(B)should','(C)check','(D)carefully'], ans:0, exp:'"Neither" is singular → <strong>is</strong> correct, not "are".' },
+    { id:'e58', section:'Comprehension', tag:'comp', difficulty:'hard', pool:'quiz', passage:'Despite the scorching heat, the volunteers cleared the rubbish-strewn beach all morning. "We do this every year," said Mrs Koh, mopping her brow. "If we do not care for our beaches, who will?"', q:'What does "scorching" tell us about the weather?', opts:['Cool and pleasant','Extremely hot','Windy and cloudy','Raining lightly'], ans:1, exp:'<strong>Scorching</strong> = extremely hot, like burning heat.' },
+    { id:'e59', section:'Comprehension', tag:'comp', difficulty:'hard', pool:'quiz', passage:'Despite the scorching heat, the volunteers cleared the rubbish-strewn beach all morning. "We do this every year," said Mrs Koh, mopping her brow. "If we do not care for our beaches, who will?"', q:"What is the main message of Mrs Koh's words?", opts:['Beaches are fun','We all share responsibility for our environment','Volunteers should be paid','Beach-cleaning is easy'], ans:2, exp:'"If we do not care, who will?" → <strong>everyone shares responsibility</strong> for the environment.' },
 
   ],
 
@@ -153,6 +165,18 @@ const QB = {
     { id:'m42', section:'Section C: Word Problems', tag:'laq', type:'text', marks:2, passage:'Siti had $45. She spent $18.60 at the bookshop. Then she spent half of what was left on food.', q:'(b) How much did she spend on food?', ans:'13.20', unitPre:'$', exp:'$26.40 ÷ 2 = <strong>$13.20</strong>' },
     { id:'m43', section:'Section C: Word Problems', tag:'laq', type:'text', marks:2, passage:'A rectangle has perimeter 36cm. Its length is 11cm.', q:'(a) What is its width?', ans:'7', unit:'cm', exp:'2×(11+w)=36 → 11+w=18 → w=<strong>7 cm</strong>' },
     { id:'m44', section:'Section C: Word Problems', tag:'laq', type:'text', marks:2, passage:'A rectangle has perimeter 36cm. Its length is 11cm and width is 7cm.', q:'(b) What is its area?', ans:'77', unit:'cm²', exp:'11 × 7 = <strong>77 cm²</strong>' },
+
+    // ── NEW medium/hard quiz-only questions ──
+    { id:'m45', section:'Section A: MCQ', tag:'geometry', difficulty:'medium', pool:'quiz', q:'A square has the same perimeter as a rectangle 12cm × 6cm. What is the side of the square?', opts:['6cm','7cm','9cm','10cm'], ans:2, hint:'Find rectangle perimeter first, then divide by 4', exp:'Rectangle perimeter: 2×(12+6)=36cm. Square side: 36÷4=<strong>9cm</strong>' },
+    { id:'m46', section:'Section A: MCQ', tag:'fractions', difficulty:'medium', pool:'quiz', q:'What is ¾ of 120?', opts:['80','90','100','60'], ans:1, hint:'Divide by the bottom number, multiply by the top', exp:'120÷4=30, 30×3=<strong>90</strong>' },
+    { id:'m47', section:'Section A: MCQ', tag:'time', difficulty:'medium', pool:'quiz', q:'Train leaves at 11:45am, arrives 2h 40min later. Arrival time?', opts:['1:25pm','2:25pm','2:15pm','1:45pm'], ans:1, hint:'11:45 + 2h = 1:45pm; then + 40min', exp:'1:45pm + 40min = <strong>2:25pm</strong>' },
+    { id:'m48', section:'Section A: MCQ', tag:'numbers', difficulty:'hard', pool:'quiz', q:'Largest 4-digit even number using digits 1, 3, 5, 8 (each used once)?', opts:['8531','5318','3518','8513'], ans:1, hint:'Must end in an even digit. What is the only even digit?', exp:'Only even digit = 8, so last digit = 8. Remaining 5,3,1 in descending order: <strong>5318</strong>' },
+    { id:'m49', section:'Section B: Short Answer', tag:'geometry', difficulty:'medium', pool:'quiz', type:'text', q:'L-shape: a 10cm×6cm rectangle with a 4cm×3cm corner cut out. Find the area.', ans:'48', unit:'cm²', hint:'Big rectangle area − cut-out area', exp:'10×6=60, minus 4×3=12, so 60−12=<strong>48 cm²</strong>' },
+    { id:'m50', section:'Section B: Short Answer', tag:'fractions', difficulty:'medium', pool:'quiz', type:'text', q:'What is ⅗ − ¼? Give as a fraction.', ans:'7/20', hint:'Common denominator of 5 and 4 is 20', exp:'12/20 − 5/20 = <strong>7/20</strong>' },
+    { id:'m51', section:'Section C: Word Problems', tag:'laq', difficulty:'medium', pool:'quiz', type:'text', q:'Ali has 3 times as many stamps as Ben. Together they have 80. How many does Ali have?', ans:'60', hint:'Ben = 1 unit, Ali = 3 units. Total = 4 units.', exp:'4 units = 80, so 1 unit = 20. Ali = 3 × 20 = <strong>60</strong>' },
+    { id:'m52', section:'Section C: Word Problems', tag:'laq', difficulty:'medium', pool:'quiz', type:'text', q:'A ribbon 2.4m long is cut into 8 equal pieces. Length of each piece in cm?', ans:'30', unit:'cm', hint:'Convert 2.4m to cm first, then divide', exp:'2.4m = 240cm. 240÷8 = <strong>30 cm</strong>' },
+    { id:'m53', section:'Section C: Word Problems', tag:'laq', difficulty:'hard', pool:'quiz', type:'text', q:'Mrs Lee baked 48 muffins. She sold ¾ and gave away 6 of the remainder. How many are left?', ans:'6', hint:'Find ¾ of 48, then subtract the 6 given away', exp:'Sold: ¾×48=36. Remainder: 48−36=12. Gave away 6. Left: 12−6=<strong>6</strong>' },
+    { id:'m54', section:'Section A: MCQ', tag:'measurement', difficulty:'hard', pool:'quiz', q:'A tank is ⅗ full. It holds 240 litres when full. How many more litres to fill it?', opts:['96L','144L','150L','200L'], ans:0, hint:'Find how much is already inside, then subtract from full', exp:'⅗ × 240 = 144L already inside. To fill: 240−144=<strong>96L</strong>' },
 
   ],
 
@@ -274,6 +298,18 @@ const QB = {
     { id:'s39', section:'Magnets', tag:'magnets', q:'Can a magnet attract through paper?', opts:['No, never','Yes, through thin non-magnetic materials','Only through wood','Only through water'], ans:1, exp:'Magnets can attract <strong>through thin non-magnetic materials</strong> like paper.' },
     { id:'s40', section:'Life Cycles', tag:'lifecycles', q:'A housefly undergoes complete metamorphosis. Order: Egg → ___ → Pupa → Adult', opts:['Nymph','Larva (maggot)','Froglet','Wriggler'], ans:1, exp:'Housefly: Egg → <strong>Larva (maggot)</strong> → Pupa → Adult fly.' },
 
+    // ── NEW medium/hard quiz-only questions ──
+    { id:'s41', topic:'Diversity of Living Things', section:'Diversity of Living Things', difficulty:'medium', pool:'quiz', q:'A bat has wings but is a mammal. Which feature confirms it is a mammal?', opts:['It has wings','It can fly at night','It gives birth to live young and feeds them milk','It lives in caves'], ans:2, exp:'Despite wings, bats give birth to live young and nurse them — definitive mammal features.' },
+    { id:'s42', topic:'Materials', section:'Materials', difficulty:'medium', pool:'quiz', q:'Why is a wetsuit (diving suit) made of rubber?', opts:['Rubber is transparent','Rubber is magnetic','Rubber is flexible and waterproof','Rubber conducts heat'], ans:2, exp:'Rubber is <strong>flexible</strong> (fits the body) and <strong>waterproof</strong> (keeps water out) — ideal for diving.' },
+    { id:'s43', topic:'Magnets', section:'Magnets', difficulty:'medium', pool:'quiz', q:'A magnet picks up iron filings. They cluster mostly at the ends. Why?', opts:['Magnetic force is strongest at the poles','The middle is too hot','The ends are sharper','Iron filings are heavier there'], ans:0, exp:'Magnets are <strong>strongest at their poles</strong>, so iron filings cluster at the ends.' },
+    { id:'s44', topic:'Life Cycles', section:'Life Cycles', difficulty:'medium', pool:'quiz', q:'A caterpillar spins a cocoon. What stage comes next after it emerges?', opts:['Egg stage','Adult butterfly','Another pupa','Larva again'], ans:1, exp:'After the pupa (cocoon) stage, the butterfly <strong>emerges as an adult</strong>.' },
+    { id:'s45', topic:'Mixed Review', section:'Mixed Review', difficulty:'medium', pool:'quiz', q:'Plant A is kept in the dark; Plant B gets sunlight. Both get water. Which survives longer?', opts:['Plant A','Plant B','Both equally','Neither will survive'], ans:1, exp:'Plants need <strong>sunlight for photosynthesis</strong> (making food). Without light, Plant A cannot produce food and will die.' },
+    { id:'s46', topic:'Diversity of Living Things', section:'Diversity of Living Things', difficulty:'hard', pool:'quiz', q:'An animal is warm-blooded, lays eggs, and has feathers. Which group does it belong to?', opts:['Mammal','Reptile','Bird','Amphibian'], ans:2, exp:'<strong>Feathers + warm-blooded + lays eggs = bird</strong>. Reptiles are cold-blooded; mammals give birth to live young.' },
+    { id:'s47', topic:'Materials', section:'Materials', difficulty:'hard', pool:'quiz', q:'A material is hard, transparent, and a poor conductor of electricity. Most likely?', opts:['Copper wire','Rubber band','Glass','Iron nail'], ans:2, exp:'<strong>Glass</strong> is hard, transparent, and does not conduct electricity — a poor conductor.' },
+    { id:'s48', topic:'Magnets', section:'Magnets', difficulty:'hard', pool:'quiz', q:'If you break a bar magnet in half, what do you get?', opts:['One N pole piece and one S pole piece','Two magnets each with N and S poles','Two N poles','Two S poles'], ans:1, exp:'Breaking a magnet always produces <strong>two smaller magnets</strong>, each with its own N and S poles.' },
+    { id:'s49', topic:'Life Cycles', section:'Life Cycles', difficulty:'hard', pool:'quiz', q:'An animal breathes with gills at birth but uses lungs as an adult. Which animal is this?', opts:['Fish','Grasshopper','Frog','Beetle'], ans:2, exp:'<strong>Frogs</strong>: tadpoles breathe with gills; adult frogs breathe with lungs — classic amphibian metamorphosis.' },
+    { id:'s50', topic:'Mixed Review', section:'Mixed Review', difficulty:'hard', pool:'quiz', q:'Food chain: Grass → Rabbit → Fox → Decomposer. What happens if all foxes are removed?', opts:['Rabbits decrease','Grass increases','Rabbits increase; grass decreases','Nothing changes'], ans:2, exp:'No foxes → <strong>rabbits increase</strong> (no predator) → rabbits eat more grass → <strong>grass decreases</strong>.' },
+
   ],
 
   malay: [
@@ -324,6 +360,18 @@ const QB = {
     { id:'b38', section:'Isi Tempat Kosong', tag:'cloze', q:'"Ibu saya ___ pakaian di dalam bilik air."', eng:'"My mother ___ clothes in the bathroom." (cooks/washes/reads/sings)', opts:['memasak','membasuh','membaca','menyanyi'], ans:1, exp:'"<strong>Membasuh</strong> pakaian" — aktiviti yang dilakukan di bilik air.' },
     { id:'b39', section:'Isi Tempat Kosong', tag:'cloze', q:'"Ayah ___ kereta setiap hujung minggu."', eng:'"Father ___ the car every weekend." (washes/eats/runs/writes)', opts:['membasuh','memakan','berlari','menulis'], ans:0, exp:'"<strong>Membasuh</strong> kereta" — kata kerja yang betul.' },
     { id:'b40', section:'Perbendaharaan Kata', tag:'perbendaharaan', q:'Maksud "tekun" ialah ___', eng:'The meaning of "tekun" (diligent/hardworking) is ___', opts:['Malas','Bersungguh-sungguh','Suka tidur','Garang'], ans:1, exp:'"<strong>Tekun</strong>" bermaksud berusaha dengan bersungguh-sungguh.' },
+
+    // ── NEW medium/hard quiz-only questions ──
+    { id:'b41', topic:'Perbendaharaan Kata', section:'Perbendaharaan Kata', difficulty:'medium', pool:'quiz', q:'Apakah maksud "bertekun"?', eng:'What does "bertekun" (to persevere) mean?', opts:['Bermalas-malasan','Bersungguh-sungguh dalam melakukan sesuatu','Tidur nyenyak','Bergaduh'], ans:1, exp:'"Bertekun" bermaksud melakukan sesuatu dengan penuh usaha dan tidak berputus asa.' },
+    { id:'b42', topic:'Perbendaharaan Kata', section:'Perbendaharaan Kata', difficulty:'medium', pool:'quiz', q:'Apakah antonim bagi "periang"?', eng:'Antonym of "periang" (cheerful)?', opts:['Gembira','Ceria','Murung','Pandai'], ans:2, exp:'Lawan kata "periang" (ceria/gembira) ialah "<strong>murung</strong>" (gloomy/sad).' },
+    { id:'b43', topic:'Tatabahasa', section:'Tatabahasa', difficulty:'medium', pool:'quiz', q:'Imbuhan manakah yang lazimnya menghasilkan kata nama (noun)?', eng:'Which suffix usually creates a noun?', opts:['-kan','-i','-an','me-'], ans:2, exp:'Akhiran "<strong>-an</strong>" membentuk kata nama: tulis→tulisan, jalan→jalanan.' },
+    { id:'b44', topic:'Tatabahasa', section:'Tatabahasa', difficulty:'medium', pool:'quiz', q:'"Murid-murid ___ dengan tekun untuk peperiksaan." Pilih kata kerja paling sesuai.', eng:'"Students ___ diligently for the exam." Choose the most suitable verb.', opts:['makan','belajar','berlari','menyanyi'], ans:1, exp:'"<strong>Belajar</strong> dengan tekun" — pelajar belajar bersungguh-sungguh untuk peperiksaan.' },
+    { id:'b45', topic:'Pemahaman', section:'Pemahaman', difficulty:'medium', pool:'quiz', passage:'Hari ini, Farhan membantu ibunya memasak untuk majlis kenduri. Dia memotong sayur dengan cermat. "Kerja keras itu indah," kata ibunya sambil tersenyum.', q:'Mengapa ibu Farhan tersenyum?', eng:"Why did Farhan's mother smile?", opts:['Makanan itu sedap','Farhan membantu dan bekerja keras','Majlis sudah tamat','Farhan menonton TV'], ans:1, exp:'Ibu tersenyum kerana Farhan membantu dengan tekun — mencerminkan nilai murni.' },
+    { id:'b46', topic:'Pemahaman', section:'Pemahaman', difficulty:'medium', pool:'quiz', passage:'Hari ini, Farhan membantu ibunya memasak untuk majlis kenduri. Dia memotong sayur dengan cermat. "Kerja keras itu indah," kata ibunya sambil tersenyum.', q:'Apakah yang dimaksudkan oleh "Kerja keras itu indah"?', eng:'"Hard work is beautiful" — what does this mean?', opts:['Kerja mudah adalah cantik','Usaha dan rajin adalah sesuatu yang baik dan berharga','Hanya orang cantik yang bekerja keras','Majlis kenduri itu indah'], ans:1, exp:'Maksud tersirat: <strong>bekerja keras adalah sesuatu yang bernilai</strong> dan membanggakan.' },
+    { id:'b47', topic:'Isi Tempat Kosong', section:'Isi Tempat Kosong', difficulty:'medium', pool:'quiz', q:'"Pada petang itu, kami ___ layang-layang di padang yang luas."', eng:'"That evening, we ___ kites in the wide field."', opts:['memasak','bermain','membaca','menyanyi'], ans:1, exp:'"<strong>Bermain</strong> layang-layang" — aktiviti yang dilakukan di padang.' },
+    { id:'b48', topic:'Isi Tempat Kosong', section:'Isi Tempat Kosong', difficulty:'medium', pool:'quiz', q:'"Rakan saya ___ daripada penyakit demam selepas seminggu berehat."', eng:'"My friend ___ from his fever after a week\'s rest." (recovered)', opts:['berlari','pulih','jatuh','tidur'], ans:1, exp:'"<strong>Pulih</strong> daripada penyakit" bermaksud sembuh selepas sakit.' },
+    { id:'b49', topic:'Perbendaharaan Kata', section:'Perbendaharaan Kata', difficulty:'hard', pool:'quiz', q:'Apakah maksud peribahasa "seperti kera mendapat bunga"?', eng:'"Like a monkey that finds flowers" — what does this proverb mean?', opts:['Hati yang senang','Mendapat sesuatu tetapi tidak tahu menghargainya','Rajin dan tekun','Suka berkawan'], ans:1, exp:'"Seperti kera mendapat bunga" bermaksud mendapat sesuatu yang bernilai <strong>tetapi tidak tahu menghargainya</strong>.' },
+    { id:'b50', topic:'Tatabahasa', section:'Tatabahasa', difficulty:'hard', pool:'quiz', q:'Apakah fungsi kata hubung "walaupun" dalam ayat?', eng:'Function of "walaupun" (although) in a sentence?', opts:['Menunjukkan sebab','Menunjukkan akibat','Menunjukkan pertentangan','Menunjukkan urutan'], ans:2, exp:'"<strong>Walaupun</strong>" menghubungkan dua idea bertentangan — situasi berlaku walaupun ada halangan.' },
   ]
 };
 
@@ -742,36 +790,34 @@ function HomeScreen({ onSelect, onProgress, onParent }) {
       </div>
 
       <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-6">
-        {/* English */}
         {['english','science','malay'].map(key => {
           const cfg = CFG[key];
           const st = subjectStats(key);
           return (
             <div key={key}>
-              <button onClick={() => onSelect(key, 'quiz')}
+              <button onClick={() => onSelect(key)}
                 className="w-full rounded-2xl p-4 flex flex-col items-center gap-2 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
                 style={{ backgroundColor: cfg.bg, borderLeft: `4px solid ${cfg.hdr}` }}>
                 <span className="text-4xl">{cfg.emoji}</span>
                 <span className="font-semibold text-gray-700 text-xs text-center">{cfg.label}</span>
-                <span className="text-xs text-gray-500">Quiz</span>
+                <span className="text-xs text-gray-500">Tap to start</span>
                 {st ? <span className="text-xs text-gray-600">Avg {st.avg}%</span> : null}
               </button>
             </div>
           );
         })}
-        {/* Empty cell to push Math+MathPro into their own row below — actually render them side-by-side in next row */}
         <div className="col-span-2 grid grid-cols-2 gap-4">
           {['math','gepmath'].map(key => {
             const cfg = CFG[key];
             const st = subjectStats(key);
             return (
               <div key={key}>
-                <button onClick={() => onSelect(key, 'quiz')}
+                <button onClick={() => onSelect(key)}
                   className="w-full rounded-2xl p-4 flex flex-col items-center gap-2 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
                   style={{ backgroundColor: cfg.bg, borderLeft: `4px solid ${cfg.hdr}` }}>
                   <span className="text-4xl">{cfg.emoji}</span>
                   <span className="font-semibold text-gray-700 text-xs text-center">{cfg.label}</span>
-                  <span className="text-xs text-gray-500">Quiz</span>
+                  <span className="text-xs text-gray-500">Tap to start</span>
                   {st ? <span className="text-xs text-gray-600">Avg {st.avg}%</span> : null}
                 </button>
               </div>
@@ -799,13 +845,57 @@ function HomeScreen({ onSelect, onProgress, onParent }) {
 // ═══════════════════════════════════════════════════════════════
 function SubjectSelectScreen({ subject, onMode, onBack }) {
   const cfg = CFG[subject];
-  const topics = {
-    english: ['Grammar MCQ', 'Vocabulary', 'Visual Text', 'Grammar Cloze', 'Editing', 'Comprehension'],
-    math: ['Section A: MCQ', 'Section B: Short Answer', 'Section C: Word Problems'],
-    science: ['Diversity of Living Things', 'Materials', 'Magnets', 'Life Cycles', 'Mixed Review'],
-    malay: ['Perbendaharaan Kata', 'Tatabahasa', 'Pemahaman', 'Isi Tempat Kosong'],
-    gepmath: ['Number Patterns', 'Clever Problem Sums', 'Logic & Spatial', 'Mental Maths', 'Fractions & Measurement'],
-  }[subject] || [];
+  const [pickingDiff, setPickingDiff] = useState(false);
+
+  if (pickingDiff) {
+    return (
+      <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
+        <div className="p-5 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
+          <button onClick={() => setPickingDiff(false)} className="text-white/70 hover:text-white text-xl">←</button>
+          <h1 className="text-xl font-bold">📝 Choose Difficulty</h1>
+        </div>
+        <div className="flex-1 flex flex-col items-center justify-center p-6">
+          <div className="text-center mb-6">
+            <div className="text-6xl mb-2">{cfg.emoji}</div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-1">Quiz Difficulty</h2>
+            <p className="text-gray-500 text-sm">Pick your challenge level!</p>
+          </div>
+          <div className="flex flex-col gap-4 w-full max-w-sm">
+            <button onClick={() => onMode('quiz', 'easy')}
+              className="bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 border-l-4 border-green-400">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">🟢</span>
+                <div className="text-left">
+                  <div className="text-lg font-bold text-gray-800">Easy</div>
+                  <div className="text-xs text-gray-500">Standard questions — great for practice</div>
+                </div>
+              </div>
+            </button>
+            <button onClick={() => onMode('quiz', 'medium')}
+              className="bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 border-l-4 border-yellow-400">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">🟡</span>
+                <div className="text-left">
+                  <div className="text-lg font-bold text-gray-800">Medium</div>
+                  <div className="text-xs text-gray-500">Trickier questions — step up the challenge!</div>
+                </div>
+              </div>
+            </button>
+            <button onClick={() => onMode('quiz', 'hard')}
+              className="bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 border-l-4 border-red-400">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">🔴</span>
+                <div className="text-left">
+                  <div className="text-lg font-bold text-gray-800">Hard</div>
+                  <div className="text-xs text-gray-500">Challenging questions — for the champion! 🏆</div>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
@@ -824,18 +914,18 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
         </div>
 
         <div className="flex gap-4 flex-col w-full max-w-sm">
-          <button onClick={() => onMode('quiz')}
+          <button onClick={() => setPickingDiff(true)}
             className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
             <div className="text-5xl mb-2">📝</div>
             <h3 className="text-xl font-bold text-gray-800">Quiz Mode</h3>
-            <p className="text-xs text-gray-500 mt-1">Take a full quiz with instant feedback</p>
+            <p className="text-xs text-gray-500 mt-1">Take a full quiz — choose your difficulty! Earn $2 for 100%</p>
           </button>
 
           <button onClick={() => onMode('drill')}
             className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
             <div className="text-5xl mb-2">⚡</div>
             <h3 className="text-xl font-bold text-gray-800">Drill Mode</h3>
-            <p className="text-xs text-gray-500 mt-1">Master a topic until perfect! Earn $2</p>
+            <p className="text-xs text-gray-500 mt-1">Master one topic until 10/10! Earn $2 for perfection</p>
           </button>
         </div>
       </div>
@@ -846,7 +936,7 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
 // ═══════════════════════════════════════════════════════════════
 // SCREEN: QUIZ (for all subjects including GEP)
 // ═══════════════════════════════════════════════════════════════
-function MathTeachPanel({ section, cfg, onDone }) {
+function MathTeachPanel({ section, cfg, onDone, onHome }) {
   const t = MATH_TEACH[section];
   if (!t) { onDone(); return null; }
   return (
@@ -888,12 +978,18 @@ function MathTeachPanel({ section, cfg, onDone }) {
           style={{ backgroundColor: t.color }}>
           ✏️ Start Practice!
         </button>
+        {onHome && (
+          <button onClick={onHome}
+            className="w-full bg-white border-2 border-gray-200 text-gray-500 font-semibold py-3 rounded-2xl text-sm hover:bg-gray-50 transition-all">
+            🏠 Return to Home
+          </button>
+        )}
       </div>
     </div>
   );
 }
 
-function SubjectTeachPanel({ section, subject, onDone }) {
+function SubjectTeachPanel({ section, subject, onDone, onHome }) {
   const teachMap = { english: ENGLISH_TEACH, science: SCIENCE_TEACH, gepmath: GEPMATH_TEACH, malay: MALAY_TEACH };
   const bank = teachMap[subject];
   if (!bank) { onDone(); return null; }
@@ -937,26 +1033,43 @@ function SubjectTeachPanel({ section, subject, onDone }) {
           style={{ backgroundColor: t.color }}>
           ✏️ Start Practice!
         </button>
+        {onHome && (
+          <button onClick={onHome}
+            className="w-full bg-white border-2 border-gray-200 text-gray-500 font-semibold py-3 rounded-2xl text-sm hover:bg-gray-50 transition-all">
+            🏠 Return to Home
+          </button>
+        )}
       </div>
     </div>
   );
 }
 
-function QuizScreen({ subject, onDone, onBack, malayHintCountRef }) {
+function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) {
   // For Malay reveal-English tracking
   const localMalayHintCount = useRef(0);
   const hintRef = malayHintCountRef || localMalayHintCount;
 
   const TEACH_BANKS = { math: MATH_TEACH, english: ENGLISH_TEACH, science: SCIENCE_TEACH, gepmath: GEPMATH_TEACH, malay: MALAY_TEACH };
 
+  // Filter by difficulty: if difficulty set, prefer matching questions; untagged questions count as 'easy'
+  function filterDiff(qs) {
+    if (!difficulty || difficulty === 'easy') return qs.filter(q => !q.difficulty || q.difficulty === 'easy');
+    if (difficulty === 'medium') return qs.filter(q => q.difficulty === 'medium');
+    if (difficulty === 'hard') return qs.filter(q => q.difficulty === 'hard');
+    return qs;
+  }
+
   const [questions] = useState(() => {
     if (subject === 'gepmath') {
-      // Sort by topic for teach panel flow
       const topicOrder = ['Number Patterns','Clever Problem Sums','Logic & Spatial','Mental Maths','Fractions & Measurement'];
       const result = [];
       topicOrder.forEach(tp => {
         const tqs = QB.gepmath.filter(q => q.topic === tp);
-        shuffle(tqs).slice(0, 8).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
+        const filtered = difficulty && difficulty !== 'easy'
+          ? tqs.filter(q => q.diff === (difficulty === 'hard' ? 3 : 2))
+          : tqs.filter(q => !q.diff || q.diff === 1);
+        const pool = filtered.length >= 3 ? filtered : tqs;
+        shuffle(pool).slice(0, 8).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
       });
       return result;
     }
@@ -965,8 +1078,10 @@ function QuizScreen({ subject, onDone, onBack, malayHintCountRef }) {
       const result = [];
       sectionOrder.forEach(sec => {
         const secQs = QB.math.filter(q => q.section === sec);
+        const filtered = filterDiff(secQs);
+        const pool = filtered.length >= 3 ? filtered : secQs.filter(q => !q.difficulty || q.difficulty === 'easy');
         const n = sec === 'Section A: MCQ' ? 14 : sec === 'Section B: Short Answer' ? 14 : 12;
-        shuffle(secQs).slice(0, n).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
+        shuffle(pool).slice(0, n).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
       });
       return result;
     }
@@ -974,8 +1089,10 @@ function QuizScreen({ subject, onDone, onBack, malayHintCountRef }) {
       const sectionOrder = ['Grammar MCQ','Vocabulary','Visual Text','Grammar Cloze','Editing','Comprehension'];
       const result = [];
       sectionOrder.forEach(sec => {
-        const sqs = QB.english.filter(q => (q.section || q.tag) === sec || q.section === sec);
-        shuffle(sqs).slice(0, 6).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
+        const sqs = QB.english.filter(q => q.section === sec);
+        const filtered = filterDiff(sqs);
+        const pool = filtered.length >= 2 ? filtered : sqs.filter(q => !q.difficulty || q.difficulty === 'easy');
+        shuffle(pool).slice(0, 6).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
       });
       return result.length ? result : generateQuiz(subject, 40);
     }
@@ -984,7 +1101,9 @@ function QuizScreen({ subject, onDone, onBack, malayHintCountRef }) {
       const result = [];
       topicOrder.forEach(tp => {
         const tqs = QB.science.filter(q => (q.topic || q.section) === tp);
-        shuffle(tqs).slice(0, 8).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
+        const filtered = filterDiff(tqs);
+        const pool = filtered.length >= 2 ? filtered : tqs.filter(q => !q.difficulty || q.difficulty === 'easy');
+        shuffle(pool).slice(0, 8).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
       });
       return result.length ? result : generateQuiz(subject, 40);
     }
@@ -993,7 +1112,9 @@ function QuizScreen({ subject, onDone, onBack, malayHintCountRef }) {
       const result = [];
       topicOrder.forEach(tp => {
         const tqs = QB.malay.filter(q => (q.topic || q.section) === tp);
-        shuffle(tqs).slice(0, 8).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
+        const filtered = filterDiff(tqs);
+        const pool = filtered.length >= 2 ? filtered : tqs.filter(q => !q.difficulty || q.difficulty === 'easy');
+        shuffle(pool).slice(0, 8).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
       });
       return result.length ? result : generateQuiz(subject, 40);
     }
@@ -1067,9 +1188,9 @@ function QuizScreen({ subject, onDone, onBack, malayHintCountRef }) {
   // Show teach panel if needed
   if (showTeachFor) {
     if (subject === 'math') {
-      return <MathTeachPanel section={showTeachFor} cfg={cfg} onDone={dismissTeach} />;
+      return <MathTeachPanel section={showTeachFor} cfg={cfg} onDone={dismissTeach} onHome={onBack} />;
     }
-    return <SubjectTeachPanel section={showTeachFor} subject={subject} onDone={dismissTeach} />;
+    return <SubjectTeachPanel section={showTeachFor} subject={subject} onDone={dismissTeach} onHome={onBack} />;
   }
 
   const pct = (idx / questions.length) * 100;
@@ -1083,10 +1204,10 @@ function QuizScreen({ subject, onDone, onBack, malayHintCountRef }) {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
       <div className="p-4 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
-        <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+        <button onClick={onBack} className="text-white/70 hover:text-white text-xl" title="Return to Home">🏠</button>
         <div className="flex-1">
           <div className="flex justify-between text-xs mb-1.5 text-white/80">
-            <span>{cfg.emoji} {cfg.label}</span>
+            <span>{cfg.emoji} {cfg.label}{difficulty && difficulty !== 'easy' ? ` · ${difficulty === 'medium' ? '🟡' : '🔴'} ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}` : ''}</span>
             <span>Q{idx+1}/{questions.length}</span>
           </div>
           <div className="w-full bg-white/30 rounded-full h-2">
@@ -1203,9 +1324,10 @@ function QuizScreen({ subject, onDone, onBack, malayHintCountRef }) {
 // ═══════════════════════════════════════════════════════════════
 // SCREEN: DRILL MODE
 // ═══════════════════════════════════════════════════════════════
-function DrillScreen({ subject, topic, onDone, onBack }) {
+function DrillScreen({ subject, topic, onDone, onBack, onHome }) {
   const [questions] = useState(() => {
-    const filtered = QB[subject].filter(q => (q.topic || q.section) === topic);
+    // Exclude quiz-only questions from drill
+    const filtered = QB[subject].filter(q => (q.topic || q.section) === topic && (!q.pool || q.pool !== 'quiz'));
     return shuffle(filtered).slice(0, 10).map(q => ({
       ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [], originalIdx: QB[subject].indexOf(q)
     }));
@@ -1268,7 +1390,7 @@ function DrillScreen({ subject, topic, onDone, onBack }) {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
       <div className="p-4 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
-        <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+        <button onClick={onHome || onBack} className="text-white/70 hover:text-white text-xl" title="Return to Home">🏠</button>
         <div className="flex-1">
           <div className="flex justify-between text-xs mb-1.5 text-white/80">
             <span>{cfg.emoji} Drill: {topic}</span>
@@ -1443,7 +1565,7 @@ function ProgressScreen({ onBack }) {
         <div className="bg-white rounded-2xl p-6 shadow-md text-center">
           <div className="text-5xl mb-2">💰</div>
           <h2 className="text-3xl font-bold text-gray-800">${wallet.earned}</h2>
-          <p className="text-sm text-gray-500 mt-1">Earned from perfect drills</p>
+          <p className="text-sm text-gray-500 mt-1">Earned from perfect scores (quiz &amp; drill)</p>
         </div>
 
         {subjects.map(key => {
@@ -1611,14 +1733,19 @@ function App() {
   const [mode, setMode] = useState(null);
   const [topic, setTopic] = useState(null);
   const [result, setResult] = useState(null);
+  const [difficulty, setDiff] = useState('easy');
 
-  function startMode(s, m) {
+  function onSubjectSelect(s) {
+    setSubj(s);
+    setScreen('subject-select');
+  }
+
+  function onMode(m, diff = 'easy') {
+    setDiff(diff);
     if (m === 'drill') {
-      setSubj(s);
-      setMode('select-topic');
+      setMode('drill');
       setScreen('select-topic');
     } else {
-      setSubj(s);
       setMode('quiz');
       setScreen('quiz');
     }
@@ -1641,12 +1768,15 @@ function App() {
 
   return (
     <>
-      {screen === 'home' && <HomeScreen onSelect={startMode} onProgress={() => setScreen('progress')} onParent={() => setScreen('parent')} />}
-      {screen === 'select-topic' && (
-        <TopicSelectScreen subject={subject} onSelect={onSelectTopic} onBack={() => setScreen('home')} />
+      {screen === 'home' && <HomeScreen onSelect={onSubjectSelect} onProgress={() => setScreen('progress')} onParent={() => setScreen('parent')} />}
+      {screen === 'subject-select' && (
+        <SubjectSelectScreen subject={subject} onMode={onMode} onBack={() => setScreen('home')} />
       )}
-      {screen === 'quiz' && <QuizScreen subject={subject} onDone={onDone} onBack={() => setScreen('home')} />}
-      {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => setScreen('select-topic')} />}
+      {screen === 'select-topic' && (
+        <TopicSelectScreen subject={subject} onSelect={onSelectTopic} onBack={() => setScreen('subject-select')} />
+      )}
+      {screen === 'quiz' && <QuizScreen subject={subject} onDone={onDone} onBack={() => setScreen('home')} difficulty={difficulty} />}
+      {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => setScreen('select-topic')} onHome={() => setScreen('home')} />}
       {screen === 'result' && result && (
         <ResultsScreen
           subject={subject}
@@ -1658,7 +1788,7 @@ function App() {
           onHome={() => setScreen('home')}
           onRetry={() => {
             if (mode === 'drill') setScreen('select-topic');
-            else setScreen('quiz');
+            else setScreen('subject-select');
           }}
         />
       )}
