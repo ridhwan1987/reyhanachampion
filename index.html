@@ -682,14 +682,15 @@ function generateQuiz(subject, n = 10) {
   }));
 }
 
-function saveResult(subject, mode, score, total, breakdown) {
+function saveResult(subject, mode, score, total, breakdown, difficulty) {
   const all = JSON.parse(localStorage.getItem(RC_PREFIX + 'results') || '[]');
   all.push({
     iso: new Date().toISOString(),
     date: new Date().toLocaleDateString('en-SG', { day:'numeric', month:'short' }),
     subject, mode, score, total,
     pct: Math.round((score / total) * 100),
-    breakdown
+    breakdown,
+    difficulty: difficulty || 'unknown'
   });
   localStorage.setItem(RC_PREFIX + 'results', JSON.stringify(all));
 }
@@ -1483,7 +1484,7 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome }) {
 // ═══════════════════════════════════════════════════════════════
 // SCREEN: RESULTS
 // ═══════════════════════════════════════════════════════════════
-function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, onHome, onRetry }) {
+function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, difficulty, onHome, onRetry }) {
   const cfg = CFG[subject];
   const pct = Math.round((score / total) * 100);
   const star = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '👍' : '💪';
@@ -1492,7 +1493,7 @@ function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, on
   const showConf = pct >= 70 || isPerfect;
 
   useEffect(() => {
-    saveResult(subject, mode, score, total, breakdown);
+    saveResult(subject, mode, score, total, breakdown, difficulty);
     if (isPerfect) {
       addReward(subject, mode);
     }
@@ -1711,9 +1712,10 @@ function ParentDashboard({ onBack }) {
         <div className="bg-white rounded-2xl p-5 shadow">
           <h3 className="text-lg font-bold text-gray-800 mb-3">Recent Sessions</h3>
           <div className="space-y-2">
-            {all.slice().reverse().slice(0, 10).map((r, i) => (
+            {all.slice().reverse().map((r, i) => (
               <div key={i} className="flex justify-between text-sm py-2 border-b last:border-0">
                 <span className="text-gray-600">{r.date} — {r.subject}</span>
+                <span style={{background:'#eee',borderRadius:'4px',padding:'2px 6px',fontSize:'0.75em',textTransform:'capitalize'}}>{r.difficulty || '—'}</span>
                 <span className={`font-bold ${r.pct >= 70 ? 'text-emerald-600' : 'text-red-500'}`}>{r.pct}%</span>
               </div>
             ))}
@@ -1757,7 +1759,7 @@ function App() {
   }
 
   function onDone(score, total, breakdown, revealCount = 0) {
-    setResult({ score, total, breakdown, revealCount });
+    setResult({ score, total, breakdown, revealCount, difficulty });
     setScreen('result');
   }
 
@@ -1785,6 +1787,7 @@ function App() {
           breakdown={result.breakdown}
           mode={mode}
           revealCount={result.revealCount || 0}
+          difficulty={result.difficulty}
           onHome={() => setScreen('home')}
           onRetry={() => {
             if (mode === 'drill') setScreen('select-topic');
