@@ -660,7 +660,7 @@ function HomeScreen({ onSelect, onProgress, onParent }) {
           <div className="text-2xl">📊</div>
           <div className="text-xs font-semibold text-gray-700">My Progress</div>
         </button>
-        <button onClick={() => onSelect('gepmath', 'quiz')} className="flex-1 bg-white shadow rounded-xl p-3 text-center hover:shadow-md transition-all">
+        <button onClick={() => onSelect('gepmath')} className="flex-1 bg-white shadow rounded-xl p-3 text-center hover:shadow-md transition-all">
           <div className="text-2xl">🦊</div>
           <div className="text-xs font-semibold text-gray-700">Math Pro</div>
         </button>
@@ -707,14 +707,14 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
             className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
             <div className="text-5xl mb-2">📝</div>
             <h3 className="text-xl font-bold text-gray-800">Quiz Mode</h3>
-            <p className="text-xs text-gray-500 mt-1">Take a full quiz with instant feedback</p>
+            <p className="text-xs text-gray-500 mt-1">Pick Easy · Medium · Hard — earn $0.50 · $1 · $2 for 100%</p>
           </button>
 
           <button onClick={() => onMode('drill')}
             className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
             <div className="text-5xl mb-2">⚡</div>
             <h3 className="text-xl font-bold text-gray-800">Drill Mode</h3>
-            <p className="text-xs text-gray-500 mt-1">Answer all correctly to earn 🟢$0.50 · 🟡$1 · 🔴$2</p>
+            <p className="text-xs text-gray-500 mt-1">Practise a topic — 30 questions, no pressure</p>
           </button>
         </div>
       </div>
@@ -1134,14 +1134,14 @@ function ResultsScreen({ subject, score, total, breakdown, mode, rewardAmount, o
   const pct = Math.round((score / total) * 100);
   const star = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '👍' : '💪';
   const msg = pct >= 90 ? 'Outstanding!' : pct >= 70 ? 'Great job!' : pct >= 50 ? 'Good effort!' : 'Keep going!';
-  const showConf = pct >= 70 || (mode === 'drill' && pct === 100);
-  const isPerfect = mode === 'drill' && pct === 100;
-  const earnedAmount = rewardAmount || 2;
+  const showConf = pct >= 70;
+  const isPerfect = mode === 'quiz' && pct === 100 && rewardAmount;
+  const earnedAmount = rewardAmount || 0;
 
   useEffect(() => {
     saveResult(subject, mode, score, total, breakdown);
     if (isPerfect) {
-      addReward(subject, 'drill', earnedAmount);
+      addReward(subject, 'quiz', earnedAmount);
     }
   }, []);
 
@@ -1347,25 +1347,28 @@ function App() {
       setScreen('select-topic');
     } else {
       setMode('quiz');
-      setScreen('quiz');
+      setScreen('difficulty-select');
     }
   }
 
-  function onSelectTopic(t) {
-    const diff = TOPIC_DIFFICULTY[t] || 'medium';
-    setTopic(t);
+  function onSelectDifficulty(diff) {
     setDifficulty(diff);
+    setScreen('quiz');
+  }
+
+  function onSelectTopic(t) {
+    setTopic(t);
     setScreen('drill');
   }
 
   function onDone(score, total, breakdown) {
-    setResult({ score, total, breakdown });
+    const rewardAmount = DIFFICULTY_REWARD[difficulty] || null;
+    setResult({ score, total, breakdown, rewardAmount });
     setScreen('result');
   }
 
-  function onDrillPerfect(totalQ) {
-    const rewardAmount = DIFFICULTY_REWARD[difficulty] || 1;
-    setResult({ score: totalQ, total: totalQ, breakdown: { [topic]: { correct: totalQ, total: totalQ } }, rewardAmount });
+  function onDrillDone(totalQ) {
+    setResult({ score: totalQ, total: totalQ, breakdown: { [topic]: { correct: totalQ, total: totalQ } } });
     setScreen('result');
   }
 
@@ -1373,11 +1376,12 @@ function App() {
     <>
       {screen === 'home' && <HomeScreen onSelect={startMode} onProgress={() => setScreen('progress')} onParent={() => setScreen('parent')} />}
       {screen === 'subject-select' && <SubjectSelectScreen subject={subject} onMode={(m) => startMode(subject, m)} onBack={() => setScreen('home')} />}
+      {screen === 'difficulty-select' && <DifficultySelectScreen subject={subject} onSelect={onSelectDifficulty} onBack={() => setScreen('subject-select')} />}
       {screen === 'select-topic' && (
-        <TopicSelectScreen subject={subject} onSelect={onSelectTopic} onBack={() => setScreen('home')} />
+        <TopicSelectScreen subject={subject} onSelect={onSelectTopic} onBack={() => setScreen('subject-select')} />
       )}
       {screen === 'quiz' && <QuizScreen subject={subject} onDone={onDone} onBack={() => setScreen('home')} />}
-      {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => setScreen('select-topic')} />}
+      {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillDone} onBack={() => setScreen('select-topic')} />}
       {screen === 'result' && result && (
         <ResultsScreen
           subject={subject}
@@ -1389,13 +1393,41 @@ function App() {
           onHome={() => setScreen('home')}
           onRetry={() => {
             if (mode === 'drill') setScreen('select-topic');
-            else setScreen('quiz');
+            else setScreen('difficulty-select');
           }}
         />
       )}
       {screen === 'progress' && <ProgressScreen onBack={() => setScreen('home')} />}
       {screen === 'parent' && <ParentDashboard onBack={() => setScreen('home')} />}
     </>
+  );
+}
+
+function DifficultySelectScreen({ subject, onSelect, onBack }) {
+  const cfg = CFG[subject];
+  const opts = [
+    { key: 'easy',   label: '🟢 Easy',   sub: 'Earn $0.50 for 100%' },
+    { key: 'medium', label: '🟡 Medium', sub: 'Earn $1 for 100%' },
+    { key: 'hard',   label: '🔴 Hard',   sub: 'Earn $2 for 100%' },
+  ];
+  return (
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
+      <div className="p-5 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
+        <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+        <h1 className="text-xl font-bold">{cfg.emoji} Choose Difficulty</h1>
+      </div>
+      <div className="flex-1 flex flex-col items-center justify-center p-6">
+        <div className="flex flex-col gap-4 w-full max-w-sm">
+          {opts.map(d => (
+            <button key={d.key} onClick={() => onSelect(d.key)}
+              className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 text-left">
+              <h3 className="text-xl font-bold text-gray-800">{d.label}</h3>
+              <p className="text-xs text-gray-500 mt-1">{d.sub}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -1417,19 +1449,15 @@ function TopicSelectScreen({ subject, onSelect, onBack }) {
           <h1 className="text-xl font-bold">⚡ Choose Topic</h1>
         </div>
       </div>
-      <div className="p-4 text-center text-xs text-gray-500">Earn 🟢$0.50 · 🟡$1 · 🔴$2 for perfect drills</div>
+      <div className="p-4 text-center text-xs text-gray-500">Choose a topic to drill — 30 questions</div>
       <div className="flex-1 p-6 max-w-lg mx-auto w-full space-y-3">
-        {topics.map(t => {
-          const diff = TOPIC_DIFFICULTY[t] || 'medium';
-          return (
-            <button key={t} onClick={() => onSelect(t)}
-              className="w-full bg-white rounded-2xl p-4 shadow hover:shadow-md transition-all text-left hover:scale-105 active:scale-95 flex items-center justify-between"
-              style={{ borderLeft: `6px solid ${cfg.hdr}` }}>
-              <span className="font-semibold text-gray-800">{t}</span>
-              <span className="text-xs font-bold ml-2 whitespace-nowrap">{DIFFICULTY_BADGE[diff]} · {DIFFICULTY_REWARD_LABEL[diff]}</span>
-            </button>
-          );
-        })}
+        {topics.map(t => (
+          <button key={t} onClick={() => onSelect(t)}
+            className="w-full bg-white rounded-2xl p-4 shadow hover:shadow-md transition-all text-left hover:scale-105 active:scale-95"
+            style={{ borderLeft: `6px solid ${cfg.hdr}` }}>
+            <span className="font-semibold text-gray-800">{t}</span>
+          </button>
+        ))}
       </div>
     </div>
   );
