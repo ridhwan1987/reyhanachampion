@@ -1326,7 +1326,10 @@ function ParentDashboard({ onBack }) {
 
   function saveFbUrl() {
     localStorage.setItem(RC_PREFIX + 'firebase_url', fbInput.trim());
-    setSyncMsg('URL saved! Click "Refresh" to pull data.');
+    setSyncMsg('Saving…');
+    syncToFirebase().then(() => {
+      setSyncMsg('Saved & uploaded! On your other device, enter the same URL and click Refresh.');
+    });
   }
 
   function doRefresh() {
