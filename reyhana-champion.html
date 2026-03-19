@@ -642,12 +642,12 @@ function HomeScreen({ onSelect, onProgress, onParent }) {
           const st = subjectStats(key);
           return (
             <div key={key}>
-              <button onClick={() => onSelect(key, 'quiz')}
+              <button onClick={() => onSelect(key)}
                 className="w-full rounded-2xl p-4 flex flex-col items-center gap-2 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
                 style={{ backgroundColor: cfg.bg, borderLeft: `4px solid ${cfg.hdr}` }}>
                 <span className="text-4xl">{cfg.emoji}</span>
                 <span className="font-semibold text-gray-700 text-xs text-center">{cfg.label}</span>
-                <span className="text-xs text-gray-500">Quiz</span>
+                <span className="text-xs text-gray-500">Quiz & Drill</span>
                 {st ? <span className="text-xs text-gray-600">Avg {st.avg}%</span> : null}
               </button>
             </div>
@@ -714,7 +714,7 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
             className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
             <div className="text-5xl mb-2">⚡</div>
             <h3 className="text-xl font-bold text-gray-800">Drill Mode</h3>
-            <p className="text-xs text-gray-500 mt-1">Master a topic until perfect! Earn $0.50–$2</p>
+            <p className="text-xs text-gray-500 mt-1">Answer all correctly to earn 🟢$0.50 · 🟡$1 · 🔴$2</p>
           </button>
         </div>
       </div>
@@ -1339,12 +1339,13 @@ function App() {
   const [result, setResult] = useState(null);
 
   function startMode(s, m) {
-    if (m === 'drill') {
-      setSubj(s);
-      setMode('select-topic');
+    setSubj(s);
+    if (!m) {
+      setScreen('subject-select');
+    } else if (m === 'drill') {
+      setMode('drill');
       setScreen('select-topic');
     } else {
-      setSubj(s);
       setMode('quiz');
       setScreen('quiz');
     }
@@ -1371,6 +1372,7 @@ function App() {
   return (
     <>
       {screen === 'home' && <HomeScreen onSelect={startMode} onProgress={() => setScreen('progress')} onParent={() => setScreen('parent')} />}
+      {screen === 'subject-select' && <SubjectSelectScreen subject={subject} onMode={(m) => startMode(subject, m)} onBack={() => setScreen('home')} />}
       {screen === 'select-topic' && (
         <TopicSelectScreen subject={subject} onSelect={onSelectTopic} onBack={() => setScreen('home')} />
       )}
