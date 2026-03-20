@@ -1405,6 +1405,10 @@ function ParentDashboard({ onBack }) {
   const [open, setOpen] = useState(false);
   const [err, setErr] = useState('');
   const [resetDone, setResetDone] = useState(false);
+  const [walletEdit, setWalletEdit] = useState(false);
+  const [walletInput, setWalletInput] = useState('');
+  const [walletMsg, setWalletMsg] = useState('');
+  const [, forceUpdate] = useState(0);
 
   function doReset() {
     Object.keys(localStorage)
@@ -1412,6 +1416,31 @@ function ParentDashboard({ onBack }) {
       .forEach(k => localStorage.removeItem(k));
     setResetDone(true);
     setTimeout(() => setResetDone(false), 3000);
+  }
+
+  function doSetBalance() {
+    const v = parseFloat(walletInput);
+    if (isNaN(v) || v < 0) { setWalletMsg('Enter a valid amount'); return; }
+    const w = getWallet();
+    w.earned = Math.round(v * 100) / 100;
+    localStorage.setItem(RC_PREFIX + 'wallet', JSON.stringify(w));
+    syncToFirebase().then(() => {
+      setWalletEdit(false);
+      setWalletMsg('Balance updated & synced!');
+      forceUpdate(n => n + 1);
+      setTimeout(() => setWalletMsg(''), 3000);
+    });
+  }
+
+  function doResetBalance() {
+    const w = getWallet();
+    w.earned = 0;
+    localStorage.setItem(RC_PREFIX + 'wallet', JSON.stringify(w));
+    syncToFirebase().then(() => {
+      setWalletMsg('Balance reset to $0 & synced!');
+      forceUpdate(n => n + 1);
+      setTimeout(() => setWalletMsg(''), 3000);
+    });
   }
 
   function tryPin() {
@@ -1438,7 +1467,6 @@ function ParentDashboard({ onBack }) {
     </div>
   );
 
-  const wallet = getWallet();
   const all = getResults();
 
   return (
@@ -1454,8 +1482,18 @@ function ParentDashboard({ onBack }) {
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white rounded-2xl p-4 shadow text-center">
             <div className="text-3xl">💰</div>
-            <div className="text-2xl font-bold text-violet-600">${wallet.earned}</div>
+            <div className="text-2xl font-bold text-violet-600">${getWallet().earned}</div>
             <div className="text-xs text-gray-500">Earned</div>
+            {!walletEdit
+              ? <button onClick={() => { setWalletInput(String(getWallet().earned)); setWalletEdit(true); setWalletMsg(''); }} className="mt-2 text-xs text-violet-400 hover:text-violet-600 underline">Edit</button>
+              : <div className="mt-2 flex gap-1">
+                  <input type="number" step="0.01" min="0" value={walletInput} onChange={e => setWalletInput(e.target.value)}
+                    className="border rounded-lg p-1 text-xs w-16 text-center focus:outline-none focus:border-violet-400" />
+                  <button onClick={doSetBalance} className="text-xs bg-violet-500 text-white px-2 py-1 rounded-lg">Set</button>
+                  <button onClick={() => setWalletEdit(false)} className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-lg">✕</button>
+                </div>
+            }
+            {walletMsg && <p className="text-xs text-emerald-600 mt-1">{walletMsg}</p>}
           </div>
           <div className="bg-white rounded-2xl p-4 shadow text-center">
             <div className="text-3xl">✅</div>
@@ -1492,6 +1530,13 @@ function ParentDashboard({ onBack }) {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="bg-white rounded-2xl p-5 shadow border border-red-100">
+          <h3 className="text-lg font-bold text-gray-800 mb-1">💳 Reset Balance</h3>
+          <p className="text-xs text-gray-500 mb-3">Use this after buying a gift card. Resets earned balance to $0 so Reyhana can start working towards the next reward.</p>
+          <button onClick={doResetBalance} className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-xl text-sm">Reset Balance to $0</button>
+          {walletMsg && walletMsg.includes('reset') && <p className="text-xs text-emerald-600 mt-2 text-center">{walletMsg}</p>}
         </div>
 
         <div className="bg-white rounded-2xl p-5 shadow border border-orange-100">
