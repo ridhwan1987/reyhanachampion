@@ -1367,8 +1367,7 @@ function CloudSyncPanel() {
     setSyncing(true); setSyncMsg('');
     loadFromFirebase().then(ok => {
       setSyncing(false);
-      setSyncMsg(ok ? 'Data refreshed from cloud!' : 'Could not load — check URL or Firebase rules.');
-      if (ok) window.location.reload();
+      setSyncMsg(ok ? 'Data refreshed! Changes are live.' : 'Could not load — check URL or Firebase rules.');
     });
   }
 
