@@ -484,7 +484,7 @@ function HomeScreen({ onSelect, onProgress, onParent }) {
         <img src="reyhanapic.JPG" alt="Reyhana" className="mx-auto mt-3 w-28 h-28 rounded-full object-cover shadow-md" />
         <p className="text-gray-500 mt-1 text-sm">Choose a subject to practise</p>
         <div className="text-sm mt-2 text-gray-600">
-          <span>💰 Wallet: ${wallet.earned} earned</span>
+          <span>💰 Wallet: ${wallet.earned.toFixed(2)} earned</span>
         </div>
       </div>
 
@@ -1277,7 +1277,7 @@ function ProgressScreen({ onBack }) {
       <div className="max-w-lg mx-auto p-6 space-y-6">
         <div className="bg-white rounded-2xl p-6 shadow-md text-center">
           <div className="text-5xl mb-2">💰</div>
-          <h2 className="text-3xl font-bold text-gray-800">${wallet.earned}</h2>
+          <h2 className="text-3xl font-bold text-gray-800">${wallet.earned.toFixed(2)}</h2>
           <p className="text-sm text-gray-500 mt-1">Earned from perfect scores (quiz &amp; drill)</p>
         </div>
 
@@ -1482,7 +1482,7 @@ function ParentDashboard({ onBack }) {
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white rounded-2xl p-4 shadow text-center">
             <div className="text-3xl">💰</div>
-            <div className="text-2xl font-bold text-violet-600">${getWallet().earned}</div>
+            <div className="text-2xl font-bold text-violet-600">${getWallet().earned.toFixed(2)}</div>
             <div className="text-xs text-gray-500">Earned</div>
             {!walletEdit
               ? <button onClick={() => { setWalletInput(String(getWallet().earned)); setWalletEdit(true); setWalletMsg(''); }} className="mt-2 text-xs text-violet-400 hover:text-violet-600 underline">Edit</button>
