@@ -1396,6 +1396,24 @@ function ParentDashboard({ onBack }) {
             ))}
           </div>
         </div>
+
+        <div className="bg-white rounded-2xl p-5 shadow border border-orange-100">
+          <h3 className="text-lg font-bold text-gray-800 mb-1">🔄 Reset Question Rotation</h3>
+          <p className="text-xs text-gray-500 mb-3">Clears only the seen-question tracker so quizzes feel fresh again. Wallet, rewards and quiz history are <strong>not</strong> affected.</p>
+          {(() => {
+            const [resetDone, setResetDone] = React.useState(false);
+            function doReset() {
+              Object.keys(localStorage)
+                .filter(k => k.startsWith('af1_seen_'))
+                .forEach(k => localStorage.removeItem(k));
+              setResetDone(true);
+              setTimeout(() => setResetDone(false), 3000);
+            }
+            return resetDone
+              ? <p className="text-emerald-600 font-bold text-sm">✅ Done! Questions will rotate fresh next quiz.</p>
+              : <button onClick={doReset} className="w-full bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 rounded-xl text-sm">Reset Question Rotation</button>;
+          })()}
+        </div>
       </div>
     </div>
   );
