@@ -739,7 +739,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
         const filtered = difficulty && difficulty !== 'easy'
           ? tqs.filter(q => q.diff === (difficulty === 'hard' ? 3 : 2))
           : tqs.filter(q => !q.diff || q.diff === 1);
-        const pool = filtered.length >= 3 ? filtered : tqs;
+        const pool = filtered.length >= 16 ? filtered : tqs;
         const key = `af1_seen_gepmath_${dk}_${tp.replace(/\W+/g,'_')}`;
         pickNoRepeat(pool, 8, key).forEach(q => result.push({ ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [] }));
       });
