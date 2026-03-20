@@ -313,7 +313,7 @@ const QB = {
     { id:'gp49', topic:'Number Patterns', diff:1, q:'What is the 10th term of: 4, 7, 10, 13, ...?', opts:['28','30','31','34'], ans:2, hint:'First term + 9 × common difference', exp:['Common difference = 3','4 + 9×3 = 31 ✓'] },
     { id:'gp50', topic:'Number Patterns', diff:2, q:'10, 9, 7, 4, 0, ___?', opts:['-4','-5','-6','-7'], ans:1, hint:'Differences: -1,-2,-3,-4,-5', exp:['Differences: -1,-2,-3,-4,-5','0-5=-5 ✓'] },
     { id:'gp51', topic:'Number Patterns', diff:1, q:'Which number comes next: 64, 32, 16, 8, ___?', opts:['2','4','6','8'], ans:1, hint:'÷2 each time', exp:['Each term is halved','8÷2=4 ✓'] },
-    { id:'gp52', topic:'Number Patterns', diff:2, q:'Pattern: 3, 6, 12, 24, ___. What is the 6th term?', opts:['36','48','72','96'], ans:2, hint:'Each term is multiplied by 2', exp:['Rule: ×2 each time','3→6→12→24→48→96','6th term = 96 ✓'] },
+    { id:'gp52', topic:'Number Patterns', diff:2, q:'Pattern: 3, 6, 12, 24, ___. What is the 6th term?', opts:['36','48','72','96'], ans:3, hint:'Each term is multiplied by 2', exp:['Rule: ×2 each time','3→6→12→24→48→96','6th term = 96 ✓'] },
 
     // ── Fractions & Measurement (gp53–gp64) ──
     { id:'gp53', topic:'Fractions & Measurement', diff:1, q:'What is 1/2 + 1/4?', opts:['2/6','3/4','3/6','1/3'], ans:1, hint:'Find common denominator', exp:['2/4 + 1/4 = 3/4 ✓'] },
