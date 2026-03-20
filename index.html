@@ -1522,8 +1522,11 @@ function App() {
   const [difficulty, setDiff] = useState('easy');
 
   React.useEffect(() => {
-    const url = (localStorage.getItem(RC_PREFIX + 'firebase_url') || '').trim();
-    if (url) loadFromFirebase();
+    const DEFAULT_URL = 'https://reyhana-quiz-default-rtdb.asia-southeast1.firebasedatabase.app';
+    if (!localStorage.getItem(RC_PREFIX + 'firebase_url')) {
+      localStorage.setItem(RC_PREFIX + 'firebase_url', DEFAULT_URL);
+    }
+    loadFromFirebase();
   }, []);
 
   function onSubjectSelect(s) {
