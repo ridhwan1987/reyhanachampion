@@ -1416,7 +1416,7 @@ function ParentDashboard({ onBack }) {
 
   function tryPin() {
     if (pin === PARENT_PIN) {
-      loadFromFirebase().then(() => setOpen(true));
+      syncToFirebase().then(() => loadFromFirebase()).then(() => setOpen(true));
       setErr('');
     } else setErr('Incorrect PIN. Try again.');
   }
