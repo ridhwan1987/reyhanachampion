@@ -26,6 +26,21 @@
       100% { transform: scale(2); opacity:0; }
     }
     .pulse-ring { animation: pulse-ring 1.5s ease-out; }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)}
+      40%{transform:translateX(8px)}  60%{transform:translateX(-5px)}
+      80%{transform:translateX(5px)}}
+    .shake{animation:shake 0.45s ease-out;}
+    @keyframes coin-fly {
+      0%  {transform:translateY(0) scale(1);opacity:1;}
+      100%{transform:translateY(-90px) scale(1.5);opacity:0;}}
+    .coin-pop{position:fixed;pointer-events:none;z-index:9999;font-size:1.8rem;
+              animation:coin-fly 0.75s ease-out forwards;}
+    @keyframes streak-in {
+      0%  {transform:scale(0.4);opacity:0;}
+      70% {transform:scale(1.2);}
+      100%{transform:scale(1);opacity:1;}}
+    .streak-pop{animation:streak-in 0.35s ease-out;}
   </style>
 </head>
 <body class="bg-slate-50">
@@ -762,6 +777,35 @@ function speakEncouragement(correct) {
   window.speechSynthesis.speak(utter);
 }
 
+function launchConfetti() {
+  const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff6bcd','#a66bff','#ff9f43'];
+  for (let i = 0; i < 40; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left = (5 + Math.random() * 90) + 'vw';
+    el.style.top = '-12px';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.width  = (7 + Math.random() * 9) + 'px';
+    el.style.height = (7 + Math.random() * 9) + 'px';
+    el.style.animationDuration = (1.1 + Math.random() * 1.3) + 's';
+    el.style.animationDelay   = (Math.random() * 0.5) + 's';
+    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3000);
+  }
+}
+
+function launchCoinPop() {
+  const emojis = ['⭐','🌟','✨'];
+  const el = document.createElement('div');
+  el.className = 'coin-pop';
+  el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  el.style.left = (25 + Math.random() * 50) + 'vw';
+  el.style.top  = '52vh';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 900);
+}
+
 function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) {
   // For Malay reveal-English tracking
   const localMalayHintCount = useRef(0);
@@ -859,6 +903,8 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
   const answersRef = useRef([]);
   const [inputVal, setInputVal] = useState('');
   const taughtSections = useRef(new Set());
+  const streakRef = useRef(0);
+  const [streak, setStreak] = useState(0);
 
   // Determine first section/topic key
   const firstKey = questions[0]?.section || questions[0]?.topic;
@@ -881,6 +927,8 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
     const _qCorrect = opt === q.ans || (typeof q.ans === 'number' && q.opts[q.ans] === opt);
     answersRef.current = [...answersRef.current, { q, chosen: opt, correct: _qCorrect }];
     speakEncouragement(_qCorrect);
+    if (_qCorrect) { streakRef.current += 1; setStreak(streakRef.current); launchConfetti(); launchCoinPop(); }
+    else { streakRef.current = 0; setStreak(0); }
   }
 
   function checkTextAnswer() {
@@ -891,6 +939,8 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
     setSel(inputVal.trim());
     answersRef.current = [...answersRef.current, { q, chosen: inputVal.trim(), correct }];
     speakEncouragement(correct);
+    if (correct) { streakRef.current += 1; setStreak(streakRef.current); launchConfetti(); launchCoinPop(); }
+    else { streakRef.current = 0; setStreak(0); }
   }
 
   function next() {
@@ -963,6 +1013,11 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
           </div>
         )}
 
+        {streak >= 3 && (
+          <div key={streak} className="streak-pop text-center font-bold py-2 px-5 rounded-full bg-orange-100 border-2 border-orange-300 text-orange-600 mx-auto w-fit text-base">
+            {'🔥'.repeat(Math.min(streak, 5))} {streak} in a row!
+          </div>
+        )}
         <div className="bg-white rounded-2xl p-5 shadow-sm">
           <p className="text-base font-semibold text-gray-800 leading-relaxed">{q.q}</p>
         </div>
@@ -973,7 +1028,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
             if (selected !== null) {
               const answerOpt = q.ans !== undefined ? (typeof q.ans === 'number' ? q.opts[q.ans] : q.ans) : q.opts[0];
               if (opt === answerOpt) cls = 'bg-green-50 border-2 border-green-500 text-green-800';
-              else if (opt === selected && opt !== answerOpt) cls = 'bg-red-50 border-2 border-red-400 text-red-700';
+              else if (opt === selected && opt !== answerOpt) cls = 'bg-red-50 border-2 border-red-400 text-red-700 shake';
               else cls = 'bg-white border-2 border-gray-200 text-gray-400 opacity-50';
             }
             return (
