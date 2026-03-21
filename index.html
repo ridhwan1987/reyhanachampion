@@ -743,6 +743,19 @@ function SubjectTeachPanel({ section, subject, onDone, onHome }) {
   );
 }
 
+function speakEncouragement(correct) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const phrases = correct
+    ? ['Amazing!', 'Good job!', 'Champion!', 'Well done!', 'Brilliant!', 'You nailed it!']
+    : ["You can do this!", "Don't give up!", "You got this!", "Keep trying!", "Almost there!", "Nice effort!"];
+  const text = phrases[Math.floor(Math.random() * phrases.length)];
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 1.1;
+  utter.pitch = correct ? 1.3 : 1.0;
+  window.speechSynthesis.speak(utter);
+}
+
 function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) {
   // For Malay reveal-English tracking
   const localMalayHintCount = useRef(0);
@@ -859,7 +872,9 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
   function pick(opt) {
     if (selected !== null) return;
     setSel(opt);
-    answersRef.current = [...answersRef.current, { q, chosen: opt, correct: opt === q.ans || (typeof q.ans === 'number' && q.opts[q.ans] === opt) }];
+    const _qCorrect = opt === q.ans || (typeof q.ans === 'number' && q.opts[q.ans] === opt);
+    answersRef.current = [...answersRef.current, { q, chosen: opt, correct: _qCorrect }];
+    speakEncouragement(_qCorrect);
   }
 
   function checkTextAnswer() {
@@ -869,6 +884,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
     const correct = userVal === ansVal;
     setSel(inputVal.trim());
     answersRef.current = [...answersRef.current, { q, chosen: inputVal.trim(), correct }];
+    speakEncouragement(correct);
   }
 
   function next() {
@@ -1056,6 +1072,7 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome }) {
     if (selected !== null) return;
     setSel(opt);
     const isCorrect = opt === q.ans || (typeof q.ans === 'number' && q.opts[q.ans] === opt);
+    speakEncouragement(isCorrect);
 
     if (!isCorrect) {
       // Move to back of queue if wrong
@@ -1072,6 +1089,7 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome }) {
     const ansVal = String(q.ans).toLowerCase().replace(/\s/g, '');
     const correct = userVal === ansVal;
     setSel(inputVal.trim());
+    speakEncouragement(correct);
 
     if (!correct) {
       // Move to back of queue if wrong
