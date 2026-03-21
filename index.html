@@ -409,7 +409,12 @@ function subjectStats(sub) {
   const perfectDrills = rs.filter(r => r.mode === 'drill' && r.pct === 100).length;
   const count = rs.length;
   const drillAttemptData = drillAttemptsForSubject(sub);
-  return { avg, best, count, perfectDrills, quizAvg, drillAvg, drillAttemptData };
+  const diffAvgs = {};
+  ['easy','medium','hard'].forEach(d => {
+    const drs = rs.filter(r => r.mode === 'quiz' && r.difficulty === d);
+    diffAvgs[d] = drs.length ? Math.round(drs.reduce((a,b) => a + b.pct, 0) / drs.length) : null;
+  });
+  return { avg, best, count, perfectDrills, quizAvg, drillAvg, drillAttemptData, diffAvgs };
 }
 
 function getWallet() {
@@ -515,7 +520,20 @@ function HomeScreen({ onSelect, onProgress, onParent }) {
                 <span className="text-4xl">{cfg.emoji}</span>
                 <span className="font-semibold text-gray-700 text-xs text-center">{cfg.label}</span>
                 <span className="text-xs text-gray-500">Tap to start</span>
-                {st ? <span className="text-xs text-gray-600">Avg {st.avg}%</span> : null}
+                {st ? (
+                  (() => {
+                    const da = st.diffAvgs;
+                    const hasDiff = da.easy !== null || da.medium !== null || da.hard !== null;
+                    if (hasDiff) return (
+                      <div className="flex gap-1.5 text-xs text-gray-600 flex-wrap justify-center">
+                        {da.easy    !== null && <span>🟢{da.easy}%</span>}
+                        {da.medium  !== null && <span>🟡{da.medium}%</span>}
+                        {da.hard    !== null && <span>🔴{da.hard}%</span>}
+                      </div>
+                    );
+                    return <span className="text-xs text-gray-600">Avg {st.avg}%</span>;
+                  })()
+                ) : null}
               </button>
             </div>
           );
@@ -532,7 +550,20 @@ function HomeScreen({ onSelect, onProgress, onParent }) {
                   <span className="text-4xl">{cfg.emoji}</span>
                   <span className="font-semibold text-gray-700 text-xs text-center">{cfg.label}</span>
                   <span className="text-xs text-gray-500">Tap to start</span>
-                  {st ? <span className="text-xs text-gray-600">Avg {st.avg}%</span> : null}
+                  {st ? (
+                  (() => {
+                    const da = st.diffAvgs;
+                    const hasDiff = da.easy !== null || da.medium !== null || da.hard !== null;
+                    if (hasDiff) return (
+                      <div className="flex gap-1.5 text-xs text-gray-600 flex-wrap justify-center">
+                        {da.easy    !== null && <span>🟢{da.easy}%</span>}
+                        {da.medium  !== null && <span>🟡{da.medium}%</span>}
+                        {da.hard    !== null && <span>🔴{da.hard}%</span>}
+                      </div>
+                    );
+                    return <span className="text-xs text-gray-600">Avg {st.avg}%</span>;
+                  })()
+                ) : null}
                 </button>
               </div>
             );
