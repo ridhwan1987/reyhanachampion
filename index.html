@@ -1190,6 +1190,7 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
   const [playsLeft, setPlaysLeft] = useState(2);
   const [speaking, setSpeaking] = useState(false);
   const passageRef = React.useRef(null);
+  const heardPassages = React.useRef(new Set());
   const cfg = CFG[subject];
   const qIdx = queue[idx];
   const q = questions[qIdx];
@@ -1197,10 +1198,15 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
   React.useEffect(() => {
     if (isLC && q && q.passage !== passageRef.current) {
       passageRef.current = q.passage;
-      setPassagePage(true);
-      setPlaysLeft(2);
-      setSpeaking(false);
-      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (!heardPassages.current.has(q.passage)) {
+        // First time seeing this passage — show listen screen
+        heardPassages.current.add(q.passage);
+        setPassagePage(true);
+        setPlaysLeft(2);
+        setSpeaking(false);
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+      }
+      // If passage already heard (e.g. wrong answer retry), skip listen screen
     }
   }, [q && q.id]);
 
@@ -1294,6 +1300,7 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
       // Perfect! Last question answered correctly
       onDone(true);
     } else if (selected !== null && queue.length > 1) {
+      setQueue(q => q.slice(1));  // remove the correctly-answered question
       setIdx(0);
       setSel(null);
       setInputVal('');
