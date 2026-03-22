@@ -1196,6 +1196,8 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
   const [passagePage, setPassagePage] = useState(!!isLC);
   const [playsLeft, setPlaysLeft] = useState(2);
   const [speaking, setSpeaking] = useState(false);
+  const [lcCorrect, setLcCorrect] = useState(0);  // LC only: correct answers so far
+  const lcAnswered = isLC ? 10 - queue.length : 0; // questions answered so far
   const cfg = CFG[subject];
   const qIdx = queue[idx];
   const q = questions[qIdx];
@@ -1259,12 +1261,12 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
     speakEncouragement(isCorrect);
 
     if (!isCorrect) {
-      // Move to back of queue if wrong
-      const newQueue = [...queue.slice(1), qIdx];
       if (isLC) {
-        // Show right/wrong highlight for 1.5s so student can see explanation
-        setTimeout(() => { setQueue(newQueue); setIdx(0); setSel(null); }, 1500);
+        // LC: show feedback 1.5s then move on — no retry, question answered once only
+        setTimeout(() => { setQueue(q => q.slice(1)); setIdx(0); setSel(null); }, 1500);
       } else {
+        // Regular drill: wrong answer goes to back of queue for retry
+        const newQueue = [...queue.slice(1), qIdx];
         setQueue(newQueue); setIdx(0); setSel(null);
       }
     }
@@ -1288,18 +1290,40 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
   }
 
   function next() {
-    if (queue.length === 1 && selected !== null) {
-      // Perfect! Last question answered correctly
-      onDone(true);
-    } else if (selected !== null && queue.length > 1) {
-      setQueue(q => q.slice(1));  // remove the correctly-answered question
-      setIdx(0);
-      setSel(null);
-      setInputVal('');
-    } else if (queue.length === 0) {
-      onDone(true);
+    if (isLC) {
+      // LC: correct answer confirmed, increment score then advance
+      const newCorrect = lcCorrect + 1;
+      setLcCorrect(newCorrect);
+      const newQueue = queue.slice(1);
+      if (newQueue.length === 0) {
+        onDone(newCorrect);  // all 10 done — pass actual score
+      } else {
+        setQueue(newQueue);
+        setIdx(0);
+        setSel(null);
+        setInputVal('');
+      }
+    } else {
+      // Regular drill: retry-until-perfect
+      if (queue.length === 1 && selected !== null) {
+        onDone(true);
+      } else if (selected !== null && queue.length > 1) {
+        setQueue(q => q.slice(1));
+        setIdx(0);
+        setSel(null);
+        setInputVal('');
+      } else if (queue.length === 0) {
+        onDone(true);
+      }
     }
   }
+
+  // LC: also end when wrong-answer timeouts empty the queue
+  React.useEffect(() => {
+    if (isLC && !passagePage && queue.length === 0 && selected === null) {
+      onDone(lcCorrect);
+    }
+  }, [queue.length]);
 
   if (!q) return <div className="min-h-screen flex items-center justify-center text-gray-600">Loading...</div>;
 
@@ -1339,8 +1363,8 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
         <button onClick={onHome || onBack} className="text-white/70 hover:text-white text-xl" title="Return to Home">🏠</button>
         <div className="flex-1">
           <div className="flex justify-between text-xs mb-1.5 text-white/80">
-            <span>{cfg.emoji} Drill: {topic}</span>
-            <span>{10 - queue.length}/{10} correct</span>
+            <span>{isLC ? "\U0001F3A7 Listening Comprehension" : cfg.emoji + " Drill: " + topic}</span>
+            <span>{isLC ? (lcAnswered + "/10 answered") : ((10 - queue.length) + "/10 correct")}</span>
           </div>
           <div className="w-full bg-white/30 rounded-full h-2">
             <div className="bg-white h-2 rounded-full transition-all duration-500" style={{ width:`${pct}%` }} />
@@ -1350,7 +1374,7 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
 
       <div className="flex-1 p-5 flex flex-col gap-4 max-w-lg mx-auto w-full pop">
         <div className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full w-fit" style={{ backgroundColor: cfg.sky + '20', color: cfg.hdr }}>
-          {10 - queue.length}/10 Correct
+          {isLC ? (lcAnswered + "/10 — " + lcCorrect + " correct") : ((10 - queue.length) + "/10 Correct")}
         </div>
 
         <div className="bg-white rounded-2xl p-5 shadow-sm">
@@ -1841,8 +1865,9 @@ function App() {
     setScreen('result');
   }
 
-  function onDrillPerfect() {
-    setResult({ score: 10, total: 10, breakdown: { [topic]: { correct: 10, total: 10 } }, isLC: mode === 'lc' });
+  function onDrillPerfect(score) {
+    const s = (mode === 'lc' && typeof score === 'number') ? score : 10;
+    setResult({ score: s, total: 10, breakdown: { [topic]: { correct: s, total: 10 } }, isLC: mode === 'lc' });
     setScreen('result');
   }
 
