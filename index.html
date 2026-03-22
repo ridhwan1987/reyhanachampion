@@ -142,12 +142,12 @@ const ENGLISH_TEACH = {
     title: 'Listening Comprehension', emoji: '🎧', color: '#1a2744', bg: '#f0f7ff',
     tip: '💡 Read the passage carefully — imagine hearing it. Find the answer in the text before choosing.',
     concepts: [
-      { icon: '🔍', label: 'Listen for the Main Idea', text: 'Ask yourself: What is this passage MAINLY about? Focus on the topic, not one small detail.' },
-      { icon: '📋', label: 'Listen for Specific Details', text: 'Who, What, When, Where, Why — listen out for these 5W details. They are common question types.' },
+      { icon: '🔍', label: 'Listen for the Main Idea', text: 'Ask: What is this passage MAINLY about? Focus on the topic, not one small detail.' },
+      { icon: '📋', label: 'Listen for Specific Details', text: 'Who, What, When, Where, Why — the 5W details are commonly tested.' },
       { icon: '💭', label: 'Make Inferences', text: 'Some answers are not directly stated. Use clues in the text to infer feelings, reasons, or outcomes.' },
-      { icon: '🗣️', label: 'Dialogues', text: 'For conversations: keep track of WHO is speaking and WHAT they are asking or agreeing to.' },
+      { icon: '🗣️', label: 'Dialogues', text: 'For conversations: keep track of WHO is speaking and WHAT they are agreeing or asking about.' },
     ],
-    example: { q: 'Why did Mr Tan help Mrs Chen?', steps: ['The text says he "kindly offered to help"', 'Kindly = he is helpful / generous by nature', 'Infer: He helped because he is a kind neighbour ✓'] }
+    example: { q: 'Why did Mr Tan help Mrs Chen?', steps: ['"Kindly offered to help" = he is helpful by nature', 'Infer: He helped because he is a kind neighbour', 'Answer: He is helpful ✓'] }
   },
 };
 
@@ -207,16 +207,16 @@ const SCIENCE_TEACH = {
     ],
     example: { q: 'Which gas do plants take in during photosynthesis?', steps: ['Photosynthesis = plants making food', 'They take in CO₂ (carbon dioxide)', 'They release O₂ (oxygen) → answer: Carbon dioxide ✓'] }
   },
-    'Pemahaman Mendengar': {
+  'Pemahaman Mendengar': {
     title: 'Pemahaman Mendengar', emoji: '🎧', color: '#ea580c', bg: '#fef3c7',
     tip: '💡 Baca petikan dengan teliti. Bayangkan anda mendengarnya. Cari jawapan dalam teks sebelum memilih.',
     concepts: [
-      { icon: '🔍', label: 'Idea Utama', text: 'Tanya diri sendiri: Apakah yang petikan ini PALING banyak bercakap tentang? Fokus kepada topik utama.' },
-      { icon: '📋', label: 'Butiran Khusus', text: 'Siapa, Apa, Bila, Di mana, Mengapa — dengarkan butiran 5W ini. Ia sering ditanya dalam soalan.' },
-      { icon: '💭', label: 'Membuat Inferens', text: 'Sesetengah jawapan tidak dinyatakan secara langsung. Gunakan petunjuk dalam teks untuk membuat inferens tentang perasaan, sebab, atau akibat.' },
+      { icon: '🔍', label: 'Idea Utama', text: 'Tanya: Apakah yang petikan ini PALING banyak bercakap? Fokus kepada topik utama.' },
+      { icon: '📋', label: 'Butiran Khusus', text: 'Siapa, Apa, Bila, Di mana, Mengapa — dengarkan butiran 5W ini.' },
+      { icon: '💭', label: 'Membuat Inferens', text: 'Sesetengah jawapan tidak dinyatakan. Gunakan petunjuk untuk membuat inferens tentang perasaan atau sebab.' },
       { icon: '🗣️', label: 'Dialog', text: 'Untuk perbualan: perhatikan SIAPA yang bercakap dan APA yang mereka minta atau setuju lakukan.' },
     ],
-    example: { q: 'Mengapa jiran-jiran memuji Rasyid?', steps: ['Teks menyebut beliau "rajin dan sopan santun"', 'Rajin = suka bekerja keras. Sopan santun = berbudi bahasa.', 'Jiran memujinya kerana sifat-sifat baik ini ✓'] }
+    example: { q: 'Mengapa jiran memuji Rasyid?', steps: ['Teks: "rajin dan sopan santun"', 'Rajin = suka bekerja keras. Sopan = berbudi bahasa', 'Jiran memuji kerana sifat-sifat baik ini ✓'] }
   },
 };
 
@@ -694,6 +694,14 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
             <h3 className="text-xl font-bold text-gray-800">Drill Mode</h3>
             <p className="text-xs text-gray-500 mt-1">Master one topic until 10/10! Earn $2 for perfection</p>
           </button>
+          {(subject === 'english' || subject === 'malay') && (
+          <button onClick={() => onMode('lc')}
+            className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
+            <div className="text-5xl mb-2">🎧</div>
+            <h3 className="text-xl font-bold text-gray-800">Listening Comprehension</h3>
+            <p className="text-xs text-gray-500 mt-1">Practice listening passages — earn $2 for 10/10!</p>
+          </button>
+          )}
         </div>
       </div>
     </div>
@@ -911,7 +919,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
       return result;
     }
     if (subject === 'english') {
-      const sectionOrder = ['Grammar MCQ','Vocabulary','Visual Text','Grammar Cloze','Editing','Comprehension','Listening Comprehension'];
+      const sectionOrder = ['Grammar MCQ','Vocabulary','Visual Text','Grammar Cloze','Editing','Comprehension'];
       const result = [];
       sectionOrder.forEach(sec => {
         const sqs = QB.english.filter(q => q.section === sec);
@@ -935,7 +943,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
       return result.length ? result : generateQuiz(subject, 40);
     }
     if (subject === 'malay') {
-      const topicOrder = ['Perbendaharaan Kata','Tatabahasa','Pemahaman','Isi Tempat Kosong','Pemahaman Mendengar'];
+      const topicOrder = ['Perbendaharaan Kata','Tatabahasa','Pemahaman','Isi Tempat Kosong'];
       const result = [];
       topicOrder.forEach(tp => {
         const tqs = QB.malay.filter(q => (q.topic || q.section) === tp);
@@ -1719,6 +1727,10 @@ function App() {
     if (m === 'drill') {
       setMode('drill');
       setScreen('select-topic');
+    } else if (m === 'lc') {
+      setMode('lc');
+      setTopic(subject === 'english' ? 'Listening Comprehension' : 'Pemahaman Mendengar');
+      setScreen('drill');
     } else {
       setMode('quiz');
       setScreen('quiz');
@@ -1750,7 +1762,7 @@ function App() {
         <TopicSelectScreen subject={subject} onSelect={onSelectTopic} onBack={() => setScreen('subject-select')} />
       )}
       {screen === 'quiz' && <QuizScreen subject={subject} onDone={onDone} onBack={() => setScreen('home')} difficulty={difficulty} />}
-      {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => setScreen('select-topic')} onHome={() => setScreen('home')} />}
+      {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => mode === 'lc' ? setScreen('subject-select') : setScreen('select-topic')} onHome={() => setScreen('home')} />}
       {screen === 'result' && result && (
         <ResultsScreen
           subject={subject}
@@ -1776,10 +1788,10 @@ function App() {
 function TopicSelectScreen({ subject, onSelect, onBack }) {
   const cfg = CFG[subject];
   const topics = {
-    english: ['Grammar MCQ', 'Vocabulary', 'Visual Text', 'Grammar Cloze', 'Editing', 'Comprehension', 'Listening Comprehension'],
+    english: ['Grammar MCQ', 'Vocabulary', 'Visual Text', 'Grammar Cloze', 'Editing', 'Comprehension'],
     math: ['Section A: MCQ', 'Section B: Short Answer', 'Section C: Word Problems'],
     science: ['Diversity of Living Things', 'Materials', 'Magnets', 'Life Cycles', 'Mixed Review'],
-    malay: ['Perbendaharaan Kata', 'Tatabahasa', 'Pemahaman', 'Isi Tempat Kosong', 'Pemahaman Mendengar'],
+    malay: ['Perbendaharaan Kata', 'Tatabahasa', 'Pemahaman', 'Isi Tempat Kosong'],
     gepmath: ['Number Patterns', 'Clever Problem Sums', 'Logic & Spatial', 'Mental Maths', 'Fractions & Measurement'],
   }[subject] || [];
 
