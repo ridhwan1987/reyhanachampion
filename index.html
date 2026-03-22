@@ -1174,7 +1174,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
 // ═══════════════════════════════════════════════════════════════
 // SCREEN: DRILL MODE
 // ═══════════════════════════════════════════════════════════════
-function DrillScreen({ subject, topic, onDone, onBack, onHome }) {
+function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
   const [questions] = useState(() => {
     // Exclude quiz-only questions from drill
     const filtered = QB[subject].filter(q => (q.topic || q.section) === topic && (!q.pool || q.pool !== 'quiz'));
@@ -1186,9 +1186,36 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome }) {
   const [idx, setIdx] = useState(0);
   const [selected, setSel] = useState(null);
   const [inputVal, setInputVal] = useState('');
+  const [passagePage, setPassagePage] = useState(!!isLC);
+  const [playsLeft, setPlaysLeft] = useState(2);
+  const passageRef = React.useRef(null);
   const cfg = CFG[subject];
   const qIdx = queue[idx];
   const q = questions[qIdx];
+
+  React.useEffect(() => {
+    if (isLC && q && q.passage !== passageRef.current) {
+      passageRef.current = q.passage;
+      setPassagePage(true);
+      setPlaysLeft(2);
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+    }
+  }, [q && q.id]);
+
+  function playPassage() {
+    if (!window.speechSynthesis || playsLeft <= 0 || !q) return;
+    window.speechSynthesis.cancel();
+    const raw = (q.passage || '').replace(/^🎧\s*/, '').replace(/\s*\/\s*/g, '. ');
+    const utter = new SpeechSynthesisUtterance(raw);
+    utter.rate = 0.82;
+    utter.pitch = 1.0;
+    const voices = window.speechSynthesis.getVoices();
+    const lang = subject === 'malay' ? 'ms' : 'en';
+    const v = voices.find(v => v.lang.startsWith(lang)) || voices.find(v => v.lang.startsWith('en'));
+    if (v) utter.voice = v;
+    window.speechSynthesis.speak(utter);
+    setPlaysLeft(p => p - 1);
+  }
 
   function pick(opt) {
     if (selected !== null) return;
@@ -1236,6 +1263,34 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome }) {
   }
 
   if (!q) return <div className="min-h-screen flex items-center justify-center text-gray-600">Loading...</div>;
+
+  if (isLC && passagePage) {
+    const playsLabel = playsLeft === 2 ? '2 plays left' : playsLeft === 1 ? '1 play left' : 'Played';
+    return (
+      <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
+        <div className="p-4 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
+          <button onClick={onBack} className="text-white/70 hover:text-white text-xl font-bold px-1">&#8592;</button>
+          <span className="font-bold">&#127911; Listening Comprehension</span>
+        </div>
+        <div className="flex-1 p-5 flex flex-col items-center justify-center gap-5 max-w-lg mx-auto w-full">
+          <div className="bg-white rounded-2xl p-6 shadow-md text-center w-full pop">
+            <div className="text-6xl mb-3">&#127911;</div>
+            <h2 className="text-xl font-bold text-gray-800 mb-1">Listen to the Passage</h2>
+            <p className="text-sm text-gray-500 mb-5">Press Play to hear the passage. You can play it up to <strong>2 times</strong> before answering the questions.</p>
+            <button onClick={playPassage} disabled={playsLeft <= 0}
+              className={"w-full py-4 rounded-xl font-bold text-xl mb-3 transition-all active:scale-95 shadow-md " + (playsLeft > 0 ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-gray-200 text-gray-400 cursor-not-allowed")}>
+              {playsLeft > 0 ? ("&#9654; Play  — " + playsLabel) : "&#10003; Played"}
+            </button>
+            <button onClick={() => setPassagePage(false)}
+              className="w-full py-3 rounded-xl font-bold bg-green-500 hover:bg-green-600 active:scale-95 text-white shadow-md transition-all">
+              Start Questions &#8594;
+            </button>
+          </div>
+          <p className="text-xs text-gray-400">{10 - queue.length}/10 answered correctly so far</p>
+        </div>
+      </div>
+    );
+  }
 
   const pct = ((10 - queue.length) / 10) * 100;
 
@@ -1762,7 +1817,7 @@ function App() {
         <TopicSelectScreen subject={subject} onSelect={onSelectTopic} onBack={() => setScreen('subject-select')} />
       )}
       {screen === 'quiz' && <QuizScreen subject={subject} onDone={onDone} onBack={() => setScreen('home')} difficulty={difficulty} />}
-      {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => mode === 'lc' ? setScreen('subject-select') : setScreen('select-topic')} onHome={() => setScreen('home')} />}
+      {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => mode === 'lc' ? setScreen('subject-select') : setScreen('select-topic')} onHome={() => setScreen('home')} isLC={mode === 'lc'} />}
       {screen === 'result' && result && (
         <ResultsScreen
           subject={subject}
