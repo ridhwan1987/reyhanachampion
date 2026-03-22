@@ -146,107 +146,107 @@ const QB = {
   ],
 
     // ── Listening Comprehension (MOE P3 English) ─────────────────────────────
-    // Passage 1 — Narrative: Mrs Chen at the market
+    // P01 — Narrative: Mrs Chen at the market
     { id:'e111', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 It was a busy Saturday morning. Mrs Chen rushed to the market with a long shopping list. She needed eggs, vegetables, and fish. At the market, she met her neighbour Mr Tan. He kindly offered to help her carry the heavy bags home.',
       q:'Why did Mrs Chen go to the market?', opts:['To meet Mr Tan','To buy groceries','To sell fish','To look for a bag'], ans:1,
       exp:'She had a shopping list and needed eggs, vegetables, and fish — she went to <strong>buy groceries</strong>.' },
     { id:'e112', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 It was a busy Saturday morning. Mrs Chen rushed to the market with a long shopping list. She needed eggs, vegetables, and fish. At the market, she met her neighbour Mr Tan. He kindly offered to help her carry the heavy bags home.',
-      q:'What does Mr Tan's action tell us about him?', opts:['He is hungry','He is helpful','He is shy','He is lost'], ans:1,
-      exp:'Mr Tan "kindly offered to help" — this shows he is a <strong>helpful</strong> neighbour.' },
+      q:'What does Mr Tan helping Mrs Chen tell us about him?', opts:['He is hungry','He is helpful','He is shy','He is lost'], ans:1,
+      exp:'Mr Tan "kindly offered to help" — this shows he is <strong>helpful</strong>.' },
 
-    // Passage 2 — Dialogue: Raju finishing homework before Grandma's
+    // P02 — Dialogue: Raju finishing homework
     { id:'e113', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Mum: Raju, have you finished your homework? / Raju: Almost, Mum. I just need to do my reading. / Mum: Remember, we are going to Grandma's house at three o'clock. / Raju: Yes, Mum. I will be ready by then.',
+      passage:'🎧 Mum: Raju, have you finished your homework? / Raju: Almost, Mum. I just need to do my reading. / Mum: Remember, we are going to Grandmother house at three in the afternoon. / Raju: Yes, Mum. I will be ready by then.',
       q:'What does Raju still need to complete?', opts:['His drawing','His science project','His reading','His spelling list'], ans:2,
       exp:'Raju says he "just needs to do his <strong>reading</strong>" to finish his homework.' },
     { id:'e114', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Mum: Raju, have you finished your homework? / Raju: Almost, Mum. I just need to do my reading. / Mum: Remember, we are going to Grandma's house at three o'clock. / Raju: Yes, Mum. I will be ready by then.',
-      q:'What time are they going to Grandma's?', opts:['Two o'clock','Half past two','Three o'clock','Four o'clock'], ans:2,
-      exp:'Mum says they are going to Grandma's at <strong>three o'clock</strong>.' },
+      passage:'🎧 Mum: Raju, have you finished your homework? / Raju: Almost, Mum. I just need to do my reading. / Mum: Remember, we are going to Grandmother house at three in the afternoon. / Raju: Yes, Mum. I will be ready by then.',
+      q:'What time are they going to visit Grandmother?', opts:['Two in the afternoon','Half past two','Three in the afternoon','Four in the afternoon'], ans:2,
+      exp:'Mum says they are going at <strong>three in the afternoon</strong>.' },
 
-    // Passage 3 — Announcement: Library closure for repairs
+    // P03 — Announcement: Library closure
     { id:'e115', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Attention, students! The school library will be closed next Monday for repairs. All borrowed books must be returned by this Friday. Students who need books may visit the community library at Marine Parade. Thank you.',
       q:'Why will the school library be closed?', opts:['Public holiday','Book fair','Repairs','Staff training'], ans:2,
       exp:'The announcement says the library will be closed <strong>for repairs</strong>.' },
     { id:'e116', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Attention, students! The school library will be closed next Monday for repairs. All borrowed books must be returned by this Friday. Students who need books may visit the community library at Marine Parade. Thank you.',
-      q:'Where can students borrow books while the school library is closed?', opts:['The bookshop','Online only','The community library at Marine Parade','The teacher's room'], ans:2,
+      q:'Where can students borrow books while the library is closed?', opts:['The bookshop','Online only','The community library at Marine Parade','The teacher room'], ans:2,
       exp:'Students can visit the <strong>community library at Marine Parade</strong>.' },
 
-    // Passage 4 — Instructions: Making a bookmark
+    // P04 — Instructions: Making a bookmark
     { id:'e117', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 To make a simple bookmark, you need a strip of cardboard, coloured pencils, and a ribbon. First, cut the cardboard into a long rectangle. Next, decorate it with your favourite colours. Finally, punch a hole at the top and thread the ribbon through.',
       q:'What is the first step?', opts:['Decorate with colours','Punch a hole','Cut the cardboard into a rectangle','Thread the ribbon'], ans:2,
       exp:'The first step is to <strong>cut the cardboard into a long rectangle</strong>.' },
     { id:'e118', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 To make a simple bookmark, you need a strip of cardboard, coloured pencils, and a ribbon. First, cut the cardboard into a long rectangle. Next, decorate it with your favourite colours. Finally, punch a hole at the top and thread the ribbon through.',
-      q:'What are the materials needed?', opts:['Paper, scissors, glue','Cardboard, coloured pencils, ribbon','Cloth, thread, needle','Wood, paint, string'], ans:1,
-      exp:'The passage lists <strong>cardboard, coloured pencils, and a ribbon</strong> as the materials.' },
+      q:'What materials do you need?', opts:['Paper, scissors, glue','Cardboard, coloured pencils, ribbon','Cloth, thread, needle','Wood, paint, string'], ans:1,
+      exp:'The passage lists <strong>cardboard, coloured pencils, and a ribbon</strong>.' },
 
-    // Passage 5 — Narrative: Mei's story-sharing turn
+    // P05 — Narrative: Mei shares a story
     { id:'e119', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Every Friday, pupils in Class 3A took turns to share a story. It was Mei's turn this week. She was nervous at first, but when she saw her classmates smiling, she felt much better. Her story was about a little girl who loved gardening.',
+      passage:'🎧 Every Friday, pupils in Class 3A took turns to share a story. It was Mei turn this week. She was nervous at first, but when she saw her classmates smiling, she felt much better. Her story was about a little girl who loved gardening.',
       q:'How did Mei feel before she started?', opts:['Excited','Bored','Nervous','Angry'], ans:2,
       exp:'The passage says Mei was <strong>nervous at first</strong> before she began.' },
     { id:'e120', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Every Friday, pupils in Class 3A took turns to share a story. It was Mei's turn this week. She was nervous at first, but when she saw her classmates smiling, she felt much better. Her story was about a little girl who loved gardening.',
-      q:'What was Mei's story about?', opts:['A boy who loved cooking','A little girl who loved gardening','A dog who found treasure','A teacher who liked music'], ans:1,
-      exp:'Mei's story was about <strong>a little girl who loved gardening</strong>.' },
+      passage:'🎧 Every Friday, pupils in Class 3A took turns to share a story. It was Mei turn this week. She was nervous at first, but when she saw her classmates smiling, she felt much better. Her story was about a little girl who loved gardening.',
+      q:'What was the story about?', opts:['A boy who loved cooking','A little girl who loved gardening','A dog who found treasure','A teacher who liked music'], ans:1,
+      exp:'The story was about <strong>a little girl who loved gardening</strong>.' },
 
-    // Passage 6 — Dialogue: Computer lab trip
+    // P06 — Dialogue: Computer lab trip
     { id:'e121', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Teacher: Good morning, class! Today we will visit the computer lab. Students: Hurray! Teacher: But first, bring your science worksheet — we will complete it on the computer. Students: Yes, Teacher! Teacher: Remember to behave well in the lab.',
-      q:'Where will the class go?', opts:['The school hall','The science lab','The computer lab','The library'], ans:2,
+      q:'Where will the class go today?', opts:['The school hall','The science lab','The computer lab','The library'], ans:2,
       exp:'The teacher says they will visit the <strong>computer lab</strong>.' },
     { id:'e122', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Teacher: Good morning, class! Today we will visit the computer lab. Students: Hurray! Teacher: But first, bring your science worksheet — we will complete it on the computer. Students: Yes, Teacher! Teacher: Remember to behave well in the lab.',
       q:'What must students bring?', opts:['Their reading book','Their maths worksheet','Their science worksheet','Their coloured pencils'], ans:2,
       exp:'The teacher asks students to bring their <strong>science worksheet</strong>.' },
 
-    // Passage 7 — Narrative: Grandfather's garden
+    // P07 — Narrative: Grandfather garden
     { id:'e123', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Every Sunday, Aisha visited her grandfather in Tampines. His garden was full of vegetables — tomatoes, chillies, and long beans. Grandfather said gardening kept him healthy and happy. Aisha loved helping him water the plants.',
-      q:'What does Aisha's grandfather grow in his garden?', opts:['Flowers and herbs','Tomatoes, chillies, and long beans','Mangoes and papayas','Roses and sunflowers'], ans:1,
-      exp:'Grandfather grows <strong>tomatoes, chillies, and long beans</strong> in his garden.' },
+      q:'What does Aisha grandfather grow?', opts:['Flowers and herbs','Tomatoes, chillies, and long beans','Mangoes and papayas','Roses and sunflowers'], ans:1,
+      exp:'Grandfather grows <strong>tomatoes, chillies, and long beans</strong>.' },
     { id:'e124', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Every Sunday, Aisha visited her grandfather in Tampines. His garden was full of vegetables — tomatoes, chillies, and long beans. Grandfather said gardening kept him healthy and happy. Aisha loved helping him water the plants.',
-      q:'According to grandfather, what does gardening do for him?', opts:['Makes him rich','Keeps him healthy and happy','Helps him sleep better','Makes him famous'], ans:1,
+      q:'What did grandfather say about gardening?', opts:['It makes him rich','It keeps him healthy and happy','It helps him sleep better','It makes him famous'], ans:1,
       exp:'Grandfather said gardening <strong>kept him healthy and happy</strong>.' },
 
-    // Passage 8 — Dialogue: Planning a birthday party
+    // P08 — Dialogue: Planning a birthday party
     { id:'e125', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Sara: Mum, can I invite five friends for my birthday party? / Mum: Of course! What do you want to eat? / Sara: Can we have pizza and chocolate cake? / Mum: Good choices. I will order the pizza and bake the cake. / Sara: Thank you, Mum! You are the best!',
-      q:'What food does Sara want at her party?', opts:['Sushi and ice cream','Burgers and pie','Pizza and chocolate cake','Noodles and fruit'], ans:2,
-      exp:'Sara wants <strong>pizza and chocolate cake</strong> at her birthday party.' },
+      passage:'🎧 Sara: Mum, can I invite five friends for my birthday? / Mum: Of course! What do you want to eat? / Sara: Can we have pizza and chocolate cake? / Mum: Good choices. I will order the pizza and bake the cake. / Sara: Thank you, Mum!',
+      q:'What food does Sara want?', opts:['Sushi and ice cream','Burgers and pie','Pizza and chocolate cake','Noodles and fruit'], ans:2,
+      exp:'Sara wants <strong>pizza and chocolate cake</strong>.' },
     { id:'e126', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Sara: Mum, can I invite five friends for my birthday party? / Mum: Of course! What do you want to eat? / Sara: Can we have pizza and chocolate cake? / Mum: Good choices. I will order the pizza and bake the cake. / Sara: Thank you, Mum! You are the best!',
+      passage:'🎧 Sara: Mum, can I invite five friends for my birthday? / Mum: Of course! What do you want to eat? / Sara: Can we have pizza and chocolate cake? / Mum: Good choices. I will order the pizza and bake the cake. / Sara: Thank you, Mum!',
       q:'Who will bake the cake?', opts:['Sara','A bakery','Her friends','Mum'], ans:3,
       exp:'Mum says "I will order the pizza and <strong>bake the cake</strong>".' },
 
-    // Passage 9 — Announcement: Sports Day
+    // P09 — Announcement: Sports Day
     { id:'e127', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Attention! This year's Sports Day will be held on 20 September at the school field. All students must wear their PE attire and bring a water bottle. Parents are welcome to watch. Students who wish to take part in races must register with their form teacher by Friday.',
+      passage:'🎧 Attention! Sports Day will be held on 20 September at the school field. All students must wear their PE attire and bring a water bottle. Parents are welcome to watch. Students who wish to join the races must register with their form teacher by Friday.',
       q:'Where will Sports Day be held?', opts:['The school hall','The community centre','The school field','The stadium'], ans:2,
       exp:'Sports Day will be held <strong>at the school field</strong>.' },
     { id:'e128', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Attention! This year's Sports Day will be held on 20 September at the school field. All students must wear their PE attire and bring a water bottle. Parents are welcome to watch. Students who wish to take part in races must register with their form teacher by Friday.',
+      passage:'🎧 Attention! Sports Day will be held on 20 September at the school field. All students must wear their PE attire and bring a water bottle. Parents are welcome to watch. Students who wish to join the races must register with their form teacher by Friday.',
       q:'What must students bring on Sports Day?', opts:['A packed lunch','A water bottle','Their textbooks','An umbrella'], ans:1,
-      exp:'Students must bring <strong>a water bottle</strong> on Sports Day.' },
+      exp:'Students must bring <strong>a water bottle</strong>.' },
 
-    // Passage 10 — Instructions: Planting a seed
+    // P10 — Instructions: Planting a seed
     { id:'e129', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Planting a seed is easy! First, fill a small pot with soil. Then, make a small hole in the centre and place the seed inside. Cover the seed gently with soil. Water it a little every day and place the pot where it can get sunlight. Soon, you will see a tiny green shoot!',
-      q:'What is the second step in planting a seed?', opts:['Water it every day','Make a hole and place the seed inside','Add more soil on top','Place the pot in sunlight'], ans:1,
+      passage:'🎧 Planting a seed is easy! First, fill a small pot with soil. Then, make a small hole in the centre and place the seed inside. Cover the seed gently with soil. Water it a little every day and place the pot where it can get sunlight.',
+      q:'What is the second step?', opts:['Water it every day','Make a hole and place the seed inside','Add more soil on top','Place the pot in sunlight'], ans:1,
       exp:'After filling the pot with soil, the second step is to <strong>make a small hole and place the seed inside</strong>.' },
     { id:'e130', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Planting a seed is easy! First, fill a small pot with soil. Then, make a small hole in the centre and place the seed inside. Cover the seed gently with soil. Water it a little every day and place the pot where it can get sunlight. Soon, you will see a tiny green shoot!',
-      q:'What do you need to give the plant every day?', opts:['Fertiliser','A little water','Direct wind','Extra soil'], ans:1,
+      passage:'🎧 Planting a seed is easy! First, fill a small pot with soil. Then, make a small hole in the centre and place the seed inside. Cover the seed gently with soil. Water it a little every day and place the pot where it can get sunlight.',
+      q:'What does the plant need every day?', opts:['Fertiliser','A little water','Direct wind','Extra soil'], ans:1,
       exp:'The passage says to <strong>water it a little every day</strong>.' },
 
-    // Passage 11 — Narrative: Rainy day at home
+    // P11 — Narrative: Rainy day at home
     { id:'e131', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 It rained heavily last Saturday. Daniel and his sister stayed home. Instead of watching television, they decided to build a fort using cushions and blankets. Their mother brought them hot chocolate. It was the best rainy day ever!',
       q:'What did Daniel and his sister build?', opts:['A model aeroplane','A fort using cushions and blankets','A sandcastle','A kite'], ans:1,
@@ -256,127 +256,127 @@ const QB = {
       q:'What did their mother bring them?', opts:['A board game','Hot chocolate','Cookies and milk','Pizza'], ans:1,
       exp:'Their mother brought them <strong>hot chocolate</strong>.' },
 
-    // Passage 12 — Dialogue: Choosing a gift
+    // P12 — Dialogue: Choosing a gift for a teacher
     { id:'e133', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Tom: I need to buy a gift for my teacher. She loves reading. / Priya: Why not get her a book? / Tom: That's a great idea! What kind of book? / Priya: Maybe a book about nature. She often talks about plants and animals. / Tom: Perfect. Let's go to the bookshop now!',
-      q:'What does Tom's teacher love?', opts:['Cooking','Reading','Painting','Sports'], ans:1,
+      passage:'🎧 Tom: I need to buy a gift for my teacher. She loves reading. / Priya: Why not get her a book? / Tom: Great idea! What kind? / Priya: Maybe a book about nature. She always talks about plants and animals. / Tom: Perfect. Let us go to the bookshop now!',
+      q:'What does the teacher love to do?', opts:['Cooking','Reading','Painting','Sports'], ans:1,
       exp:'Tom says his teacher <strong>loves reading</strong>.' },
     { id:'e134', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Tom: I need to buy a gift for my teacher. She loves reading. / Priya: Why not get her a book? / Tom: That's a great idea! What kind of book? / Priya: Maybe a book about nature. She often talks about plants and animals. / Tom: Perfect. Let's go to the bookshop now!',
+      passage:'🎧 Tom: I need to buy a gift for my teacher. She loves reading. / Priya: Why not get her a book? / Tom: Great idea! What kind? / Priya: Maybe a book about nature. She always talks about plants and animals. / Tom: Perfect. Let us go to the bookshop now!',
       q:'What type of book does Priya suggest?', opts:['A cook book','A story book','A book about nature','A maths book'], ans:2,
       exp:'Priya suggests <strong>a book about nature</strong> because the teacher talks about plants and animals.' },
 
-    // Passage 13 — Description: A favourite animal
+    // P13 — Description: Dolphins
     { id:'e135', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 My favourite animal is the dolphin. Dolphins live in the sea and are very intelligent. They communicate by making clicking and whistling sounds. Dolphins are known for being playful and often leap out of the water. They also live in groups called pods.',
+      passage:'🎧 My favourite animal is the dolphin. Dolphins live in the sea and are very intelligent. They communicate by making clicking and whistling sounds. Dolphins are known for being playful and often leap out of the water. They live in groups called pods.',
       q:'How do dolphins communicate?', opts:['By waving their fins','By making clicking and whistling sounds','By changing colours','By swimming in circles'], ans:1,
       exp:'Dolphins communicate by making <strong>clicking and whistling sounds</strong>.' },
     { id:'e136', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 My favourite animal is the dolphin. Dolphins live in the sea and are very intelligent. They communicate by making clicking and whistling sounds. Dolphins are known for being playful and often leap out of the water. They also live in groups called pods.',
+      passage:'🎧 My favourite animal is the dolphin. Dolphins live in the sea and are very intelligent. They communicate by making clicking and whistling sounds. Dolphins are known for being playful and often leap out of the water. They live in groups called pods.',
       q:'What is a group of dolphins called?', opts:['A herd','A flock','A pod','A pack'], ans:2,
       exp:'A group of dolphins is called a <strong>pod</strong>.' },
 
-    // Passage 14 — Narrative: Helping a classmate
+    // P14 — Narrative: Helping a classmate
     { id:'e137', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 One afternoon, Jing Wei noticed that her classmate Rina looked sad. Rina had forgotten her lunch box at home. Without thinking twice, Jing Wei offered to share her food. Rina was very grateful. Their teacher praised Jing Wei for her kindness.',
+      passage:'🎧 One afternoon, Jing Wei noticed that her classmate Rina looked sad. Rina had forgotten her lunch box at home. Without hesitation, Jing Wei offered to share her food. Rina was very grateful. Their teacher praised Jing Wei for her kindness.',
       q:'Why did Rina look sad?', opts:['She lost her pencil','She forgot her lunch box','She failed her test','She missed the bus'], ans:1,
       exp:'Rina looked sad because she had <strong>forgotten her lunch box at home</strong>.' },
     { id:'e138', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 One afternoon, Jing Wei noticed that her classmate Rina looked sad. Rina had forgotten her lunch box at home. Without thinking twice, Jing Wei offered to share her food. Rina was very grateful. Their teacher praised Jing Wei for her kindness.',
+      passage:'🎧 One afternoon, Jing Wei noticed that her classmate Rina looked sad. Rina had forgotten her lunch box at home. Without hesitation, Jing Wei offered to share her food. Rina was very grateful. Their teacher praised Jing Wei for her kindness.',
       q:'What did the teacher do?', opts:['Gave Jing Wei extra homework','Praised Jing Wei for her kindness','Told Rina to call her mother','Bought lunch for both girls'], ans:1,
       exp:'The teacher <strong>praised Jing Wei for her kindness</strong>.' },
 
-    // Passage 15 — Announcement: School concert
+    // P15 — Announcement: School concert
     { id:'e139', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Dear students, our Annual School Concert will be held on 5 November in the school hall. Each class is required to prepare a five-minute performance. Practices will begin next Monday. All students must return their permission slips by 10 October.',
+      passage:'🎧 Dear students, our Annual School Concert will be held on 5 November in the school hall. Each class must prepare a five-minute performance. Practices will begin next Monday. All students must return their permission slips by 10 October.',
       q:'Where will the concert be held?', opts:['The community centre','The school hall','The auditorium','The classroom'], ans:1,
       exp:'The concert will be held <strong>in the school hall</strong>.' },
     { id:'e140', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Dear students, our Annual School Concert will be held on 5 November in the school hall. Each class is required to prepare a five-minute performance. Practices will begin next Monday. All students must return their permission slips by 10 October.',
+      passage:'🎧 Dear students, our Annual School Concert will be held on 5 November in the school hall. Each class must prepare a five-minute performance. Practices will begin next Monday. All students must return their permission slips by 10 October.',
       q:'When must students return their permission slips?', opts:['By 5 November','By next Monday','By 10 October','By the end of the week'], ans:2,
-      exp:'Students must return their permission slips <strong>by 10 October</strong>.' },
+      exp:'Permission slips must be returned <strong>by 10 October</strong>.' },
 
-    // Passage 16 — Instructions: Making a paper plane
+    // P16 — Instructions: Making a paper plane
     { id:'e141', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Making a paper plane is fun! Start with a piece of A4 paper. First, fold it in half lengthwise. Then, fold the top two corners down to meet the centre. Next, fold the wings down on both sides. Finally, hold the centre and give it a gentle throw!',
-      q:'What is the first step?', opts:['Fold the wings down','Fold in half lengthwise','Fold the top corners','Give it a throw'], ans:1,
+      q:'What is the first step?', opts:['Fold the wings down','Fold it in half lengthwise','Fold the top corners','Give it a throw'], ans:1,
       exp:'The first step is to <strong>fold the paper in half lengthwise</strong>.' },
     { id:'e142', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Making a paper plane is fun! Start with a piece of A4 paper. First, fold it in half lengthwise. Then, fold the top two corners down to meet the centre. Next, fold the wings down on both sides. Finally, hold the centre and give it a gentle throw!',
       q:'What type of paper is used?', opts:['A5 paper','A3 paper','A4 paper','Cardboard'], ans:2,
       exp:'The passage says to start with <strong>a piece of A4 paper</strong>.' },
 
-    // Passage 17 — Dialogue: At the doctor's clinic
+    // P17 — Dialogue: At the clinic
     { id:'e143', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Doctor: Good morning! What seems to be the problem? / Patient (Ali): I have a sore throat and a runny nose. / Doctor: How long have you been feeling this way? / Ali: Since yesterday morning. / Doctor: I see. I will give you some medicine. Drink plenty of water and rest at home.',
-      q:'What are Ali's symptoms?', opts:['Headache and fever','Sore throat and runny nose','Stomachache and dizziness','Cough and rash'], ans:1,
+      passage:'🎧 Doctor: Good morning! What is the problem? / Ali: I have a sore throat and a runny nose. / Doctor: How long have you been feeling this way? / Ali: Since yesterday morning. / Doctor: I will give you medicine. Drink plenty of water and rest at home.',
+      q:'What are Ali symptoms?', opts:['Headache and fever','Sore throat and runny nose','Stomachache and dizziness','Cough and rash'], ans:1,
       exp:'Ali has a <strong>sore throat and a runny nose</strong>.' },
     { id:'e144', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Doctor: Good morning! What seems to be the problem? / Patient (Ali): I have a sore throat and a runny nose. / Doctor: How long have you been feeling this way? / Ali: Since yesterday morning. / Doctor: I see. I will give you some medicine. Drink plenty of water and rest at home.',
+      passage:'🎧 Doctor: Good morning! What is the problem? / Ali: I have a sore throat and a runny nose. / Doctor: How long have you been feeling this way? / Ali: Since yesterday morning. / Doctor: I will give you medicine. Drink plenty of water and rest at home.',
       q:'What does the doctor advise Ali to do?', opts:['Go to school as normal','Exercise and eat well','Drink plenty of water and rest','See another doctor immediately'], ans:2,
       exp:'The doctor advises Ali to <strong>drink plenty of water and rest at home</strong>.' },
 
-    // Passage 18 — Narrative: First day at a new school
+    // P18 — Narrative: First day at a new school
     { id:'e145', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 On her first day at Greenfield Primary, Layla felt nervous. The classrooms were bigger than her old school. But her form teacher, Mr Seah, was very welcoming. He introduced Layla to the class and asked a girl named Hana to show her around. By lunchtime, Layla already felt at home.',
+      passage:'🎧 On her first day at Greenfield Primary, Layla felt nervous. The classrooms were bigger than her old school. But her teacher, Mr Seah, was very welcoming. He introduced Layla to the class and asked a girl named Hana to show her around. By lunchtime, Layla already felt at home.',
       q:'How did Layla feel on her first day?', opts:['Excited and confident','Nervous','Angry','Bored'], ans:1,
       exp:'The passage says Layla <strong>felt nervous</strong> on her first day.' },
     { id:'e146', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 On her first day at Greenfield Primary, Layla felt nervous. The classrooms were bigger than her old school. But her form teacher, Mr Seah, was very welcoming. He introduced Layla to the class and asked a girl named Hana to show her around. By lunchtime, Layla already felt at home.',
+      passage:'🎧 On her first day at Greenfield Primary, Layla felt nervous. The classrooms were bigger than her old school. But her teacher, Mr Seah, was very welcoming. He introduced Layla to the class and asked a girl named Hana to show her around. By lunchtime, Layla already felt at home.',
       q:'Who showed Layla around the school?', opts:['Mr Seah','The principal','A girl named Hana','Her mother'], ans:2,
       exp:'Mr Seah asked <strong>a girl named Hana</strong> to show Layla around.' },
 
-    // Passage 19 — Announcement: Book fair
+    // P19 — Announcement: Book fair
     { id:'e147', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Great news, readers! The school book fair is from 3 to 7 March in the school library. Books are sold at discounted prices. Students may bring up to thirty dollars to spend. A special story-telling session for Primary 3 students will be on 4 March at 2 p.m.',
       q:'When is the book fair?', opts:['1 to 5 March','3 to 7 March','5 to 9 March','10 to 14 March'], ans:1,
       exp:'The book fair is from <strong>3 to 7 March</strong>.' },
     { id:'e148', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Great news, readers! The school book fair is from 3 to 7 March in the school library. Books are sold at discounted prices. Students may bring up to thirty dollars to spend. A special story-telling session for Primary 3 students will be on 4 March at 2 p.m.',
-      q:'Which group gets a special story-telling session?', opts:['Primary 1','Primary 2','Primary 3','Primary 4'], ans:2,
-      exp:'A special story-telling session is for <strong>Primary 3 students</strong>.' },
+      q:'Which group has a special story-telling session?', opts:['Primary 1','Primary 2','Primary 3','Primary 4'], ans:2,
+      exp:'The special story-telling session is for <strong>Primary 3 students</strong>.' },
 
-    // Passage 20 — Narrative: Picnic at the park
+    // P20 — Narrative: Picnic at the park
     { id:'e149', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Last Sunday, the Tan family had a picnic at East Coast Park. They brought sandwiches, fruit, and lemonade. While the parents rested under a tree, the children flew a kite. In the evening, they walked along the beach and watched the sunset together.',
+      passage:'🎧 Last Sunday, the Tan family had a picnic at East Coast Park. They brought sandwiches, fruit, and lemonade. While the parents rested under a tree, the children flew a kite. In the evening, they walked along the beach and watched the sunset.',
       q:'What did the Tan family bring to eat?', opts:['Rice and curry','Sandwiches, fruit, and lemonade','Burgers and soda','Fried chicken and drinks'], ans:1,
       exp:'They brought <strong>sandwiches, fruit, and lemonade</strong>.' },
     { id:'e150', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Last Sunday, the Tan family had a picnic at East Coast Park. They brought sandwiches, fruit, and lemonade. While the parents rested under a tree, the children flew a kite. In the evening, they walked along the beach and watched the sunset together.',
+      passage:'🎧 Last Sunday, the Tan family had a picnic at East Coast Park. They brought sandwiches, fruit, and lemonade. While the parents rested under a tree, the children flew a kite. In the evening, they walked along the beach and watched the sunset.',
       q:'What did the children do while the parents rested?', opts:['Ate their food','Swam in the sea','Flew a kite','Read books'], ans:2,
-      exp:'The children <strong>flew a kite</strong> while the parents rested under a tree.' },
+      exp:'The children <strong>flew a kite</strong> while the parents rested.' },
 
-    // Passage 21 — Dialogue: Discussing a project
+    // P21 — Dialogue: Science project
     { id:'e151', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Ahmad: Our science project is due next Friday. Have you started? / Siti: Not yet. What is our topic again? / Ahmad: We need to make a model of the water cycle. / Siti: Oh! Can we use cotton wool for the clouds? / Ahmad: Great idea. I will bring the materials tomorrow.',
-      q:'What is the topic of their science project?', opts:['The food chain','Magnets','The water cycle','Life cycles'], ans:2,
+      passage:'🎧 Ahmad: Our science project is due next Friday. Have you started? / Siti: Not yet. What is our topic? / Ahmad: We need to make a model of the water cycle. / Siti: Oh! Can we use cotton wool for the clouds? / Ahmad: Great idea. I will bring the materials tomorrow.',
+      q:'What is the topic of their project?', opts:['The food chain','Magnets','The water cycle','Life cycles'], ans:2,
       exp:'Ahmad says they need to make a model of <strong>the water cycle</strong>.' },
     { id:'e152', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Ahmad: Our science project is due next Friday. Have you started? / Siti: Not yet. What is our topic again? / Ahmad: We need to make a model of the water cycle. / Siti: Oh! Can we use cotton wool for the clouds? / Ahmad: Great idea. I will bring the materials tomorrow.',
+      passage:'🎧 Ahmad: Our science project is due next Friday. Have you started? / Siti: Not yet. What is our topic? / Ahmad: We need to make a model of the water cycle. / Siti: Oh! Can we use cotton wool for the clouds? / Ahmad: Great idea. I will bring the materials tomorrow.',
       q:'When is the project due?', opts:['Next Monday','Next Wednesday','Next Friday','This Friday'], ans:2,
       exp:'Ahmad says the project is due <strong>next Friday</strong>.' },
 
-    // Passage 22 — Instructions: Making lemonade
+    // P22 — Instructions: Making lemonade
     { id:'e153', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Here is how to make refreshing lemonade. You need two lemons, two tablespoons of sugar, and a glass of cold water. First, squeeze the lemons into a jug. Add the sugar and stir until it dissolves. Finally, pour in the cold water, add some ice, and enjoy!',
       q:'What ingredients do you need?', opts:['Oranges, honey, warm water','Lemons, sugar, cold water','Limes, salt, sparkling water','Lemons, milk, ice cream'], ans:1,
-      exp:'You need <strong>two lemons, two tablespoons of sugar, and a glass of cold water</strong>.' },
+      exp:'You need <strong>two lemons, two tablespoons of sugar, and cold water</strong>.' },
     { id:'e154', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Here is how to make refreshing lemonade. You need two lemons, two tablespoons of sugar, and a glass of cold water. First, squeeze the lemons into a jug. Add the sugar and stir until it dissolves. Finally, pour in the cold water, add some ice, and enjoy!',
       q:'What do you do after adding the sugar?', opts:['Pour in cold water','Add ice','Stir until the sugar dissolves','Squeeze the lemons'], ans:2,
       exp:'After adding the sugar, you <strong>stir until it dissolves</strong>.' },
 
-    // Passage 23 — Narrative: Lost and found
+    // P23 — Narrative: Lost and found
     { id:'e155', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 During recess, Kavya realised her water bottle was missing. She searched her bag and the canteen table but could not find it. She decided to check the lost-and-found box outside the general office. There it was — her blue water bottle with her name on it.',
       q:'Where did Kavya find her water bottle?', opts:['In her bag','At the canteen table','In the lost-and-found box','In her classroom'], ans:2,
       exp:'Kavya found her water bottle <strong>in the lost-and-found box outside the general office</strong>.' },
     { id:'e156', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 During recess, Kavya realised her water bottle was missing. She searched her bag and the canteen table but could not find it. She decided to check the lost-and-found box outside the general office. There it was — her blue water bottle with her name on it.',
-      q:'How could Kavya's bottle be identified?', opts:['It had a sticker on it','Her name was written on it','It was shaped like a star','It had a special colour pattern'], ans:1,
-      exp:'Kavya's bottle could be identified because <strong>her name was on it</strong>.' },
+      q:'How could the bottle be identified?', opts:['It had a sticker on it','Her name was written on it','It was shaped like a star','It had a special colour pattern'], ans:1,
+      exp:'The bottle could be identified because <strong>her name was on it</strong>.' },
 
-    // Passage 24 — Announcement: Swimming registration
+    // P24 — Announcement: Swimming lessons
     { id:'e157', section:'Listening Comprehension', tag:'lc',
       passage:'🎧 Hello, students! The school swimming programme for Primary 3 will begin in Term 2. Lessons are every Thursday from 3 to 4 p.m. at Tampines Swimming Complex. Each student must bring a swimsuit, towel, and goggles. Register with your PE teacher by 15 April.',
       q:'When are the swimming lessons?', opts:['Every Monday','Every Wednesday','Every Thursday','Every Friday'], ans:2,
@@ -386,64 +386,64 @@ const QB = {
       q:'What must each student bring?', opts:['Food and water','A swimsuit, towel, and goggles','A kickboard and float','Just a swimsuit'], ans:1,
       exp:'Each student must bring <strong>a swimsuit, towel, and goggles</strong>.' },
 
-    // Passage 25 — Dialogue: Favourite food
+    // P25 — Dialogue: Favourite food
     { id:'e159', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 James: What is your favourite food, Nadia? / Nadia: I love chicken rice! The sauce and the tender chicken are amazing. / James: I prefer nasi lemak — the sambal is the best part! / Nadia: Ha! Shall we go to the hawker centre after school? / James: Sure! Let's ask Priya too.',
-      q:'What is Nadia's favourite food?', opts:['Nasi lemak','Fried noodles','Chicken rice','Roti prata'], ans:2,
+      passage:'🎧 James: What is your favourite food, Nadia? / Nadia: I love chicken rice! The sauce and the tender chicken are amazing. / James: I prefer nasi lemak — the sambal is the best part! / Nadia: Shall we go to the hawker centre after school? / James: Sure! Let us ask Priya too.',
+      q:'What is Nadia favourite food?', opts:['Nasi lemak','Fried noodles','Chicken rice','Roti prata'], ans:2,
       exp:'Nadia says she loves <strong>chicken rice</strong>.' },
     { id:'e160', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 James: What is your favourite food, Nadia? / Nadia: I love chicken rice! The sauce and the tender chicken are amazing. / James: I prefer nasi lemak — the sambal is the best part! / Nadia: Ha! Shall we go to the hawker centre after school? / James: Sure! Let's ask Priya too.',
+      passage:'🎧 James: What is your favourite food, Nadia? / Nadia: I love chicken rice! The sauce and the tender chicken are amazing. / James: I prefer nasi lemak — the sambal is the best part! / Nadia: Shall we go to the hawker centre after school? / James: Sure! Let us ask Priya too.',
       q:'Where do they plan to go after school?', opts:['A restaurant','A food court','The hawker centre','The supermarket'], ans:2,
       exp:'They plan to go to <strong>the hawker centre</strong> after school.' },
 
-    // Passage 26 — Narrative: Camping trip
+    // P26 — Narrative: Camping trip
     { id:'e161', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Last school holiday, Ben went on a camping trip with his scout group. They hiked through a forest trail and set up tents beside a stream. That night, they cooked rice over a campfire and listened to crickets singing in the dark. Ben said it was the most unforgettable experience of his life.',
+      passage:'🎧 Last holiday, Ben went on a camping trip with his scout group. They hiked through a forest trail and set up tents beside a stream. That night, they cooked rice over a campfire and listened to crickets singing in the dark. Ben said it was the most unforgettable experience of his life.',
       q:'Where did they set up their tents?', opts:['On top of a hill','Beside a stream','Near a beach','In an open field'], ans:1,
       exp:'They set up their tents <strong>beside a stream</strong>.' },
     { id:'e162', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Last school holiday, Ben went on a camping trip with his scout group. They hiked through a forest trail and set up tents beside a stream. That night, they cooked rice over a campfire and listened to crickets singing in the dark. Ben said it was the most unforgettable experience of his life.',
+      passage:'🎧 Last holiday, Ben went on a camping trip with his scout group. They hiked through a forest trail and set up tents beside a stream. That night, they cooked rice over a campfire and listened to crickets singing in the dark. Ben said it was the most unforgettable experience of his life.',
       q:'How did Ben feel about the trip?', opts:['He found it boring','He was scared the whole time','He said it was the most unforgettable experience of his life','He wanted to go home early'], ans:2,
       exp:'Ben said it was <strong>the most unforgettable experience of his life</strong>.' },
 
-    // Passage 27 — Description: My best friend
+    // P27 — Description: Best friend
     { id:'e163', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 My best friend is called Yusuf. He is tall with curly hair and always wears a big smile. Yusuf is very creative — he loves building things out of recycled materials. He is also very patient and never gets angry when things go wrong. I am glad to have him as my friend.',
+      passage:'🎧 My best friend is called Yusuf. He is tall with curly hair and always wears a big smile. Yusuf is very creative — he loves building things from recycled materials. He is also very patient and never gets angry when things go wrong. I am glad to have him as my friend.',
       q:'What is Yusuf known for?', opts:['Being very sporty','Being creative and patient','Being the class monitor','Being very talkative'], ans:1,
       exp:'Yusuf is known for being <strong>very creative and patient</strong>.' },
     { id:'e164', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 My best friend is called Yusuf. He is tall with curly hair and always wears a big smile. Yusuf is very creative — he loves building things out of recycled materials. He is also very patient and never gets angry when things go wrong. I am glad to have him as my friend.',
-      q:'What does Yusuf love to do?', opts:['Play video games','Build things out of recycled materials','Read comic books','Play football'], ans:1,
-      exp:'Yusuf loves <strong>building things out of recycled materials</strong>.' },
+      passage:'🎧 My best friend is called Yusuf. He is tall with curly hair and always wears a big smile. Yusuf is very creative — he loves building things from recycled materials. He is also very patient and never gets angry when things go wrong. I am glad to have him as my friend.',
+      q:'What does Yusuf love to do?', opts:['Play video games','Build things from recycled materials','Read comic books','Play football'], ans:1,
+      exp:'Yusuf loves <strong>building things from recycled materials</strong>.' },
 
-    // Passage 28 — Announcement: Clean-up campaign
+    // P28 — Announcement: Clean-up campaign
     { id:'e165', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Greenfield Primary School will be holding a Clean and Green Campaign on 8 August. All classes are invited to take part by tidying their classrooms and recycling unwanted items. The class with the cleanest classroom wins a pizza party. Sign up with your class monitor.',
+      passage:'🎧 Greenfield Primary will hold a Clean and Green Campaign on 8 August. All classes are invited to tidy their classrooms and recycle unwanted items. The class with the cleanest classroom wins a pizza party. Sign up with your class monitor.',
       q:'What is the reward for the cleanest classroom?', opts:['A trophy','Extra recess time','A pizza party','Movie vouchers'], ans:2,
       exp:'The reward for the cleanest classroom is <strong>a pizza party</strong>.' },
     { id:'e166', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Greenfield Primary School will be holding a Clean and Green Campaign on 8 August. All classes are invited to take part by tidying their classrooms and recycling unwanted items. The class with the cleanest classroom wins a pizza party. Sign up with your class monitor.',
+      passage:'🎧 Greenfield Primary will hold a Clean and Green Campaign on 8 August. All classes are invited to tidy their classrooms and recycle unwanted items. The class with the cleanest classroom wins a pizza party. Sign up with your class monitor.',
       q:'Who should you sign up with?', opts:['The principal','Your PE teacher','Your class monitor','The librarian'], ans:2,
       exp:'Students should sign up <strong>with their class monitor</strong>.' },
 
-    // Passage 29 — Instructions: How to make a paper boat
+    // P29 — Instructions: Paper boat
     { id:'e167', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Let's make a paper boat! Take a piece of square paper. Fold it in half to make a rectangle. Then fold down the top corners to the centre to form a triangle. Fold up the bottom flap on both sides. Finally, pull the sides apart gently to open up your boat!',
-      q:'What shape of paper do you need?', opts:['Rectangle','Circle','Triangle','Square'], ans:3,
-      exp:'You need <strong>a piece of square paper</strong>.' },
+      passage:'🎧 Let us make a paper boat! Take a square piece of paper. Fold it in half to make a rectangle. Then fold down the top corners to the centre to form a triangle. Fold up the bottom flap on both sides. Finally, pull the sides apart gently to open up your boat!',
+      q:'What shape of paper do you start with?', opts:['Rectangle','Circle','Triangle','Square'], ans:3,
+      exp:'You need <strong>a square piece of paper</strong>.' },
     { id:'e168', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Let's make a paper boat! Take a piece of square paper. Fold it in half to make a rectangle. Then fold down the top corners to the centre to form a triangle. Fold up the bottom flap on both sides. Finally, pull the sides apart gently to open up your boat!',
-      q:'What is the last step?', opts:['Fold down the corners','Fold in half','Pull the sides apart gently','Fold up the bottom flap'], ans:2,
-      exp:'The last step is to <strong>pull the sides apart gently to open up your boat</strong>.' },
+      passage:'🎧 Let us make a paper boat! Take a square piece of paper. Fold it in half to make a rectangle. Then fold down the top corners to the centre to form a triangle. Fold up the bottom flap on both sides. Finally, pull the sides apart gently to open up your boat!',
+      q:'What is the last step?', opts:['Fold down the corners','Fold it in half','Pull the sides apart gently','Fold up the bottom flap'], ans:2,
+      exp:'The last step is to <strong>pull the sides apart gently</strong> to open the boat.' },
 
-    // Passage 30 — Dialogue: Before a test
+    // P30 — Dialogue: Before a test
     { id:'e169', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Ryan: I am so nervous about the English test tomorrow. / Emma: Me too! But I have been revising every evening. / Ryan: Really? What do you focus on? / Emma: Mostly grammar and vocabulary. Those always come up. / Ryan: Good tip. Let's study together this afternoon! / Emma: Sure! Two heads are better than one.',
+      passage:'🎧 Ryan: I am so nervous about the English test tomorrow. / Emma: Me too! But I have been revising every evening. / Ryan: Really? What do you focus on? / Emma: Mostly grammar and vocabulary. Those always come up. / Ryan: Good tip. Let us study together this afternoon! / Emma: Sure! Two heads are better than one.',
       q:'What does Emma focus on when revising?', opts:['Comprehension and editing','Grammar and vocabulary','Reading and spelling','Visual text and cloze'], ans:1,
-      exp:'Emma says she focuses mostly on <strong>grammar and vocabulary</strong>.' },
+      exp:'Emma focuses mostly on <strong>grammar and vocabulary</strong>.' },
     { id:'e170', section:'Listening Comprehension', tag:'lc',
-      passage:'🎧 Ryan: I am so nervous about the English test tomorrow. / Emma: Me too! But I have been revising every evening. / Ryan: Really? What do you focus on? / Emma: Mostly grammar and vocabulary. Those always come up. / Ryan: Good tip. Let's study together this afternoon! / Emma: Sure! Two heads are better than one.',
-      q:'What does "Two heads are better than one" mean?', opts:['You need two people to pass a test','Working together is better than working alone','Two books are needed','Having two teachers is helpful'], ans:1,
+      passage:'🎧 Ryan: I am so nervous about the English test tomorrow. / Emma: Me too! But I have been revising every evening. / Ryan: Really? What do you focus on? / Emma: Mostly grammar and vocabulary. Those always come up. / Ryan: Good tip. Let us study together this afternoon! / Emma: Sure! Two heads are better than one.',
+      q:'What does "Two heads are better than one" mean?', opts:['You need two people to pass a test','Working together is more effective than working alone','Two books are needed','Having two teachers is helpful'], ans:1,
       exp:'"Two heads are better than one" means <strong>working together is more effective than working alone</strong>.' },
 
   math: [
@@ -927,19 +927,19 @@ const QB = {
     { id:'b97', topic:'Isi Tempat Kosong', q:'"Murid-murid diminta ___ tangan sebelum makan."', eng:'"Students are asked to ___ their hands before eating." (wash)', opts:['Membasuh','Memakan','Menulis','Tidur'], ans:0, exp:'"Membasuh tangan" — amalan kebersihan sebelum makan.' },
     { id:'b98', topic:'Isi Tempat Kosong', q:'"Dia ___ kerja rumahnya sebelum menonton televisyen."', eng:'"She ___ her homework before watching television." (completed/finished)', opts:['Melupakan','Menyiapkan','Membuang','Menonton'], ans:1, exp:'"Menyiapkan kerja rumah" — menyelesaikan atau menyempurnakan kerja rumah.' },
     // ── Pemahaman Mendengar (MOE P3 Bahasa Melayu) ───────────────────────────
-    // Petikan 1 — Narasi: Amira ke pasar
+    // PM01 — Narasi: Amira ke pasar
     { id:'b99', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Pada hari Sabtu pagi, Amira dan ibunya pergi ke pasar. Amira membantu ibunya membawa barang-barang. Di pasar, mereka membeli sayur-sayuran, ikan, dan buah-buahan. Amira gembira kerana ibu membelinya sebiji epal merah yang besar.',
-      eng:'On Saturday morning, Amira and her mother went to the market. They bought vegetables, fish and fruit. Amira was happy because her mother bought her a big red apple.',
+      eng:'On Saturday morning, Amira and her mother went to the market. They bought vegetables, fish and fruit.',
       q:'Ke manakah Amira dan ibunya pergi?', opts:['Ke sekolah','Ke pasar','Ke taman','Ke perpustakaan'], ans:1,
       exp:'Petikan menyatakan Amira dan ibunya pergi ke <strong>pasar</strong>.' },
     { id:'b100', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Pada hari Sabtu pagi, Amira dan ibunya pergi ke pasar. Amira membantu ibunya membawa barang-barang. Di pasar, mereka membeli sayur-sayuran, ikan, dan buah-buahan. Amira gembira kerana ibu membelinya sebiji epal merah yang besar.',
-      eng:'On Saturday morning, Amira and her mother went to the market. They bought vegetables, fish and fruit. Amira was happy because her mother bought her a big red apple.',
+      eng:'On Saturday morning, Amira and her mother went to the market. They bought vegetables, fish and fruit.',
       q:'Mengapa Amira berasa gembira?', opts:['Kerana dia jumpa rakannya','Kerana ibu membeli epal merah untuknya','Kerana harga ikan murah','Kerana pasar berhampiran rumah'], ans:1,
       exp:'Amira gembira kerana <strong>ibu membelinya sebiji epal merah yang besar</strong>.' },
 
-    // Petikan 2 — Dialog: Hafiz pinjam pembaris
+    // PM02 — Dialog: Hafiz pinjam pembaris
     { id:'b101', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Hafiz: Encik Lim, bolehkah saya pinjam pembaris ini? / Cikgu: Boleh, Hafiz. Tapi ingat, kembalikan selepas kelas. / Hafiz: Baik, Encik Lim. Terima kasih. / Cikgu: Sama-sama. Jaga pembaris itu dengan baik.',
       eng:'Hafiz asks to borrow a ruler. The teacher allows it but reminds him to return it after class.',
@@ -951,19 +951,19 @@ const QB = {
       q:'Bilakah Hafiz perlu kembalikan pembaris itu?', opts:['Sebelum rehat','Selepas kelas','Esok pagi','Selepas makan tengah hari'], ans:1,
       exp:'Cikgu berkata Hafiz perlu kembalikan pembaris <strong>selepas kelas</strong>.' },
 
-    // Petikan 3 — Pengumuman: Pertandingan melukis
+    // PM03 — Pengumuman: Pertandingan melukis
     { id:'b103', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Perhatian semua pelajar! Pertandingan melukis peringkat sekolah akan diadakan pada hari Rabu, 15 Mac. Semua pelajar yang berminat boleh mendaftarkan diri dengan guru kelas masing-masing sebelum hari Isnin. Hadiah-hadiah menarik menanti para peserta.',
-      eng:'A school-level drawing competition will be on Wednesday 15 March. Students register with their class teacher before Monday. Attractive prizes await participants.',
+      eng:'A school-level drawing competition will be on Wednesday 15 March. Register with class teacher before Monday.',
       q:'Apakah pertandingan yang diumumkan?', opts:['Pertandingan menulis','Pertandingan melukis','Pertandingan bercerita','Pertandingan menyanyi'], ans:1,
       exp:'Pengumuman tentang <strong>pertandingan melukis</strong> peringkat sekolah.' },
     { id:'b104', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Perhatian semua pelajar! Pertandingan melukis peringkat sekolah akan diadakan pada hari Rabu, 15 Mac. Semua pelajar yang berminat boleh mendaftarkan diri dengan guru kelas masing-masing sebelum hari Isnin. Hadiah-hadiah menarik menanti para peserta.',
-      eng:'A school-level drawing competition will be on Wednesday 15 March. Students register with their class teacher before Monday. Attractive prizes await participants.',
+      eng:'A school-level drawing competition will be on Wednesday 15 March. Register with class teacher before Monday.',
       q:'Bagaimana cara mendaftar?', opts:['Hantar borang ke pejabat','Jumpa guru kelas','Hantar e-mel','Daftar dalam talian'], ans:1,
       exp:'Pelajar perlu mendaftar dengan <strong>guru kelas masing-masing</strong>.' },
 
-    // Petikan 4 — Arahan: Cara buat kek cawan
+    // PM04 — Arahan: Cara buat kek cawan
     { id:'b105', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Untuk membuat kek cawan, anda memerlukan tepung, gula, telur, dan mentega. Pertama, campurkan semua bahan dalam mangkuk. Kemudian, kacau sehingga sebati. Selepas itu, tuangkan ke dalam acuan kertas. Akhirnya, bakar dalam ketuhar selama 20 minit.',
       eng:'To make cupcakes, mix flour, sugar, eggs and butter. Pour into paper cups and bake for 20 minutes.',
@@ -975,7 +975,7 @@ const QB = {
       q:'Berapa lama kek perlu dibakar?', opts:['10 minit','15 minit','20 minit','30 minit'], ans:2,
       exp:'Kek dibakar selama <strong>20 minit</strong>.' },
 
-    // Petikan 5 — Narasi: Rasyid di kedai runcit
+    // PM05 — Narasi: Rasyid di kedai runcit
     { id:'b107', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Setiap petang selepas sekolah, Rasyid membantu ayahnya di kedai runcit. Dia menyusun barangan di rak dan melayan pelanggan dengan mesra. Jiran-jiran sering memuji Rasyid kerana sikapnya yang rajin dan sopan santun.',
       eng:'Every afternoon, Rasyid helps his father at the grocery shop. He is praised for being diligent and polite.',
@@ -987,67 +987,67 @@ const QB = {
       q:'Mengapa jiran-jiran memuji Rasyid?', opts:['Kerana pandai memasak','Kerana rajin dan sopan santun','Kerana seorang atlet','Kerana kaya'], ans:1,
       exp:'Jiran memuji Rasyid kerana <strong>rajin dan sopan santun</strong>.' },
 
-    // Petikan 6 — Dialog: Rancangan hujung minggu
+    // PM06 — Dialog: Rancangan hujung minggu
     { id:'b109', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Nadia: Syafiq, kita nak buat apa hujung minggu ini? / Syafiq: Jom pergi taman permainan! / Nadia: Eh, ayah saya nak bawa kita ke muzium. Ada pameran haiwan purba. Mesti menarik! / Syafiq: Wah, seronok tu!',
-      eng:'Nadia's dad wants to take them to a museum with an ancient animals exhibition. Syafiq thinks it sounds fun.',
+      eng:'Nadia dad wants to take them to a museum with an ancient animals exhibition.',
       q:'Ke manakah ayah Nadia mahu membawa mereka?', opts:['Taman permainan','Muzium','Pawagam','Pantai'], ans:1,
       exp:'Ayah Nadia mahu membawa mereka ke <strong>muzium</strong>.' },
     { id:'b110', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Nadia: Syafiq, kita nak buat apa hujung minggu ini? / Syafiq: Jom pergi taman permainan! / Nadia: Eh, ayah saya nak bawa kita ke muzium. Ada pameran haiwan purba. Mesti menarik! / Syafiq: Wah, seronok tu!',
-      eng:'Nadia's dad wants to take them to a museum with an ancient animals exhibition. Syafiq thinks it sounds fun.',
+      eng:'Nadia dad wants to take them to a museum with an ancient animals exhibition.',
       q:'Apakah yang ada di muzium itu?', opts:['Pameran lukisan','Pameran haiwan purba','Pertunjukan sains','Pameran buku'], ans:1,
       exp:'Di muzium ada <strong>pameran haiwan purba</strong>.' },
 
-    // Petikan 7 — Narasi: Kebun datuk
+    // PM07 — Narasi: Kebun datuk
     { id:'b111', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Setiap Ahad, Farid melawat datuknya di Tampines. Datuknya mempunyai kebun yang penuh dengan sayur-sayuran seperti cili, kangkung, dan timun. Datuk berkata berkebun membuatnya sihat dan bahagia. Farid suka membantu menyiram pokok.',
-      eng:'Every Sunday Farid visits his grandfather who grows vegetables. Grandfather says gardening keeps him healthy and happy.',
+      eng:'Every Sunday Farid visits his grandfather who grows vegetables including chilli, water spinach and cucumber.',
       q:'Apakah yang ditanam oleh datuk Farid?', opts:['Bunga-bungaan','Cili, kangkung, dan timun','Pokok buah-buahan','Pokok kelapa'], ans:1,
       exp:'Datuk menanam <strong>cili, kangkung, dan timun</strong>.' },
     { id:'b112', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Setiap Ahad, Farid melawat datuknya di Tampines. Datuknya mempunyai kebun yang penuh dengan sayur-sayuran seperti cili, kangkung, dan timun. Datuk berkata berkebun membuatnya sihat dan bahagia. Farid suka membantu menyiram pokok.',
-      eng:'Every Sunday Farid visits his grandfather who grows vegetables. Grandfather says gardening keeps him healthy and happy.',
+      eng:'Every Sunday Farid visits his grandfather who grows vegetables including chilli, water spinach and cucumber.',
       q:'Mengapa datuk suka berkebun?', opts:['Untuk wang','Kerana berkebun membuatnya sihat dan bahagia','Kerana disuruh jiran','Kerana tidak ada kerja lain'], ans:1,
       exp:'Datuk berkata berkebun membuatnya <strong>sihat dan bahagia</strong>.' },
 
-    // Petikan 8 — Dialog: Rancangan hari jadi Sara
+    // PM08 — Dialog: Rancangan hari jadi Sara
     { id:'b113', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Sara: Ibu, bolehkah saya jemput lima orang kawan untuk majlis hari jadi saya? / Ibu: Boleh sayang! Apa yang Sara mahu makan? / Sara: Boleh kita buat pizza dan kek coklat? / Ibu: Bagus! Ibu akan pesan pizza dan bakar kek. / Sara: Terima kasih, Ibu!',
-      eng:'Sara asks to invite five friends for her birthday. She wants pizza and chocolate cake. Mum agrees to order pizza and bake the cake.',
-      q:'Apakah makanan yang Sara mahukan untuk hari jadinya?', opts:['Nasi lemak dan kuih','Burger dan pai','Pizza dan kek coklat','Mi goreng dan aiskrim'], ans:2,
+      eng:'Sara asks to invite five friends for her birthday and wants pizza and chocolate cake. Mum agrees to bake the cake.',
+      q:'Apakah makanan yang Sara mahukan?', opts:['Nasi lemak dan kuih','Burger dan pai','Pizza dan kek coklat','Mi goreng dan aiskrim'], ans:2,
       exp:'Sara mahu <strong>pizza dan kek coklat</strong>.' },
     { id:'b114', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Sara: Ibu, bolehkah saya jemput lima orang kawan untuk majlis hari jadi saya? / Ibu: Boleh sayang! Apa yang Sara mahu makan? / Sara: Boleh kita buat pizza dan kek coklat? / Ibu: Bagus! Ibu akan pesan pizza dan bakar kek. / Sara: Terima kasih, Ibu!',
-      eng:'Sara asks to invite five friends for her birthday. She wants pizza and chocolate cake. Mum agrees to order pizza and bake the cake.',
+      eng:'Sara asks to invite five friends for her birthday and wants pizza and chocolate cake. Mum agrees to bake the cake.',
       q:'Siapakah yang akan membakar kek?', opts:['Sara','Kedai kek','Kawan-kawan Sara','Ibu'], ans:3,
       exp:'Ibu berkata "<strong>Ibu akan bakar kek</strong>".' },
 
-    // Petikan 9 — Pengumuman: Hari Sukan
+    // PM09 — Pengumuman: Hari Sukan
     { id:'b115', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Perhatian! Hari Sukan sekolah tahun ini akan diadakan pada 20 September di padang sekolah. Semua murid mesti memakai pakaian sukan dan membawa botol air. Ibu bapa dialu-alukan untuk hadir. Murid yang ingin menyertai acara larian perlu mendaftar dengan guru kelas sebelum Jumaat.',
-      eng:'Sports Day on 20 September at the school field. Students wear PE attire and bring a water bottle. Parents welcome.',
+      eng:'Sports Day on 20 September at the school field. Students must wear PE attire and bring a water bottle.',
       q:'Di manakah Hari Sukan akan diadakan?', opts:['Di dewan sekolah','Di pusat komuniti','Di padang sekolah','Di stadium'], ans:2,
       exp:'Hari Sukan diadakan <strong>di padang sekolah</strong>.' },
     { id:'b116', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Perhatian! Hari Sukan sekolah tahun ini akan diadakan pada 20 September di padang sekolah. Semua murid mesti memakai pakaian sukan dan membawa botol air. Ibu bapa dialu-alukan untuk hadir. Murid yang ingin menyertai acara larian perlu mendaftar dengan guru kelas sebelum Jumaat.',
-      eng:'Sports Day on 20 September at the school field. Students wear PE attire and bring a water bottle. Parents welcome.',
+      eng:'Sports Day on 20 September at the school field. Students must wear PE attire and bring a water bottle.',
       q:'Apakah yang mesti dibawa oleh setiap murid?', opts:['Baju hujan','Botol air','Buku teks','Payung'], ans:1,
       exp:'Setiap murid mesti membawa <strong>botol air</strong>.' },
 
-    // Petikan 10 — Arahan: Cara menanam biji benih
+    // PM10 — Arahan: Cara menanam biji benih
     { id:'b117', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Menanam biji benih adalah mudah! Pertama, isikan pasu kecil dengan tanah. Kemudian, buat lubang kecil di tengah dan masukkan biji benih. Tutup biji benih itu dengan tanah dengan lembut. Siram sedikit setiap hari dan letakkan pasu di tempat yang mendapat cahaya matahari.',
-      eng:'First fill a pot with soil, make a hole, place the seed, cover it, water daily and put in sunlight.',
+      eng:'First fill a small pot with soil, make a hole, place the seed, cover gently, water daily and put in sunlight.',
       q:'Apakah langkah pertama untuk menanam biji benih?', opts:['Siram dengan air','Buat lubang kecil','Isikan pasu dengan tanah','Letak di bawah matahari'], ans:2,
       exp:'Langkah pertama ialah <strong>isikan pasu kecil dengan tanah</strong>.' },
     { id:'b118', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Menanam biji benih adalah mudah! Pertama, isikan pasu kecil dengan tanah. Kemudian, buat lubang kecil di tengah dan masukkan biji benih. Tutup biji benih itu dengan tanah dengan lembut. Siram sedikit setiap hari dan letakkan pasu di tempat yang mendapat cahaya matahari.',
-      eng:'First fill a pot with soil, make a hole, place the seed, cover it, water daily and put in sunlight.',
+      eng:'First fill a small pot with soil, make a hole, place the seed, cover gently, water daily and put in sunlight.',
       q:'Apakah yang perlu dilakukan setiap hari?', opts:['Baja tanah','Siram sedikit air','Tukar pasu baru','Buang daun lama'], ans:1,
       exp:'Pokok perlu <strong>disiram sedikit setiap hari</strong>.' },
 
-    // Petikan 11 — Narasi: Hujan lebat di rumah
+    // PM11 — Narasi: Hujan lebat di rumah
     { id:'b119', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Pada hari Sabtu yang lalu, hujan lebat turun. Daniel dan kakaknya terpaksa tinggal di rumah. Daripada menonton televisyen, mereka memutuskan untuk membina khemah menggunakan bantal dan selimut. Ibu mereka membawa minuman coklat panas untuk mereka.',
       eng:'Heavy rain on Saturday. Daniel and his sister built a fort using cushions and blankets. Mum brought hot chocolate.',
@@ -1059,23 +1059,23 @@ const QB = {
       q:'Apakah yang ibu bawa untuk mereka?', opts:['Permainan papan','Minuman coklat panas','Biskut dan susu','Pizza'], ans:1,
       exp:'Ibu membawa <strong>minuman coklat panas</strong>.' },
 
-    // Petikan 12 — Dialog: Memilih hadiah untuk cikgu
+    // PM12 — Dialog: Memilih hadiah untuk cikgu
     { id:'b121', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
-      passage:'🎧 Tom: Saya perlu beli hadiah untuk cikgu saya. Dia suka membaca. / Priya: Kenapa tidak belikan dia buku? / Tom: Idea bagus! Buku apa ya? / Priya: Mungkin buku tentang alam semula jadi. Dia selalu bercakap tentang tumbuhan dan haiwan. / Tom: Sempurna! Jom ke kedai buku sekarang.',
-      eng:'Tom needs a gift for his teacher who loves reading. Priya suggests a nature book since the teacher talks about plants and animals.',
+      passage:'🎧 Tom: Saya perlu beli hadiah untuk cikgu saya. Dia suka membaca. / Priya: Kenapa tidak belikan dia buku? / Tom: Idea bagus! Buku apa ya? / Priya: Mungkin buku tentang alam semula jadi. Dia selalu bercakap tentang tumbuhan dan haiwan. / Tom: Sempurna! Jom ke kedai buku.',
+      eng:'Tom needs a gift for his teacher who loves reading. Priya suggests a nature book.',
       q:'Apakah yang cikgu Tom suka lakukan?', opts:['Memasak','Membaca','Melukis','Bersukan'], ans:1,
       exp:'Cikgu Tom <strong>suka membaca</strong>.' },
     { id:'b122', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
-      passage:'🎧 Tom: Saya perlu beli hadiah untuk cikgu saya. Dia suka membaca. / Priya: Kenapa tidak belikan dia buku? / Tom: Idea bagus! Buku apa ya? / Priya: Mungkin buku tentang alam semula jadi. Dia selalu bercakap tentang tumbuhan dan haiwan. / Tom: Sempurna! Jom ke kedai buku sekarang.',
-      eng:'Tom needs a gift for his teacher who loves reading. Priya suggests a nature book since the teacher talks about plants and animals.',
+      passage:'🎧 Tom: Saya perlu beli hadiah untuk cikgu saya. Dia suka membaca. / Priya: Kenapa tidak belikan dia buku? / Tom: Idea bagus! Buku apa ya? / Priya: Mungkin buku tentang alam semula jadi. Dia selalu bercakap tentang tumbuhan dan haiwan. / Tom: Sempurna! Jom ke kedai buku.',
+      eng:'Tom needs a gift for his teacher who loves reading. Priya suggests a nature book.',
       q:'Apakah jenis buku yang Priya cadangkan?', opts:['Buku masakan','Buku cerita','Buku tentang alam semula jadi','Buku matematik'], ans:2,
       exp:'Priya mencadangkan <strong>buku tentang alam semula jadi</strong>.' },
 
-    // Petikan 13 — Penerangan: Haiwan kegemaran (lumba-lumba)
+    // PM13 — Penerangan: Haiwan kegemaran — lumba-lumba
     { id:'b123', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Haiwan kegemaran saya ialah lumba-lumba. Lumba-lumba hidup di laut dan sangat bijak. Mereka berkomunikasi dengan membuat bunyi klik dan siulan. Lumba-lumba dikenali kerana sifatnya yang suka bermain dan sering melompat keluar dari air. Mereka hidup dalam kumpulan yang disebut pod.',
       eng:'Dolphins are intelligent, communicate with clicks and whistles, are playful, and live in groups called pods.',
-      q:'Bagaimana lumba-lumba berkomunikasi?', opts:['Menggerak sirip','Membuat bunyi klik dan siulan','Menukar warna','Berenang membuat bulatan'], ans:1,
+      q:'Bagaimana lumba-lumba berkomunikasi?', opts:['Menggerak sirip','Membuat bunyi klik dan siulan','Menukar warna','Berenang dalam bulatan'], ans:1,
       exp:'Lumba-lumba berkomunikasi dengan <strong>bunyi klik dan siulan</strong>.' },
     { id:'b124', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Haiwan kegemaran saya ialah lumba-lumba. Lumba-lumba hidup di laut dan sangat bijak. Mereka berkomunikasi dengan membuat bunyi klik dan siulan. Lumba-lumba dikenali kerana sifatnya yang suka bermain dan sering melompat keluar dari air. Mereka hidup dalam kumpulan yang disebut pod.',
@@ -1083,7 +1083,7 @@ const QB = {
       q:'Bagaimana kumpulan lumba-lumba dipanggil?', opts:['Kawanan','Kelompok','Pod','Pasukan'], ans:2,
       exp:'Kumpulan lumba-lumba dipanggil <strong>pod</strong>.' },
 
-    // Petikan 14 — Narasi: Berkongsi makanan dengan rakan
+    // PM14 — Narasi: Berkongsi makanan dengan rakan
     { id:'b125', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Pada suatu petang, Jing Wei menyedari rakannya Rina kelihatan sedih. Rina terlupa membawa bekas makanannya ke sekolah. Tanpa berfikir panjang, Jing Wei menawarkan untuk berkongsi makanannya. Rina sangat berterima kasih. Guru mereka memuji Jing Wei kerana kemurahan hatinya.',
       eng:'Jing Wei shares her food with Rina who forgot her lunch box. The teacher praises Jing Wei for her generosity.',
@@ -1092,10 +1092,10 @@ const QB = {
     { id:'b126', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Pada suatu petang, Jing Wei menyedari rakannya Rina kelihatan sedih. Rina terlupa membawa bekas makanannya ke sekolah. Tanpa berfikir panjang, Jing Wei menawarkan untuk berkongsi makanannya. Rina sangat berterima kasih. Guru mereka memuji Jing Wei kerana kemurahan hatinya.',
       eng:'Jing Wei shares her food with Rina who forgot her lunch box. The teacher praises Jing Wei for her generosity.',
-      q:'Apakah yang guru lakukan?', opts:['Beri Jing Wei kerja tambahan','Puji Jing Wei kerana kemurahan hatinya','Suruh Rina telefon ibunya','Beli makanan untuk kedua-dua mereka'], ans:1,
+      q:'Apakah yang guru lakukan?', opts:['Beri Jing Wei kerja tambahan','Puji Jing Wei kerana kemurahan hatinya','Suruh Rina telefon ibunya','Beli makanan untuk mereka berdua'], ans:1,
       exp:'Guru <strong>memuji Jing Wei kerana kemurahan hatinya</strong>.' },
 
-    // Petikan 15 — Pengumuman: Konsert tahunan sekolah
+    // PM15 — Pengumuman: Konsert tahunan sekolah
     { id:'b127', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Murid-murid yang dihormati, Konsert Tahunan Sekolah kita akan diadakan pada 5 November di dewan sekolah. Setiap kelas dikehendaki menyediakan persembahan selama lima minit. Latihan akan bermula Isnin depan. Semua murid perlu memulangkan slip kebenaran sebelum 10 Oktober.',
       eng:'Annual School Concert on 5 November in the school hall. Each class prepares a 5-minute performance. Permission slips due 10 October.',
@@ -1104,82 +1104,82 @@ const QB = {
     { id:'b128', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Murid-murid yang dihormati, Konsert Tahunan Sekolah kita akan diadakan pada 5 November di dewan sekolah. Setiap kelas dikehendaki menyediakan persembahan selama lima minit. Latihan akan bermula Isnin depan. Semua murid perlu memulangkan slip kebenaran sebelum 10 Oktober.',
       eng:'Annual School Concert on 5 November in the school hall. Each class prepares a 5-minute performance. Permission slips due 10 October.',
-      q:'Bilakah tarikh akhir memulangkan slip kebenaran?', opts:['5 November','Isnin depan','10 Oktober','Akhir minggu'], ans:2,
+      q:'Bilakah tarikh akhir slip kebenaran?', opts:['5 November','Isnin depan','10 Oktober','Akhir minggu ini'], ans:2,
       exp:'Slip kebenaran mesti dipulangkan <strong>sebelum 10 Oktober</strong>.' },
 
-    // Petikan 16 — Arahan: Membuat kapal kertas
+    // PM16 — Arahan: Membuat kapal kertas
     { id:'b129', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
-      passage:'🎧 Mari buat kapal kertas! Ambil sekeping kertas segi empat. Lipat dua untuk membentuk segi empat tepat. Kemudian, lipat pula sudut-sudut atas ke bahagian tengah untuk membentuk segi tiga. Lipat naik jalur bawah pada kedua-dua belah. Akhirnya, tarik kedua-dua hujung dengan lembut untuk membuka kapal anda!',
-      eng:'Start with a square paper, fold in half, fold top corners to centre, fold up bottom flap, then pull sides apart to open the boat.',
+      passage:'🎧 Mari buat kapal kertas! Ambil sekeping kertas segi empat. Lipat dua untuk membentuk segi empat tepat. Kemudian, lipat pula sudut-sudut atas ke bahagian tengah untuk membentuk segi tiga. Lipat naik jalur bawah pada kedua-dua belah. Akhirnya, tarik kedua-dua hujung untuk membuka kapal anda!',
+      eng:'Use square paper: fold in half, fold top corners to centre, fold up bottom flap, then pull sides apart.',
       q:'Apakah bentuk kertas yang diperlukan?', opts:['Segi empat tepat','Bulatan','Segi tiga','Segi empat sama'], ans:3,
       exp:'Anda memerlukan <strong>sekeping kertas segi empat sama</strong>.' },
     { id:'b130', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
-      passage:'🎧 Mari buat kapal kertas! Ambil sekeping kertas segi empat. Lipat dua untuk membentuk segi empat tepat. Kemudian, lipat pula sudut-sudut atas ke bahagian tengah untuk membentuk segi tiga. Lipat naik jalur bawah pada kedua-dua belah. Akhirnya, tarik kedua-dua hujung dengan lembut untuk membuka kapal anda!',
-      eng:'Start with a square paper, fold in half, fold top corners to centre, fold up bottom flap, then pull sides apart to open the boat.',
-      q:'Apakah langkah terakhir?', opts:['Lipat sudut ke tengah','Lipat dua kertas','Tarik kedua-dua hujung dengan lembut','Lipat naik jalur bawah'], ans:2,
-      exp:'Langkah terakhir ialah <strong>tarik kedua-dua hujung dengan lembut untuk membuka kapal</strong>.' },
+      passage:'🎧 Mari buat kapal kertas! Ambil sekeping kertas segi empat. Lipat dua untuk membentuk segi empat tepat. Kemudian, lipat pula sudut-sudut atas ke bahagian tengah untuk membentuk segi tiga. Lipat naik jalur bawah pada kedua-dua belah. Akhirnya, tarik kedua-dua hujung untuk membuka kapal anda!',
+      eng:'Use square paper: fold in half, fold top corners to centre, fold up bottom flap, then pull sides apart.',
+      q:'Apakah langkah terakhir?', opts:['Lipat sudut ke tengah','Lipat dua kertas','Tarik kedua-dua hujung untuk membuka kapal','Lipat naik jalur bawah'], ans:2,
+      exp:'Langkah terakhir ialah <strong>tarik kedua-dua hujung untuk membuka kapal</strong>.' },
 
-    // Petikan 17 — Dialog: Di klinik
+    // PM17 — Dialog: Di klinik
     { id:'b131', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Doktor: Selamat pagi! Ada apa masalahnya? / Ali: Saya sakit tekak dan hidung berair. / Doktor: Sejak bila awak rasa begini? / Ali: Sejak semalam pagi. / Doktor: Baiklah. Saya akan beri ubat. Minum banyak air dan rehat di rumah.',
-      eng:'Ali has a sore throat and runny nose. The doctor prescribes medicine and advises him to drink water and rest.',
+      eng:'Ali has a sore throat and runny nose. The doctor prescribes medicine and advises rest and water.',
       q:'Apakah simptom-simptom Ali?', opts:['Sakit kepala dan demam','Sakit tekak dan hidung berair','Sakit perut dan pening','Batuk dan ruam'], ans:1,
       exp:'Ali mengalami <strong>sakit tekak dan hidung berair</strong>.' },
     { id:'b132', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Doktor: Selamat pagi! Ada apa masalahnya? / Ali: Saya sakit tekak dan hidung berair. / Doktor: Sejak bila awak rasa begini? / Ali: Sejak semalam pagi. / Doktor: Baiklah. Saya akan beri ubat. Minum banyak air dan rehat di rumah.',
-      eng:'Ali has a sore throat and runny nose. The doctor prescribes medicine and advises him to drink water and rest.',
-      q:'Apakah nasihat doktor kepada Ali?', opts:['Pergi sekolah seperti biasa','Bersenam dan makan dengan baik','Minum banyak air dan rehat di rumah','Jumpa doktor lain dengan segera'], ans:2,
+      eng:'Ali has a sore throat and runny nose. The doctor prescribes medicine and advises rest and water.',
+      q:'Apakah nasihat doktor kepada Ali?', opts:['Pergi sekolah seperti biasa','Bersenam dan makan dengan baik','Minum banyak air dan rehat di rumah','Jumpa doktor lain'], ans:2,
       exp:'Doktor menasihati Ali untuk <strong>minum banyak air dan rehat di rumah</strong>.' },
 
-    // Petikan 18 — Narasi: Hari pertama di sekolah baharu
+    // PM18 — Narasi: Hari pertama di sekolah baharu
     { id:'b133', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Pada hari pertama Layla di Sekolah Greenfield, dia berasa gugup. Bilik darjah di sekolah baru itu lebih besar daripada sekolah lamanya. Namun, cikgu kelasnya, Cikgu Seah, sangat mesra. Beliau memperkenalkan Layla kepada kelas dan meminta seorang pelajar bernama Hana untuk menunjukkan kawasan sekolah.',
-      eng:'Layla feels nervous on her first day. Her kind teacher Mr Seah introduces her and asks Hana to show her around.',
+      eng:'Layla feels nervous on her first day. Kind teacher Mr Seah introduces her and asks Hana to show her around.',
       q:'Bagaimana perasaan Layla pada hari pertamanya?', opts:['Teruja dan yakin','Gugup','Marah','Bosan'], ans:1,
       exp:'Layla <strong>berasa gugup</strong> pada hari pertamanya.' },
     { id:'b134', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Pada hari pertama Layla di Sekolah Greenfield, dia berasa gugup. Bilik darjah di sekolah baru itu lebih besar daripada sekolah lamanya. Namun, cikgu kelasnya, Cikgu Seah, sangat mesra. Beliau memperkenalkan Layla kepada kelas dan meminta seorang pelajar bernama Hana untuk menunjukkan kawasan sekolah.',
-      eng:'Layla feels nervous on her first day. Her kind teacher Mr Seah introduces her and asks Hana to show her around.',
+      eng:'Layla feels nervous on her first day. Kind teacher Mr Seah introduces her and asks Hana to show her around.',
       q:'Siapakah yang menunjukkan kawasan sekolah kepada Layla?', opts:['Cikgu Seah','Pengetua','Hana','Ibunya'], ans:2,
-      exp:'Cikgu Seah meminta <strong>Hana</strong> untuk menunjukkan kawasan sekolah kepada Layla.' },
+      exp:'Cikgu Seah meminta <strong>Hana</strong> untuk menunjukkan kawasan sekolah.' },
 
-    // Petikan 19 — Pengumuman: Pesta buku
+    // PM19 — Pengumuman: Pesta buku
     { id:'b135', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Berita gembira, para pembaca! Pesta Buku Sekolah akan berlangsung dari 3 hingga 7 Mac di perpustakaan sekolah. Buku dijual dengan harga diskaun. Murid boleh membawa sehingga tiga puluh ringgit. Sesi bercerita khas untuk murid Darjah 3 akan diadakan pada 4 Mac jam 2 petang.',
-      eng:'School book fair 3-7 March. Discounted books. Students can bring up to $30. P3 story-telling on 4 March at 2pm.',
+      eng:'School book fair 3-7 March. Discounted books, up to $30 per student. P3 story-telling on 4 March at 2pm.',
       q:'Bilakah Pesta Buku berlangsung?', opts:['1 hingga 5 Mac','3 hingga 7 Mac','5 hingga 9 Mac','10 hingga 14 Mac'], ans:1,
       exp:'Pesta Buku berlangsung dari <strong>3 hingga 7 Mac</strong>.' },
     { id:'b136', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Berita gembira, para pembaca! Pesta Buku Sekolah akan berlangsung dari 3 hingga 7 Mac di perpustakaan sekolah. Buku dijual dengan harga diskaun. Murid boleh membawa sehingga tiga puluh ringgit. Sesi bercerita khas untuk murid Darjah 3 akan diadakan pada 4 Mac jam 2 petang.',
-      eng:'School book fair 3-7 March. Discounted books. Students can bring up to $30. P3 story-telling on 4 March at 2pm.',
+      eng:'School book fair 3-7 March. Discounted books, up to $30 per student. P3 story-telling on 4 March at 2pm.',
       q:'Kumpulan manakah yang mendapat sesi bercerita khas?', opts:['Darjah 1','Darjah 2','Darjah 3','Darjah 4'], ans:2,
       exp:'Sesi bercerita khas adalah untuk <strong>murid Darjah 3</strong>.' },
 
-    // Petikan 20 — Narasi: Berkelah di taman
+    // PM20 — Narasi: Berkelah di taman
     { id:'b137', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Pada hari Ahad yang lalu, keluarga Tan berkelah di East Coast Park. Mereka membawa sandwic, buah-buahan, dan air lemon. Sementara ibu bapa berehat di bawah pokok, anak-anak menerbangkan layang-layang. Pada waktu petang, mereka berjalan di tepi pantai dan menonton matahari terbenam.',
-      eng:'The Tan family picnicked at East Coast Park with sandwiches, fruit and lemonade. Kids flew a kite while parents rested.',
-      q:'Apakah makanan yang dibawa oleh keluarga Tan?', opts:['Nasi dan kari','Sandwic, buah-buahan, dan air lemon','Burger dan minuman bergas','Ayam goreng dan minuman'], ans:1,
+      eng:'The Tan family had a picnic at East Coast Park with sandwiches, fruit and lemonade. Kids flew a kite.',
+      q:'Apakah makanan yang dibawa oleh keluarga Tan?', opts:['Nasi dan kari','Sandwic, buah-buahan, dan air lemon','Burger dan minuman bergas','Ayam goreng'], ans:1,
       exp:'Mereka membawa <strong>sandwic, buah-buahan, dan air lemon</strong>.' },
     { id:'b138', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Pada hari Ahad yang lalu, keluarga Tan berkelah di East Coast Park. Mereka membawa sandwic, buah-buahan, dan air lemon. Sementara ibu bapa berehat di bawah pokok, anak-anak menerbangkan layang-layang. Pada waktu petang, mereka berjalan di tepi pantai dan menonton matahari terbenam.',
-      eng:'The Tan family picnicked at East Coast Park with sandwiches, fruit and lemonade. Kids flew a kite while parents rested.',
-      q:'Apakah yang dilakukan oleh anak-anak semasa ibu bapa berehat?', opts:['Makan makanan mereka','Berenang di laut','Menerbangkan layang-layang','Membaca buku'], ans:2,
+      eng:'The Tan family had a picnic at East Coast Park with sandwiches, fruit and lemonade. Kids flew a kite.',
+      q:'Apakah yang dilakukan anak-anak semasa ibu bapa berehat?', opts:['Makan makanan mereka','Berenang di laut','Menerbangkan layang-layang','Membaca buku'], ans:2,
       exp:'Anak-anak <strong>menerbangkan layang-layang</strong>.' },
 
-    // Petikan 21 — Dialog: Perbincangan projek sains
+    // PM21 — Dialog: Perbincangan projek sains
     { id:'b139', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Ahmad: Projek sains kita perlu dihantar Jumaat depan. Kamu dah mulakan? / Siti: Belum lagi. Topik kita apa? / Ahmad: Kita perlu buat model kitar air. / Siti: Oh! Boleh kita guna kapas untuk awan? / Ahmad: Idea bagus! Saya akan bawa bahan-bahan esok.',
-      eng:'Ahmad and Siti discuss their water cycle science project due next Friday. Siti suggests cotton wool for clouds.',
+      eng:'Ahmad and Siti discuss their water cycle project due next Friday. Siti suggests cotton wool for clouds.',
       q:'Apakah topik projek sains mereka?', opts:['Rantai makanan','Magnet','Kitar air','Kitar hidup'], ans:2,
       exp:'Mereka perlu buat model <strong>kitar air</strong>.' },
     { id:'b140', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Ahmad: Projek sains kita perlu dihantar Jumaat depan. Kamu dah mulakan? / Siti: Belum lagi. Topik kita apa? / Ahmad: Kita perlu buat model kitar air. / Siti: Oh! Boleh kita guna kapas untuk awan? / Ahmad: Idea bagus! Saya akan bawa bahan-bahan esok.',
-      eng:'Ahmad and Siti discuss their water cycle science project due next Friday. Siti suggests cotton wool for clouds.',
+      eng:'Ahmad and Siti discuss their water cycle project due next Friday. Siti suggests cotton wool for clouds.',
       q:'Bilakah tarikh projek itu perlu dihantar?', opts:['Isnin depan','Rabu depan','Jumaat depan','Jumaat ini'], ans:2,
       exp:'Projek perlu dihantar <strong>Jumaat depan</strong>.' },
 
-    // Petikan 22 — Arahan: Resepi air limau
+    // PM22 — Arahan: Resepi air limau
     { id:'b141', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Begini cara membuat air limau yang menyegarkan. Anda perlukan dua biji limau, dua sudu gula, dan segelas air sejuk. Pertama, perah limau ke dalam jag. Masukkan gula dan kacau sehingga larut. Akhirnya, tuangkan air sejuk, tambah ais, dan nikmati!',
       eng:'Squeeze two lemons into a jug, add sugar and stir until dissolved, pour in cold water and add ice.',
@@ -1191,67 +1191,67 @@ const QB = {
       q:'Apakah yang dilakukan selepas memasukkan gula?', opts:['Tuang air sejuk','Tambah ais','Kacau sehingga gula larut','Perah limau'], ans:2,
       exp:'Selepas masukkan gula, <strong>kacau sehingga larut</strong>.' },
 
-    // Petikan 23 — Narasi: Barang hilang
+    // PM23 — Narasi: Barang hilang
     { id:'b143', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Semasa waktu rehat, Kavya menyedari botol airnya hilang. Dia mencari dalam beg dan di meja kantin tetapi tidak menjumpainya. Dia memutuskan untuk menyemak kotak barang jumpa di luar pejabat am. Botol air biru miliknya yang tertulis namanya ada di sana.',
-      eng:'Kavya's water bottle went missing during recess. She found it in the lost-and-found box outside the general office.',
+      eng:'Kavya found her missing water bottle in the lost-and-found box outside the general office.',
       q:'Di manakah Kavya menjumpai botol airnya?', opts:['Dalam beg','Di meja kantin','Dalam kotak barang jumpa','Di bilik darjah'], ans:2,
       exp:'Kavya menjumpai botol airnya <strong>dalam kotak barang jumpa di luar pejabat am</strong>.' },
     { id:'b144', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Semasa waktu rehat, Kavya menyedari botol airnya hilang. Dia mencari dalam beg dan di meja kantin tetapi tidak menjumpainya. Dia memutuskan untuk menyemak kotak barang jumpa di luar pejabat am. Botol air biru miliknya yang tertulis namanya ada di sana.',
-      eng:'Kavya's water bottle went missing during recess. She found it in the lost-and-found box outside the general office.',
+      eng:'Kavya found her missing water bottle in the lost-and-found box outside the general office.',
       q:'Bagaimana botol air Kavya dapat dikenali?', opts:['Ada pelekat di atasnya','Namanya tertulis di atasnya','Berbentuk bintang','Mempunyai corak warna istimewa'], ans:1,
       exp:'Botol air Kavya boleh dikenali kerana <strong>namanya tertulis di atasnya</strong>.' },
 
-    // Petikan 24 — Pengumuman: Pendaftaran program renang
+    // PM24 — Pengumuman: Pendaftaran program renang
     { id:'b145', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Perhatian murid-murid! Program renang sekolah bagi murid Darjah 3 akan bermula pada Penggal 2. Kelas diadakan setiap Khamis dari jam 3 hingga 4 petang di Kompleks Renang Tampines. Setiap murid mesti membawa baju renang, tuala, dan gogal. Daftar dengan guru PJ sebelum 15 April.',
-      eng:'P3 swimming programme starts Term 2, every Thursday 3-4pm at Tampines Swimming Complex. Bring swimsuit, towel and goggles.',
+      eng:'P3 swimming programme starts Term 2, every Thursday 3-4pm at Tampines Swimming Complex.',
       q:'Bilakah kelas renang diadakan?', opts:['Setiap Isnin','Setiap Rabu','Setiap Khamis','Setiap Jumaat'], ans:2,
       exp:'Kelas renang diadakan <strong>setiap Khamis</strong>.' },
     { id:'b146', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Perhatian murid-murid! Program renang sekolah bagi murid Darjah 3 akan bermula pada Penggal 2. Kelas diadakan setiap Khamis dari jam 3 hingga 4 petang di Kompleks Renang Tampines. Setiap murid mesti membawa baju renang, tuala, dan gogal. Daftar dengan guru PJ sebelum 15 April.',
-      eng:'P3 swimming programme starts Term 2, every Thursday 3-4pm at Tampines Swimming Complex. Bring swimsuit, towel and goggles.',
-      q:'Apakah yang mesti dibawa oleh setiap murid?', opts:['Makanan dan minuman','Baju renang, tuala, dan gogal','Papan tangan dan pelampung','Hanya baju renang sahaja'], ans:1,
+      eng:'P3 swimming programme starts Term 2, every Thursday 3-4pm at Tampines Swimming Complex.',
+      q:'Apakah yang mesti dibawa oleh setiap murid?', opts:['Makanan dan minuman','Baju renang, tuala, dan gogal','Papan tangan dan pelampung','Hanya baju renang'], ans:1,
       exp:'Setiap murid mesti membawa <strong>baju renang, tuala, dan gogal</strong>.' },
 
-    // Petikan 25 — Dialog: Makanan kegemaran
+    // PM25 — Dialog: Makanan kegemaran
     { id:'b147', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
-      passage:'🎧 James: Apakah makanan kegemaran awak, Nadia? / Nadia: Saya suka nasi ayam! Sos dan ayamnya sangat sedap. / James: Saya lebih suka nasi lemak — sambalnya paling best! / Nadia: Ha! Nak pergi ke gerai makan selepas sekolah? / James: Boleh! Jom ajak Priya sekali.',
+      passage:'🎧 James: Apakah makanan kegemaran awak, Nadia? / Nadia: Saya suka nasi ayam! Sos dan ayamnya sangat sedap. / James: Saya lebih suka nasi lemak — sambalnya paling best! / Nadia: Nak pergi ke gerai makan selepas sekolah? / James: Boleh! Jom ajak Priya sekali.',
       eng:'Nadia loves chicken rice, James loves nasi lemak. They plan to go to the hawker stall after school.',
       q:'Apakah makanan kegemaran Nadia?', opts:['Nasi lemak','Mi goreng','Nasi ayam','Roti canai'], ans:2,
       exp:'Nadia suka <strong>nasi ayam</strong>.' },
     { id:'b148', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
-      passage:'🎧 James: Apakah makanan kegemaran awak, Nadia? / Nadia: Saya suka nasi ayam! Sos dan ayamnya sangat sedap. / James: Saya lebih suka nasi lemak — sambalnya paling best! / Nadia: Ha! Nak pergi ke gerai makan selepas sekolah? / James: Boleh! Jom ajak Priya sekali.',
+      passage:'🎧 James: Apakah makanan kegemaran awak, Nadia? / Nadia: Saya suka nasi ayam! Sos dan ayamnya sangat sedap. / James: Saya lebih suka nasi lemak — sambalnya paling best! / Nadia: Nak pergi ke gerai makan selepas sekolah? / James: Boleh! Jom ajak Priya sekali.',
       eng:'Nadia loves chicken rice, James loves nasi lemak. They plan to go to the hawker stall after school.',
-      q:'Ke manakah mereka merancang untuk pergi selepas sekolah?', opts:['Restoran','Pusat membeli-belah','Gerai makan','Pasar raya'], ans:2,
+      q:'Ke manakah mereka merancang pergi selepas sekolah?', opts:['Restoran','Pusat membeli-belah','Gerai makan','Pasar raya'], ans:2,
       exp:'Mereka merancang untuk pergi ke <strong>gerai makan</strong>.' },
 
-    // Petikan 26 — Narasi: Perkhemahan pengakap
+    // PM26 — Narasi: Perkhemahan pengakap
     { id:'b149', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Semasa cuti sekolah yang lalu, Ben pergi berkemah bersama kumpulan pengakapnya. Mereka mendaki laluan hutan dan mendirikan khemah di tepi sungai. Pada malam itu, mereka memasak nasi di atas api unggun dan mendengar bunyi cengkerik dalam gelap. Ben berkata ia adalah pengalaman paling tidak terlupakan dalam hidupnya.',
-      eng:'Ben went camping with his scout group, hiked through a forest, set up tents by a stream and cooked over a campfire.',
+      eng:'Ben went camping with his scout group, hiked a forest trail and set up tents by a stream.',
       q:'Di manakah mereka mendirikan khemah?', opts:['Di puncak bukit','Di tepi sungai','Di tepi pantai','Di padang terbuka'], ans:1,
       exp:'Mereka mendirikan khemah <strong>di tepi sungai</strong>.' },
     { id:'b150', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Semasa cuti sekolah yang lalu, Ben pergi berkemah bersama kumpulan pengakapnya. Mereka mendaki laluan hutan dan mendirikan khemah di tepi sungai. Pada malam itu, mereka memasak nasi di atas api unggun dan mendengar bunyi cengkerik dalam gelap. Ben berkata ia adalah pengalaman paling tidak terlupakan dalam hidupnya.',
-      eng:'Ben went camping with his scout group, hiked through a forest, set up tents by a stream and cooked over a campfire.',
+      eng:'Ben went camping with his scout group, hiked a forest trail and set up tents by a stream.',
       q:'Bagaimana Ben menggambarkan pengalamannya?', opts:['Membosankan','Dia takut sepanjang masa','Pengalaman paling tidak terlupakan','Dia mahu balik awal'], ans:2,
       exp:'Ben berkata ia adalah <strong>pengalaman paling tidak terlupakan dalam hidupnya</strong>.' },
 
-    // Petikan 27 — Penerangan: Sahabat baik
+    // PM27 — Penerangan: Sahabat baik
     { id:'b151', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
-      passage:'🎧 Sahabat baik saya bernama Yusuf. Dia tinggi dengan rambut ikal dan sentiasa tersenyum. Yusuf sangat kreatif — dia suka membuat benda daripada bahan kitar semula. Dia juga sangat sabar dan tidak pernah marah apabila sesuatu tidak berjalan lancar. Saya bertuah kerana ada dia sebagai kawan.',
-      eng:'Yusuf is tall with curly hair, always smiling, creative, and very patient. The speaker is lucky to have him as a friend.',
+      passage:'🎧 Sahabat baik saya bernama Yusuf. Dia tinggi dengan rambut ikal dan sentiasa tersenyum. Yusuf sangat kreatif — dia suka membuat benda daripada bahan kitar semula. Dia juga sangat sabar dan tidak pernah marah apabila sesuatu tidak berjalan lancar.',
+      eng:'Yusuf is tall with curly hair, always smiling, creative and very patient.',
       q:'Apakah yang Yusuf suka lakukan?', opts:['Bermain video game','Membuat benda daripada bahan kitar semula','Membaca buku komik','Bermain bola sepak'], ans:1,
       exp:'Yusuf suka <strong>membuat benda daripada bahan kitar semula</strong>.' },
     { id:'b152', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
-      passage:'🎧 Sahabat baik saya bernama Yusuf. Dia tinggi dengan rambut ikal dan sentiasa tersenyum. Yusuf sangat kreatif — dia suka membuat benda daripada bahan kitar semula. Dia juga sangat sabar dan tidak pernah marah apabila sesuatu tidak berjalan lancar. Saya bertuah kerana ada dia sebagai kawan.',
-      eng:'Yusuf is tall with curly hair, always smiling, creative, and very patient. The speaker is lucky to have him as a friend.',
+      passage:'🎧 Sahabat baik saya bernama Yusuf. Dia tinggi dengan rambut ikal dan sentiasa tersenyum. Yusuf sangat kreatif — dia suka membuat benda daripada bahan kitar semula. Dia juga sangat sabar dan tidak pernah marah apabila sesuatu tidak berjalan lancar.',
+      eng:'Yusuf is tall with curly hair, always smiling, creative and very patient.',
       q:'Apakah sifat-sifat Yusuf?', opts:['Sangat suka bersukan','Kreatif dan sabar','Ketua kelas','Sangat suka bercakap'], ans:1,
       exp:'Yusuf dikenali kerana sifatnya yang <strong>kreatif dan sabar</strong>.' },
 
-    // Petikan 28 — Pengumuman: Kempen kebersihan
+    // PM28 — Pengumuman: Kempen kebersihan
     { id:'b153', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Sekolah Greenfield akan mengadakan Kempen Bersih dan Hijau pada 8 Ogos. Semua kelas dijemput untuk mengemas bilik darjah dan mengitar semula barang-barang yang tidak diperlukan. Kelas yang paling bersih akan memenangi majlis makan pizza. Daftar dengan ketua kelas anda.',
       eng:'Green and Clean Campaign on 8 August. Cleanest class wins a pizza party. Register with class monitor.',
@@ -1263,29 +1263,29 @@ const QB = {
       q:'Dengan siapakah anda perlu mendaftar?', opts:['Pengetua','Guru PJ','Ketua kelas anda','Pustakawan'], ans:2,
       exp:'Murid perlu mendaftar <strong>dengan ketua kelas</strong>.' },
 
-    // Petikan 29 — Arahan: Cara buat kapal origami
+    // PM29 — Arahan: Cara buat origami kapal layar
     { id:'b155', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Begini cara membuat kapal layar origami. Pertama, lipat sekeping kertas segi empat tepat menjadi dua. Kemudian, lipat sudut atas kiri dan kanan ke bawah untuk membentuk segi tiga. Lipat naik tepi bawah. Balikkan kertas itu dan buat perkara yang sama. Akhirnya, tarik bahagian tengah ke tepi untuk membuka kapal anda.',
-      eng:'Fold a rectangular paper in half, fold top corners down to form a triangle, fold up bottom edges on both sides, then pull apart the middle.',
+      eng:'Fold rectangular paper: in half, top corners form triangle, fold bottom edges, flip and repeat, then pull apart.',
       q:'Apakah bentuk yang terbentuk selepas melipat sudut atas?', opts:['Segi empat','Segi tiga','Bulatan','Bintang'], ans:1,
       exp:'Selepas melipat sudut atas, terbentuk <strong>segi tiga</strong>.' },
     { id:'b156', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
       passage:'🎧 Begini cara membuat kapal layar origami. Pertama, lipat sekeping kertas segi empat tepat menjadi dua. Kemudian, lipat sudut atas kiri dan kanan ke bawah untuk membentuk segi tiga. Lipat naik tepi bawah. Balikkan kertas itu dan buat perkara yang sama. Akhirnya, tarik bahagian tengah ke tepi untuk membuka kapal anda.',
-      eng:'Fold a rectangular paper in half, fold top corners down to form a triangle, fold up bottom edges on both sides, then pull apart the middle.',
-      q:'Apakah langkah terakhir?', opts:['Lipat sudut ke tengah','Lipat kertas menjadi dua','Tarik bahagian tengah ke tepi','Lipat naik tepi bawah'], ans:2,
+      eng:'Fold rectangular paper: in half, top corners form triangle, fold bottom edges, flip and repeat, then pull apart.',
+      q:'Apakah langkah terakhir?', opts:['Lipat sudut ke tengah','Lipat kertas menjadi dua','Tarik bahagian tengah ke tepi untuk membuka kapal','Lipat naik tepi bawah'], ans:2,
       exp:'Langkah terakhir ialah <strong>tarik bahagian tengah ke tepi untuk membuka kapal</strong>.' },
 
-    // Petikan 30 — Dialog: Sebelum peperiksaan
+    // PM30 — Dialog: Sebelum peperiksaan
     { id:'b157', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
-      passage:'🎧 Ryan: Saya sangat gugup tentang ujian Bahasa Melayu esok. / Emma: Saya pun! Tapi saya dah ulang kaji setiap malam. / Ryan: Betul ke? Apa yang kamu fokuskan? / Emma: Terutamanya tatabahasa dan perbendaharaan kata. Dua benda tu selalu keluar. / Ryan: Tips yang bagus! Jom kita belajar sama-sama petang ini! / Emma: Boleh! Dua kepala lebih baik dari satu.',
-      eng:'Ryan and Emma discuss their Malay test. Emma focuses on tatabahasa and perbendaharaan kata. They decide to study together.',
-      q:'Apa yang Emma fokuskan semasa ulang kaji?', opts:['Pemahaman dan penyuntingan','Tatabahasa dan perbendaharaan kata','Membaca dan mengeja','Teks visual dan cloze'], ans:1,
+      passage:'🎧 Ryan: Saya sangat gugup tentang ujian Bahasa Melayu esok. / Emma: Saya pun! Tapi saya dah ulang kaji setiap malam. / Ryan: Betul ke? Apa yang kamu fokuskan? / Emma: Terutamanya tatabahasa dan perbendaharaan kata. Dua benda tu selalu keluar. / Ryan: Tips yang bagus! Jom kita belajar sama-sama petang ini!',
+      eng:'Ryan and Emma discuss their Malay test. Emma focuses on tatabahasa and perbendaharaan kata for revision.',
+      q:'Apa yang Emma fokuskan semasa ulang kaji?', opts:['Pemahaman dan penyuntingan','Tatabahasa dan perbendaharaan kata','Membaca dan mengeja','Teks visual dan isi tempat kosong'], ans:1,
       exp:'Emma fokus pada <strong>tatabahasa dan perbendaharaan kata</strong>.' },
     { id:'b158', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
-      passage:'🎧 Ryan: Saya sangat gugup tentang ujian Bahasa Melayu esok. / Emma: Saya pun! Tapi saya dah ulang kaji setiap malam. / Ryan: Betul ke? Apa yang kamu fokuskan? / Emma: Terutamanya tatabahasa dan perbendaharaan kata. Dua benda tu selalu keluar. / Ryan: Tips yang bagus! Jom kita belajar sama-sama petang ini! / Emma: Boleh! Dua kepala lebih baik dari satu.',
-      eng:'Ryan and Emma discuss their Malay test. Emma focuses on tatabahasa and perbendaharaan kata. They decide to study together.',
-      q:'Apakah maksud "Dua kepala lebih baik dari satu"?', opts:['Dua orang perlu lulus ujian','Belajar bersama lebih berkesan daripada belajar sendirian','Dua buku diperlukan','Dua cikgu lebih baik'], ans:1,
-      exp:'"Dua kepala lebih baik dari satu" bermaksud <strong>belajar bersama lebih berkesan</strong>.' },
+      passage:'🎧 Ryan: Saya sangat gugup tentang ujian Bahasa Melayu esok. / Emma: Saya pun! Tapi saya dah ulang kaji setiap malam. / Ryan: Betul ke? Apa yang kamu fokuskan? / Emma: Terutamanya tatabahasa dan perbendaharaan kata. Dua benda tu selalu keluar. / Ryan: Tips yang bagus! Jom kita belajar sama-sama petang ini!',
+      eng:'Ryan and Emma discuss their Malay test. Emma focuses on tatabahasa and perbendaharaan kata for revision.',
+      q:'Apakah yang mereka akan buat petang itu?', opts:['Pergi bermain','Menonton televisyen','Belajar bersama-sama','Tidur awal'], ans:2,
+      exp:'Mereka akan <strong>belajar bersama-sama</strong> pada petang itu.' },
 
   ]
 };

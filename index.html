@@ -147,7 +147,7 @@ const ENGLISH_TEACH = {
       { icon: '💭', label: 'Make Inferences', text: 'Some answers are not directly stated. Use clues in the text to infer feelings, reasons, or outcomes.' },
       { icon: '🗣️', label: 'Dialogues', text: 'For conversations: keep track of WHO is speaking and WHAT they are agreeing or asking about.' },
     ],
-    example: { q: 'Why did Mr Tan help Mrs Chen?', steps: ['"Kindly offered to help" = he is helpful by nature', 'Infer: He helped because he is a kind neighbour', 'Answer: He is helpful ✓'] }
+    example: { q: 'Why did Mr Tan help Mrs Chen?', steps: ['"Kindly offered to help" = he is helpful by nature', 'Infer: He is a kind and helpful neighbour', 'Answer: He is helpful ✓'] }
   },
 };
 
@@ -695,12 +695,12 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
             <p className="text-xs text-gray-500 mt-1">Master one topic until 10/10! Earn $2 for perfection</p>
           </button>
           {(subject === 'english' || subject === 'malay') && (
-          <button onClick={() => onMode('lc')}
-            className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
-            <div className="text-5xl mb-2">🎧</div>
-            <h3 className="text-xl font-bold text-gray-800">Listening Comprehension</h3>
-            <p className="text-xs text-gray-500 mt-1">Practice listening passages — earn $2 for 10/10!</p>
-          </button>
+            <button onClick={() => onMode('lc')}
+              className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95" style={{borderTop:'3px solid #1a2744'}}>
+              <div className="text-5xl mb-2">🎧</div>
+              <h3 className="text-xl font-bold text-gray-800">Listening Comprehension</h3>
+              <p className="text-xs text-gray-500 mt-1">Practise passages — earn $0.50 for 10/10!</p>
+            </button>
           )}
         </div>
       </div>
@@ -1362,7 +1362,7 @@ function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, di
         </p>
         {isPerfect && (
           <div className="mt-3 bg-yellow-100 rounded-lg p-2">
-            <p className="text-sm font-bold text-yellow-800">🎉 Perfect {mode === 'quiz' ? 'Quiz' : 'Drill'}! +$2 to your wallet</p>
+            <p className="text-sm font-bold text-yellow-800">🎉 Perfect {mode === 'quiz' ? 'Quiz' : mode === 'lc' ? 'Listening Comprehension' : 'Drill'}! +{mode === 'lc' ? '$0.50' : '$2'} to your wallet</p>
           </div>
         )}
         {subject === 'malay' && revealCount > 0 && (
@@ -1748,7 +1748,7 @@ function App() {
   }
 
   function onDrillPerfect() {
-    setResult({ score: 10, total: 10, breakdown: { [topic]: { correct: 10, total: 10 } } });
+    setResult({ score: 10, total: 10, breakdown: { [topic]: { correct: 10, total: 10 } }, isLC: mode === 'lc' });
     setScreen('result');
   }
 
