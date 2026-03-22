@@ -1081,10 +1081,10 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
         )}
         <div className="bg-white rounded-2xl p-5 shadow-sm">
           {isLC && (
-            <button onClick={playPassage} disabled={speaking}
+            <button onClick={replayPassage} disabled={speaking}
               className={"flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full mb-3 transition-all " + (speaking ? "bg-blue-100 text-blue-400 cursor-wait" : "bg-blue-50 text-blue-700 hover:bg-blue-100 active:scale-95")}
             >
-              {speaking ? "\u{1F50A} Playing\u2026" : "\u25B6 Play passage"}
+              {speaking ? "\uD83D\uDD0A Playing\u2026" : "\u25B6 Play passage"}
             </button>
           )}
           <p className="text-base font-semibold text-gray-800 leading-relaxed">{q.q}</p>
@@ -1196,48 +1196,30 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
   const [passagePage, setPassagePage] = useState(!!isLC);
   const [playsLeft, setPlaysLeft] = useState(2);
   const [speaking, setSpeaking] = useState(false);
-  const passageRef = React.useRef(null);
   const cfg = CFG[subject];
   const qIdx = queue[idx];
   const q = questions[qIdx];
 
-  React.useEffect(() => {
-    if (isLC && q && q.passage !== passageRef.current) {
-      passageRef.current = q.passage;
-      // Auto-play new passage audio inline — no redirect to passage-intro page
-      setSpeaking(false);
-      if (window.speechSynthesis) window.speechSynthesis.cancel();
-      // Small delay so the question card renders first, then audio starts
-      setTimeout(() => { if (isLC) playPassageAudio(q); }, 400);
-    }
-  }, [q && q.id]);
-
-  function playPassageAudio(passageQ) {
-    const target = passageQ || q;
-    if (!window.speechSynthesis || !target || speaking) return;
+  // NO auto-play anywhere. User has full control via buttons.
+  function speakPassage(passage, onFinish) {
+    if (!window.speechSynthesis || speaking) return;
     window.speechSynthesis.cancel();
-    // Strip emoji prefix and turn "/" dialogue separators into pauses
-    const raw = (target.passage || '')
+    const raw = (passage || '')
       .replace(/^🎧\s*/, '')
       .replace(/\s*\/\s*/g, '. ')
       .replace(/—/g, ', ');
-
     function doSpeak(voices) {
       const utter = new SpeechSynthesisUtterance(raw);
       utter.pitch = 1.0;
-
       if (subject === 'malay') {
-        // ms-MY = Malaysian Malay neural voice on Android (Google TTS) & iOS 14+
-        // Correct BM phonology: ng, ny, c=/ch/, diphthongs, nasal vowels
         utter.lang = 'ms-MY';
         utter.rate = 0.83;
         const v = voices.find(v => v.lang === 'ms-MY') ||
                   voices.find(v => v.lang.startsWith('ms')) ||
-                  voices.find(v => v.lang === 'id-ID') ||   // Indonesian — same script, similar phonology
+                  voices.find(v => v.lang === 'id-ID') ||
                   voices.find(v => v.lang.startsWith('id'));
         if (v) utter.voice = v;
       } else {
-        // en-GB: clearer articulation than en-US for non-native listeners
         utter.lang = 'en-GB';
         utter.rate = 0.85;
         const v = voices.find(v => /google uk english female/i.test(v.name)) ||
@@ -1247,22 +1229,28 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
                   voices.find(v => v.lang.startsWith('en'));
         if (v) utter.voice = v;
       }
-
       setSpeaking(true);
-      setPlaysLeft(p => p - 1);
-      utter.onend  = () => setSpeaking(false);
+      utter.onend = () => { setSpeaking(false); if (onFinish) onFinish(); };
       utter.onerror = () => setSpeaking(false);
       window.speechSynthesis.speak(utter);
     }
-
     const voices = window.speechSynthesis.getVoices();
-    if (voices.length > 0) {
-      doSpeak(voices);
-    } else {
-      window.speechSynthesis.onvoiceschanged = () => doSpeak(window.speechSynthesis.getVoices());
-    }
+    if (voices.length > 0) doSpeak(voices);
+    else window.speechSynthesis.onvoiceschanged = () => doSpeak(window.speechSynthesis.getVoices());
   }
-  function playPassage() { if (playsLeft > 0) playPassageAudio(); }
+
+  // Passage-intro button: limited to 2 plays
+  function playPassage() {
+    if (playsLeft <= 0 || speaking || !q) return;
+    setPlaysLeft(p => p - 1);
+    speakPassage(q.passage);
+  }
+
+  // Question-card replay button: unlimited, just disabled while speaking
+  function replayPassage() {
+    if (speaking || !q) return;
+    speakPassage(q.passage);
+  }
 
   function pick(opt) {
     if (selected !== null) return;
