@@ -138,6 +138,17 @@ const ENGLISH_TEACH = {
     ],
     example: { q: '"Mr Lee gave him two loaves without hesitation." What does hesitation mean?', steps: ['Look at the context: he gave immediately', 'Without hesitation = without waiting/pausing', 'Hesitation means delay or pause ✓'] }
   },
+  'Listening Comprehension': {
+    title: 'Listening Comprehension', emoji: '🎧', color: '#1a2744', bg: '#f0f7ff',
+    tip: '💡 Read the passage carefully — imagine hearing it. Find the answer in the text before choosing.',
+    concepts: [
+      { icon: '🔍', label: 'Listen for the Main Idea', text: 'Ask yourself: What is this passage MAINLY about? Focus on the topic, not one small detail.' },
+      { icon: '📋', label: 'Listen for Specific Details', text: 'Who, What, When, Where, Why — listen out for these 5W details. They are common question types.' },
+      { icon: '💭', label: 'Make Inferences', text: 'Some answers are not directly stated. Use clues in the text to infer feelings, reasons, or outcomes.' },
+      { icon: '🗣️', label: 'Dialogues', text: 'For conversations: keep track of WHO is speaking and WHAT they are asking or agreeing to.' },
+    ],
+    example: { q: 'Why did Mr Tan help Mrs Chen?', steps: ['The text says he "kindly offered to help"', 'Kindly = he is helpful / generous by nature', 'Infer: He helped because he is a kind neighbour ✓'] }
+  },
 };
 
 const SCIENCE_TEACH = {
@@ -195,6 +206,17 @@ const SCIENCE_TEACH = {
       { icon: '💡', label: 'Key Facts', text: 'Photosynthesis uses CO₂ + water + sunlight. Respiration releases energy from food using oxygen.' },
     ],
     example: { q: 'Which gas do plants take in during photosynthesis?', steps: ['Photosynthesis = plants making food', 'They take in CO₂ (carbon dioxide)', 'They release O₂ (oxygen) → answer: Carbon dioxide ✓'] }
+  },
+    'Pemahaman Mendengar': {
+    title: 'Pemahaman Mendengar', emoji: '🎧', color: '#ea580c', bg: '#fef3c7',
+    tip: '💡 Baca petikan dengan teliti. Bayangkan anda mendengarnya. Cari jawapan dalam teks sebelum memilih.',
+    concepts: [
+      { icon: '🔍', label: 'Idea Utama', text: 'Tanya diri sendiri: Apakah yang petikan ini PALING banyak bercakap tentang? Fokus kepada topik utama.' },
+      { icon: '📋', label: 'Butiran Khusus', text: 'Siapa, Apa, Bila, Di mana, Mengapa — dengarkan butiran 5W ini. Ia sering ditanya dalam soalan.' },
+      { icon: '💭', label: 'Membuat Inferens', text: 'Sesetengah jawapan tidak dinyatakan secara langsung. Gunakan petunjuk dalam teks untuk membuat inferens tentang perasaan, sebab, atau akibat.' },
+      { icon: '🗣️', label: 'Dialog', text: 'Untuk perbualan: perhatikan SIAPA yang bercakap dan APA yang mereka minta atau setuju lakukan.' },
+    ],
+    example: { q: 'Mengapa jiran-jiran memuji Rasyid?', steps: ['Teks menyebut beliau "rajin dan sopan santun"', 'Rajin = suka bekerja keras. Sopan santun = berbudi bahasa.', 'Jiran memujinya kerana sifat-sifat baik ini ✓'] }
   },
 };
 
@@ -889,7 +911,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
       return result;
     }
     if (subject === 'english') {
-      const sectionOrder = ['Grammar MCQ','Vocabulary','Visual Text','Grammar Cloze','Editing','Comprehension'];
+      const sectionOrder = ['Grammar MCQ','Vocabulary','Visual Text','Grammar Cloze','Editing','Comprehension','Listening Comprehension'];
       const result = [];
       sectionOrder.forEach(sec => {
         const sqs = QB.english.filter(q => q.section === sec);
@@ -913,7 +935,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
       return result.length ? result : generateQuiz(subject, 40);
     }
     if (subject === 'malay') {
-      const topicOrder = ['Perbendaharaan Kata','Tatabahasa','Pemahaman','Isi Tempat Kosong'];
+      const topicOrder = ['Perbendaharaan Kata','Tatabahasa','Pemahaman','Isi Tempat Kosong','Pemahaman Mendengar'];
       const result = [];
       topicOrder.forEach(tp => {
         const tqs = QB.malay.filter(q => (q.topic || q.section) === tp);
@@ -1754,10 +1776,10 @@ function App() {
 function TopicSelectScreen({ subject, onSelect, onBack }) {
   const cfg = CFG[subject];
   const topics = {
-    english: ['Grammar MCQ', 'Vocabulary', 'Visual Text', 'Grammar Cloze', 'Editing', 'Comprehension'],
+    english: ['Grammar MCQ', 'Vocabulary', 'Visual Text', 'Grammar Cloze', 'Editing', 'Comprehension', 'Listening Comprehension'],
     math: ['Section A: MCQ', 'Section B: Short Answer', 'Section C: Word Problems'],
     science: ['Diversity of Living Things', 'Materials', 'Magnets', 'Life Cycles', 'Mixed Review'],
-    malay: ['Perbendaharaan Kata', 'Tatabahasa', 'Pemahaman', 'Isi Tempat Kosong'],
+    malay: ['Perbendaharaan Kata', 'Tatabahasa', 'Pemahaman', 'Isi Tempat Kosong', 'Pemahaman Mendengar'],
     gepmath: ['Number Patterns', 'Clever Problem Sums', 'Logic & Spatial', 'Mental Maths', 'Fractions & Measurement'],
   }[subject] || [];
 

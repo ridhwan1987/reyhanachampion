@@ -512,6 +512,188 @@ const QB = {
 
   ],
 
+    // ── Listening Comprehension (P3 MOE English) ──
+    // Passage 1: Narrative — busy Saturday market trip (lc_p1)
+    { id:'e100', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] It was a busy Saturday morning. Mrs Chen rushed to the market with a long shopping list. She needed eggs, vegetables, and fish. At the market, she met her neighbour, Mr Tan. He kindly offered to help her carry the heavy bags home.',
+      q:'Why did Mrs Chen go to the market?',
+      opts:['To meet Mr Tan','To buy groceries','To sell vegetables','To look for a bag'],
+      ans:1, exp:'The passage says she had a shopping list and needed eggs, vegetables, and fish — she went to <strong>buy groceries</strong>.' },
+
+    { id:'e101', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] It was a busy Saturday morning. Mrs Chen rushed to the market with a long shopping list. She needed eggs, vegetables, and fish. At the market, she met her neighbour, Mr Tan. He kindly offered to help her carry the heavy bags home.',
+      q:'Who helped Mrs Chen carry her bags?',
+      opts:['Her husband','A market seller','Mr Tan, her neighbour','A security guard'],
+      ans:2, exp:'The passage says her neighbour, <strong>Mr Tan</strong>, helped carry the heavy bags home.' },
+
+    { id:'e102', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] It was a busy Saturday morning. Mrs Chen rushed to the market with a long shopping list. She needed eggs, vegetables, and fish. At the market, she met her neighbour, Mr Tan. He kindly offered to help her carry the heavy bags home.',
+      q:'What word best describes Mr Tan?',
+      opts:['Greedy','Helpful','Lazy','Shy'],
+      ans:1, exp:'Mr Tan "kindly offered to help" — this shows he is <strong>helpful</strong>.' },
+
+    // Passage 2: Dialogue — homework before Grandma's visit (lc_p2)
+    { id:'e103', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Mum: Raju, have you finished your homework? / Raju: Almost, Mum. I just need to do my reading. / Mum: Remember, we are going to Grandma's house at three o'clock. / Raju: Yes, Mum. I will be ready by then.',
+      q:'What does Raju still need to finish?',
+      opts:['His drawing','His science project','His reading','His spelling'],
+      ans:2, exp:'Raju said he just needed to do his <strong>reading</strong> to complete his homework.' },
+
+    { id:'e104', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Mum: Raju, have you finished your homework? / Raju: Almost, Mum. I just need to do my reading. / Mum: Remember, we are going to Grandma's house at three o'clock. / Raju: Yes, Mum. I will be ready by then.',
+      q:'What time will they leave for Grandma's?',
+      opts:['Two o'clock','Half past two','Three o'clock','Four o'clock'],
+      ans:2, exp:'Mum said they are going to Grandma's house at <strong>three o'clock</strong>.' },
+
+    // Passage 3: Announcement — library closure (lc_p3)
+    { id:'e105', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Attention, students! The school library will be closed next Monday for repairs. All borrowed books must be returned by this Friday. Students who need books may visit the nearby community library at Marine Parade. Thank you.',
+      q:'Why will the library be closed?',
+      opts:['It is a public holiday','For a book fair','For repairs','For painting'],
+      ans:2, exp:'The announcement says the library will be closed <strong>for repairs</strong>.' },
+
+    { id:'e106', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Attention, students! The school library will be closed next Monday for repairs. All borrowed books must be returned by this Friday. Students who need books may visit the nearby community library at Marine Parade. Thank you.',
+      q:'What must students do by Friday?',
+      opts:['Submit book reports','Return borrowed books','Register for library cards','Choose new books'],
+      ans:1, exp:'Students must <strong>return all borrowed books</strong> by Friday before the closure.' },
+
+    { id:'e107', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Attention, students! The school library will be closed next Monday for repairs. All borrowed books must be returned by this Friday. Students who need books may visit the nearby community library at Marine Parade. Thank you.',
+      q:'Where can students find books while the school library is closed?',
+      opts:['Online only','The classroom bookshelf','The community library at Marine Parade','The teacher's room'],
+      ans:2, exp:'Students can visit the <strong>community library at Marine Parade</strong>.' },
+
+    // Passage 4: Instructions — how to make a bookmark (lc_p4)
+    { id:'e108', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] To make a simple bookmark, you will need a strip of cardboard, coloured pencils, and a ribbon. First, cut the cardboard into a long rectangle. Next, decorate it with your favourite colours. Finally, punch a hole at the top and thread the ribbon through it.',
+      q:'What is the FIRST step in making the bookmark?',
+      opts:['Decorate it with colours','Punch a hole at the top','Cut the cardboard into a rectangle','Thread the ribbon through'],
+      ans:2, exp:'The first step is to <strong>cut the cardboard into a long rectangle</strong>.' },
+
+    { id:'e109', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] To make a simple bookmark, you will need a strip of cardboard, coloured pencils, and a ribbon. First, cut the cardboard into a long rectangle. Next, decorate it with your favourite colours. Finally, punch a hole at the top and thread the ribbon through it.',
+      q:'What is the purpose of the ribbon?',
+      opts:['To write your name on','To wrap the bookmark as a gift','To thread through the hole at the top','To keep the bookmark flat'],
+      ans:2, exp:'The ribbon is threaded through the <strong>hole punched at the top</strong> of the bookmark.' },
+
+    // Passage 5: Short narrative — Mei shares a story (lc_p5)
+    { id:'e110', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Every Friday, the pupils in Class 3A took turns to share a story with the class. This week, it was Mei's turn. She was nervous at first, but when she saw her classmates smiling at her, she felt much better. Her story was about a little girl who loved gardening.',
+      q:'How did Mei feel before she started?',
+      opts:['Excited','Bored','Nervous','Angry'],
+      ans:2, exp:'The passage says Mei was <strong>nervous at first</strong> before she began speaking.' },
+
+    { id:'e111', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Every Friday, the pupils in Class 3A took turns to share a story with the class. This week, it was Mei's turn. She was nervous at first, but when she saw her classmates smiling at her, she felt much better. Her story was about a little girl who loved gardening.',
+      q:'What changed how Mei felt?',
+      opts:['Her teacher praised her','Her classmates were smiling','She remembered her lines','The story was short'],
+      ans:1, exp:'Mei felt better when she saw her <strong>classmates smiling</strong> at her.' },
+
+    // Passage 6: Dialogue — computer lab trip (lc_p6)
+    { id:'e112', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Teacher: Good morning, class! Today we will visit the computer lab. Students: Hurray! Teacher: But first, please bring your science worksheet — we will complete it on the computer. Students: Yes, Teacher! / Teacher: Remember to behave well in the lab.',
+      q:'Where will the class go today?',
+      opts:['The school hall','The science lab','The computer lab','The library'],
+      ans:2, exp:'The teacher says they will visit the <strong>computer lab</strong>.' },
+
+    { id:'e113', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Teacher: Good morning, class! Today we will visit the computer lab. Students: Hurray! Teacher: But first, please bring your science worksheet — we will complete it on the computer. Students: Yes, Teacher! / Teacher: Remember to behave well in the lab.',
+      q:'What must students remember to bring?',
+      opts:['Their reading book','Their maths worksheet','Their science worksheet','Their coloured pencils'],
+      ans:2, exp:'The teacher reminds students to bring their <strong>science worksheet</strong> to complete on the computer.' },
+
+    // ── Listening Comprehension (P3 MOE English) ──
+    // Passage 1: Narrative — busy Saturday market trip (lc_p1)
+    { id:'e100', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] It was a busy Saturday morning. Mrs Chen rushed to the market with a long shopping list. She needed eggs, vegetables, and fish. At the market, she met her neighbour, Mr Tan. He kindly offered to help her carry the heavy bags home.',
+      q:'Why did Mrs Chen go to the market?',
+      opts:['To meet Mr Tan','To buy groceries','To sell vegetables','To look for a bag'],
+      ans:1, exp:'The passage says she had a shopping list and needed eggs, vegetables, and fish — she went to <strong>buy groceries</strong>.' },
+
+    { id:'e101', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] It was a busy Saturday morning. Mrs Chen rushed to the market with a long shopping list. She needed eggs, vegetables, and fish. At the market, she met her neighbour, Mr Tan. He kindly offered to help her carry the heavy bags home.',
+      q:'Who helped Mrs Chen carry her bags?',
+      opts:['Her husband','A market seller','Mr Tan, her neighbour','A security guard'],
+      ans:2, exp:'The passage says her neighbour, <strong>Mr Tan</strong>, helped carry the heavy bags home.' },
+
+    { id:'e102', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] It was a busy Saturday morning. Mrs Chen rushed to the market with a long shopping list. She needed eggs, vegetables, and fish. At the market, she met her neighbour, Mr Tan. He kindly offered to help her carry the heavy bags home.',
+      q:'What word best describes Mr Tan?',
+      opts:['Greedy','Helpful','Lazy','Shy'],
+      ans:1, exp:'Mr Tan "kindly offered to help" — this shows he is <strong>helpful</strong>.' },
+
+    // Passage 2: Dialogue — homework before Grandma's visit (lc_p2)
+    { id:'e103', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Mum: Raju, have you finished your homework? / Raju: Almost, Mum. I just need to do my reading. / Mum: Remember, we are going to Grandma's house at three o'clock. / Raju: Yes, Mum. I will be ready by then.',
+      q:'What does Raju still need to finish?',
+      opts:['His drawing','His science project','His reading','His spelling'],
+      ans:2, exp:'Raju said he just needed to do his <strong>reading</strong> to complete his homework.' },
+
+    { id:'e104', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Mum: Raju, have you finished your homework? / Raju: Almost, Mum. I just need to do my reading. / Mum: Remember, we are going to Grandma's house at three o'clock. / Raju: Yes, Mum. I will be ready by then.',
+      q:'What time will they leave for Grandma's?',
+      opts:['Two o'clock','Half past two','Three o'clock','Four o'clock'],
+      ans:2, exp:'Mum said they are going to Grandma's house at <strong>three o'clock</strong>.' },
+
+    // Passage 3: Announcement — library closure (lc_p3)
+    { id:'e105', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Attention, students! The school library will be closed next Monday for repairs. All borrowed books must be returned by this Friday. Students who need books may visit the nearby community library at Marine Parade. Thank you.',
+      q:'Why will the library be closed?',
+      opts:['It is a public holiday','For a book fair','For repairs','For painting'],
+      ans:2, exp:'The announcement says the library will be closed <strong>for repairs</strong>.' },
+
+    { id:'e106', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Attention, students! The school library will be closed next Monday for repairs. All borrowed books must be returned by this Friday. Students who need books may visit the nearby community library at Marine Parade. Thank you.',
+      q:'What must students do by Friday?',
+      opts:['Submit book reports','Return borrowed books','Register for library cards','Choose new books'],
+      ans:1, exp:'Students must <strong>return all borrowed books</strong> by Friday before the closure.' },
+
+    { id:'e107', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Attention, students! The school library will be closed next Monday for repairs. All borrowed books must be returned by this Friday. Students who need books may visit the nearby community library at Marine Parade. Thank you.',
+      q:'Where can students find books while the school library is closed?',
+      opts:['Online only','The classroom bookshelf','The community library at Marine Parade','The teacher's room'],
+      ans:2, exp:'Students can visit the <strong>community library at Marine Parade</strong>.' },
+
+    // Passage 4: Instructions — how to make a bookmark (lc_p4)
+    { id:'e108', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] To make a simple bookmark, you will need a strip of cardboard, coloured pencils, and a ribbon. First, cut the cardboard into a long rectangle. Next, decorate it with your favourite colours. Finally, punch a hole at the top and thread the ribbon through it.',
+      q:'What is the FIRST step in making the bookmark?',
+      opts:['Decorate it with colours','Punch a hole at the top','Cut the cardboard into a rectangle','Thread the ribbon through'],
+      ans:2, exp:'The first step is to <strong>cut the cardboard into a long rectangle</strong>.' },
+
+    { id:'e109', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] To make a simple bookmark, you will need a strip of cardboard, coloured pencils, and a ribbon. First, cut the cardboard into a long rectangle. Next, decorate it with your favourite colours. Finally, punch a hole at the top and thread the ribbon through it.',
+      q:'What is the purpose of the ribbon?',
+      opts:['To write your name on','To wrap the bookmark as a gift','To thread through the hole at the top','To keep the bookmark flat'],
+      ans:2, exp:'The ribbon is threaded through the <strong>hole punched at the top</strong> of the bookmark.' },
+
+    // Passage 5: Short narrative — Mei shares a story (lc_p5)
+    { id:'e110', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Every Friday, the pupils in Class 3A took turns to share a story with the class. This week, it was Mei's turn. She was nervous at first, but when she saw her classmates smiling at her, she felt much better. Her story was about a little girl who loved gardening.',
+      q:'How did Mei feel before she started?',
+      opts:['Excited','Bored','Nervous','Angry'],
+      ans:2, exp:'The passage says Mei was <strong>nervous at first</strong> before she began speaking.' },
+
+    { id:'e111', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Every Friday, the pupils in Class 3A took turns to share a story with the class. This week, it was Mei's turn. She was nervous at first, but when she saw her classmates smiling at her, she felt much better. Her story was about a little girl who loved gardening.',
+      q:'What changed how Mei felt?',
+      opts:['Her teacher praised her','Her classmates were smiling','She remembered her lines','The story was short'],
+      ans:1, exp:'Mei felt better when she saw her <strong>classmates smiling</strong> at her.' },
+
+    // Passage 6: Dialogue — computer lab trip (lc_p6)
+    { id:'e112', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Teacher: Good morning, class! Today we will visit the computer lab. Students: Hurray! Teacher: But first, please bring your science worksheet — we will complete it on the computer. Students: Yes, Teacher! / Teacher: Remember to behave well in the lab.',
+      q:'Where will the class go today?',
+      opts:['The school hall','The science lab','The computer lab','The library'],
+      ans:2, exp:'The teacher says they will visit the <strong>computer lab</strong>.' },
+
+    { id:'e113', section:'Listening Comprehension', tag:'lc',
+      passage:'🎧 [Listen] Teacher: Good morning, class! Today we will visit the computer lab. Students: Hurray! Teacher: But first, please bring your science worksheet — we will complete it on the computer. Students: Yes, Teacher! / Teacher: Remember to behave well in the lab.',
+      q:'What must students remember to bring?',
+      opts:['Their reading book','Their maths worksheet','Their science worksheet','Their coloured pencils'],
+      ans:2, exp:'The teacher reminds students to bring their <strong>science worksheet</strong> to complete on the computer.' },
+
   malay: [
     // Perbendaharaan Kata
     { id:'b01', topic:'Perbendaharaan Kata', q:'Apakah maksud perkataan "gigih"?', eng:'What is the meaning of the word "gigih"?', opts:['Malas','Berusaha bersungguh-sungguh','Takut','Gembira'], ans:1, exp:'"Gigih" bermaksud tidak berputus asa dan terus berusaha.' },
@@ -626,4 +808,214 @@ const QB = {
     { id:'b97', topic:'Isi Tempat Kosong', q:'"Murid-murid diminta ___ tangan sebelum makan."', eng:'"Students are asked to ___ their hands before eating." (wash)', opts:['Membasuh','Memakan','Menulis','Tidur'], ans:0, exp:'"Membasuh tangan" — amalan kebersihan sebelum makan.' },
     { id:'b98', topic:'Isi Tempat Kosong', q:'"Dia ___ kerja rumahnya sebelum menonton televisyen."', eng:'"She ___ her homework before watching television." (completed/finished)', opts:['Melupakan','Menyiapkan','Membuang','Menonton'], ans:1, exp:'"Menyiapkan kerja rumah" — menyelesaikan atau menyempurnakan kerja rumah.' },
   ]
+    // ── Pemahaman Mendengar (P3 MOE Bahasa Melayu) ──
+    // Petikan 1: Narasi — Amira ke pasar (pm_p1)
+    { id:'b99', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Pada hari Sabtu pagi, Amira dan ibunya pergi ke pasar. Amira membantu ibunya membawa barang-barang. Di pasar, mereka membeli sayur-sayuran, ikan, dan buah-buahan. Amira gembira kerana ibu membelinya sebiji epal merah yang besar.',
+      eng:'[Listen] On Saturday morning, Amira and her mother went to the market. Amira helped her mother carry the items. They bought vegetables, fish, and fruits. Amira was happy because her mother bought her a big red apple.',
+      q:'Ke manakah Amira dan ibunya pergi?',
+      opts:['Ke sekolah','Ke pasar','Ke taman','Ke perpustakaan'],
+      ans:1, exp:'Petikan menyatakan Amira dan ibunya pergi ke <strong>pasar</strong> pada hari Sabtu.' },
+
+    { id:'b100', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Pada hari Sabtu pagi, Amira dan ibunya pergi ke pasar. Amira membantu ibunya membawa barang-barang. Di pasar, mereka membeli sayur-sayuran, ikan, dan buah-buahan. Amira gembira kerana ibu membelinya sebiji epal merah yang besar.',
+      eng:'[Listen] On Saturday morning, Amira and her mother went to the market. Amira helped her mother carry the items. They bought vegetables, fish, and fruits. Amira was happy because her mother bought her a big red apple.',
+      q:'Mengapa Amira berasa gembira?',
+      opts:['Kerana dia jumpa rakannya','Kerana ibu membeli epal merah untuknya','Kerana harga ikan murah','Kerana pasar berhampiran rumah'],
+      ans:1, exp:'Petikan menyatakan Amira gembira kerana <strong>ibu membelinya sebiji epal merah yang besar</strong>.' },
+
+    { id:'b101', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Pada hari Sabtu pagi, Amira dan ibunya pergi ke pasar. Amira membantu ibunya membawa barang-barang. Di pasar, mereka membeli sayur-sayuran, ikan, dan buah-buahan. Amira gembira kerana ibu membelinya sebiji epal merah yang besar.',
+      eng:'[Listen] On Saturday morning, Amira and her mother went to the market. Amira helped her mother carry the items. They bought vegetables, fish, and fruits. Amira was happy because her mother bought her a big red apple.',
+      q:'Nilai murni apakah yang ditunjukkan oleh Amira?',
+      opts:['Membantu ibu membawa barang','Bersikap sombong','Malas bekerja','Bergaduh'],
+      ans:0, exp:'Amira <strong>membantu ibunya membawa barang-barang</strong> — ini menunjukkan nilai tolong-menolong.' },
+
+    // Petikan 2: Dialog — pinjam pembaris (pm_p2)
+    { id:'b102', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Hafiz: Encik Lim, bolehkah saya pinjam pembaris ini? / Cikgu: Boleh, Hafiz. Tapi ingat, kembalikan selepas kelas. / Hafiz: Baik, Encik Lim. Terima kasih. / Cikgu: Sama-sama. Jaga pembaris itu dengan baik.',
+      eng:'[Listen] Hafiz: Mr Lim, may I borrow this ruler? / Teacher: Yes, Hafiz. But remember to return it after class. / Hafiz: Sure, Mr Lim. Thank you. / Teacher: You're welcome. Take good care of it.',
+      q:'Apakah yang Hafiz ingin pinjam?',
+      opts:['Buku','Pensel','Pembaris','Pemadam'],
+      ans:2, exp:'Hafiz bertanya kepada cikgu untuk meminjam <strong>pembaris</strong>.' },
+
+    { id:'b103', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Hafiz: Encik Lim, bolehkah saya pinjam pembaris ini? / Cikgu: Boleh, Hafiz. Tapi ingat, kembalikan selepas kelas. / Hafiz: Baik, Encik Lim. Terima kasih. / Cikgu: Sama-sama. Jaga pembaris itu dengan baik.',
+      eng:'[Listen] Hafiz: Mr Lim, may I borrow this ruler? / Teacher: Yes, Hafiz. But remember to return it after class. / Hafiz: Sure, Mr Lim. Thank you. / Teacher: You're welcome. Take good care of it.',
+      q:'Bilakah Hafiz perlu memulangkan pembaris itu?',
+      opts:['Sebelum rehat','Selepas kelas','Esok pagi','Selepas makan tengah hari'],
+      ans:1, exp:'Cikgu berkata Hafiz perlu kembalikan pembaris itu <strong>selepas kelas</strong>.' },
+
+    // Petikan 3: Pengumuman — pertandingan melukis (pm_p3)
+    { id:'b104', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Perhatian semua pelajar! Pertandingan melukis peringkat sekolah akan diadakan pada hari Rabu, 15 Mac. Semua pelajar yang berminat boleh mendaftarkan diri dengan guru kelas masing-masing sebelum hari Isnin. Hadiah-hadiah menarik menanti para peserta.',
+      eng:'[Listen] Attention all students! The school-level drawing competition will be held on Wednesday, 15 March. Interested students may register with their class teacher before Monday. Attractive prizes await all participants.',
+      q:'Apakah pertandingan yang diumumkan?',
+      opts:['Pertandingan menulis','Pertandingan melukis','Pertandingan bercerita','Pertandingan menyanyi'],
+      ans:1, exp:'Pengumuman menyebut tentang <strong>pertandingan melukis</strong> peringkat sekolah.' },
+
+    { id:'b105', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Perhatian semua pelajar! Pertandingan melukis peringkat sekolah akan diadakan pada hari Rabu, 15 Mac. Semua pelajar yang berminat boleh mendaftarkan diri dengan guru kelas masing-masing sebelum hari Isnin. Hadiah-hadiah menarik menanti para peserta.',
+      eng:'[Listen] Attention all students! The school-level drawing competition will be held on Wednesday, 15 March. Interested students may register with their class teacher before Monday. Attractive prizes await all participants.',
+      q:'Bagaimanakah cara untuk mendaftar?',
+      opts:['Hantar borang ke pejabat','Jumpa guru kelas masing-masing','Hantar e-mel kepada pengetua','Daftar secara dalam talian'],
+      ans:1, exp:'Pelajar perlu mendaftarkan diri dengan <strong>guru kelas masing-masing</strong>.' },
+
+    { id:'b106', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Perhatian semua pelajar! Pertandingan melukis peringkat sekolah akan diadakan pada hari Rabu, 15 Mac. Semua pelajar yang berminat boleh mendaftarkan diri dengan guru kelas masing-masing sebelum hari Isnin. Hadiah-hadiah menarik menanti para peserta.',
+      eng:'[Listen] Attention all students! The school-level drawing competition will be held on Wednesday, 15 March. Interested students may register with their class teacher before Monday. Attractive prizes await all participants.',
+      q:'Apakah yang menanti peserta-peserta pertandingan itu?',
+      opts:['Sijil sahaja','Hadiah-hadiah menarik','Wang tunai','Buku cerita'],
+      ans:1, exp:'Pengumuman menyatakan <strong>hadiah-hadiah menarik</strong> menanti para peserta.' },
+
+    // Petikan 4: Arahan — cara buat kek cawan (pm_p4)
+    { id:'b107', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Untuk membuat kek cawan, anda memerlukan tepung, gula, telur, dan mentega. Pertama, campurkan semua bahan dalam mangkuk. Kemudian, kacau sehingga sebati. Selepas itu, tuangkan adunan ke dalam acuan kertas. Akhirnya, bakar dalam ketuhar selama 20 minit.',
+      eng:'[Listen] To make cupcakes, you need flour, sugar, eggs, and butter. First, mix all the ingredients in a bowl. Then, stir until well-combined. After that, pour the batter into paper cups. Finally, bake in the oven for 20 minutes.',
+      q:'Apakah langkah pertama untuk membuat kek cawan?',
+      opts:['Bakar dalam ketuhar','Tuangkan ke dalam acuan','Campurkan semua bahan','Hiaskan kek'],
+      ans:2, exp:'Langkah pertama ialah <strong>campurkan semua bahan dalam mangkuk</strong>.' },
+
+    { id:'b108', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Untuk membuat kek cawan, anda memerlukan tepung, gula, telur, dan mentega. Pertama, campurkan semua bahan dalam mangkuk. Kemudian, kacau sehingga sebati. Selepas itu, tuangkan adunan ke dalam acuan kertas. Akhirnya, bakar dalam ketuhar selama 20 minit.',
+      eng:'[Listen] To make cupcakes, you need flour, sugar, eggs, and butter. First, mix all the ingredients in a bowl. Then, stir until well-combined. After that, pour the batter into paper cups. Finally, bake in the oven for 20 minutes.',
+      q:'Berapa lama kek cawan itu perlu dibakar?',
+      opts:['10 minit','15 minit','20 minit','30 minit'],
+      ans:2, exp:'Kek cawan perlu dibakar dalam ketuhar selama <strong>20 minit</strong>.' },
+
+    // Petikan 5: Narasi — Rasyid membantu ayah (pm_p5)
+    { id:'b109', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Setiap petang selepas sekolah, Rasyid membantu ayahnya di kedai runcit. Dia menyusun barangan di rak dan melayan pelanggan dengan mesra. Jiran-jiran sering memuji Rasyid kerana sikapnya yang rajin dan sopan santun.',
+      eng:'[Listen] Every afternoon after school, Rasyid helped his father at the grocery shop. He arranged items on the shelves and served customers warmly. Neighbours often praised Rasyid for his diligence and polite manners.',
+      q:'Di manakah Rasyid membantu ayahnya?',
+      opts:['Di sekolah','Di taman','Di kedai runcit','Di pejabat'],
+      ans:2, exp:'Rasyid membantu ayahnya di <strong>kedai runcit</strong>.' },
+
+    { id:'b110', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Setiap petang selepas sekolah, Rasyid membantu ayahnya di kedai runcit. Dia menyusun barangan di rak dan melayan pelanggan dengan mesra. Jiran-jiran sering memuji Rasyid kerana sikapnya yang rajin dan sopan santun.',
+      eng:'[Listen] Every afternoon after school, Rasyid helped his father at the grocery shop. He arranged items on the shelves and served customers warmly. Neighbours often praised Rasyid for his diligence and polite manners.',
+      q:'Mengapa jiran-jiran memuji Rasyid?',
+      opts:['Kerana dia pandai memasak','Kerana dia rajin dan sopan santun','Kerana dia seorang atlet','Kerana dia kaya'],
+      ans:1, exp:'Jiran-jiran memuji Rasyid kerana sikapnya yang <strong>rajin dan sopan santun</strong>.' },
+
+    // Petikan 6: Dialog — rancangan hujung minggu (pm_p6)
+    { id:'b111', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Nadia: Syafiq, kita nak buat apa hujung minggu ini? / Syafiq: Jom kita pergi taman permainan! / Nadia: Eh, ayah saya kata dia nak bawa kita ke muzium. / Syafiq: Muzium? Seronok juga tu! Apa yang ada di sana? / Nadia: Ada pameran haiwan purba. Mesti menarik!',
+      eng:'[Listen] Nadia: Syafiq, what shall we do this weekend? / Syafiq: Let's go to the playground! / Nadia: Oh, my dad wants to take us to the museum. / Syafiq: A museum? That sounds fun too! What is there? / Nadia: There is an exhibition on ancient animals. It must be interesting!',
+      q:'Ke manakah ayah Nadia mahu membawa mereka?',
+      opts:['Taman permainan','Muzium','Pawagam','Pantai'],
+      ans:1, exp:'Ayah Nadia mahu membawa mereka ke <strong>muzium</strong>.' },
+
+    { id:'b112', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Nadia: Syafiq, kita nak buat apa hujung minggu ini? / Syafiq: Jom kita pergi taman permainan! / Nadia: Eh, ayah saya kata dia nak bawa kita ke muzium. / Syafiq: Muzium? Seronok juga tu! Apa yang ada di sana? / Nadia: Ada pameran haiwan purba. Mesti menarik!',
+      eng:'[Listen] Nadia: Syafiq, what shall we do this weekend? / Syafiq: Let's go to the playground! / Nadia: Oh, my dad wants to take us to the museum. / Syafiq: A museum? That sounds fun too! What is there? / Nadia: There is an exhibition on ancient animals. It must be interesting!',
+      q:'Apakah yang ada di muzium itu?',
+      opts:['Pameran lukisan','Pameran haiwan purba','Pertunjukan sains','Pameran buku'],
+      ans:1, exp:'Nadia berkata di muzium ada <strong>pameran haiwan purba</strong>.' },
+
+    // ── Pemahaman Mendengar (P3 MOE Bahasa Melayu) ──
+    // Petikan 1: Narasi — Amira ke pasar (pm_p1)
+    { id:'b99', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Pada hari Sabtu pagi, Amira dan ibunya pergi ke pasar. Amira membantu ibunya membawa barang-barang. Di pasar, mereka membeli sayur-sayuran, ikan, dan buah-buahan. Amira gembira kerana ibu membelinya sebiji epal merah yang besar.',
+      eng:'[Listen] On Saturday morning, Amira and her mother went to the market. Amira helped her mother carry the items. They bought vegetables, fish, and fruits. Amira was happy because her mother bought her a big red apple.',
+      q:'Ke manakah Amira dan ibunya pergi?',
+      opts:['Ke sekolah','Ke pasar','Ke taman','Ke perpustakaan'],
+      ans:1, exp:'Petikan menyatakan Amira dan ibunya pergi ke <strong>pasar</strong> pada hari Sabtu.' },
+
+    { id:'b100', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Pada hari Sabtu pagi, Amira dan ibunya pergi ke pasar. Amira membantu ibunya membawa barang-barang. Di pasar, mereka membeli sayur-sayuran, ikan, dan buah-buahan. Amira gembira kerana ibu membelinya sebiji epal merah yang besar.',
+      eng:'[Listen] On Saturday morning, Amira and her mother went to the market. Amira helped her mother carry the items. They bought vegetables, fish, and fruits. Amira was happy because her mother bought her a big red apple.',
+      q:'Mengapa Amira berasa gembira?',
+      opts:['Kerana dia jumpa rakannya','Kerana ibu membeli epal merah untuknya','Kerana harga ikan murah','Kerana pasar berhampiran rumah'],
+      ans:1, exp:'Petikan menyatakan Amira gembira kerana <strong>ibu membelinya sebiji epal merah yang besar</strong>.' },
+
+    { id:'b101', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Pada hari Sabtu pagi, Amira dan ibunya pergi ke pasar. Amira membantu ibunya membawa barang-barang. Di pasar, mereka membeli sayur-sayuran, ikan, dan buah-buahan. Amira gembira kerana ibu membelinya sebiji epal merah yang besar.',
+      eng:'[Listen] On Saturday morning, Amira and her mother went to the market. Amira helped her mother carry the items. They bought vegetables, fish, and fruits. Amira was happy because her mother bought her a big red apple.',
+      q:'Nilai murni apakah yang ditunjukkan oleh Amira?',
+      opts:['Membantu ibu membawa barang','Bersikap sombong','Malas bekerja','Bergaduh'],
+      ans:0, exp:'Amira <strong>membantu ibunya membawa barang-barang</strong> — ini menunjukkan nilai tolong-menolong.' },
+
+    // Petikan 2: Dialog — pinjam pembaris (pm_p2)
+    { id:'b102', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Hafiz: Encik Lim, bolehkah saya pinjam pembaris ini? / Cikgu: Boleh, Hafiz. Tapi ingat, kembalikan selepas kelas. / Hafiz: Baik, Encik Lim. Terima kasih. / Cikgu: Sama-sama. Jaga pembaris itu dengan baik.',
+      eng:'[Listen] Hafiz: Mr Lim, may I borrow this ruler? / Teacher: Yes, Hafiz. But remember to return it after class. / Hafiz: Sure, Mr Lim. Thank you. / Teacher: You're welcome. Take good care of it.',
+      q:'Apakah yang Hafiz ingin pinjam?',
+      opts:['Buku','Pensel','Pembaris','Pemadam'],
+      ans:2, exp:'Hafiz bertanya kepada cikgu untuk meminjam <strong>pembaris</strong>.' },
+
+    { id:'b103', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Hafiz: Encik Lim, bolehkah saya pinjam pembaris ini? / Cikgu: Boleh, Hafiz. Tapi ingat, kembalikan selepas kelas. / Hafiz: Baik, Encik Lim. Terima kasih. / Cikgu: Sama-sama. Jaga pembaris itu dengan baik.',
+      eng:'[Listen] Hafiz: Mr Lim, may I borrow this ruler? / Teacher: Yes, Hafiz. But remember to return it after class. / Hafiz: Sure, Mr Lim. Thank you. / Teacher: You're welcome. Take good care of it.',
+      q:'Bilakah Hafiz perlu memulangkan pembaris itu?',
+      opts:['Sebelum rehat','Selepas kelas','Esok pagi','Selepas makan tengah hari'],
+      ans:1, exp:'Cikgu berkata Hafiz perlu kembalikan pembaris itu <strong>selepas kelas</strong>.' },
+
+    // Petikan 3: Pengumuman — pertandingan melukis (pm_p3)
+    { id:'b104', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Perhatian semua pelajar! Pertandingan melukis peringkat sekolah akan diadakan pada hari Rabu, 15 Mac. Semua pelajar yang berminat boleh mendaftarkan diri dengan guru kelas masing-masing sebelum hari Isnin. Hadiah-hadiah menarik menanti para peserta.',
+      eng:'[Listen] Attention all students! The school-level drawing competition will be held on Wednesday, 15 March. Interested students may register with their class teacher before Monday. Attractive prizes await all participants.',
+      q:'Apakah pertandingan yang diumumkan?',
+      opts:['Pertandingan menulis','Pertandingan melukis','Pertandingan bercerita','Pertandingan menyanyi'],
+      ans:1, exp:'Pengumuman menyebut tentang <strong>pertandingan melukis</strong> peringkat sekolah.' },
+
+    { id:'b105', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Perhatian semua pelajar! Pertandingan melukis peringkat sekolah akan diadakan pada hari Rabu, 15 Mac. Semua pelajar yang berminat boleh mendaftarkan diri dengan guru kelas masing-masing sebelum hari Isnin. Hadiah-hadiah menarik menanti para peserta.',
+      eng:'[Listen] Attention all students! The school-level drawing competition will be held on Wednesday, 15 March. Interested students may register with their class teacher before Monday. Attractive prizes await all participants.',
+      q:'Bagaimanakah cara untuk mendaftar?',
+      opts:['Hantar borang ke pejabat','Jumpa guru kelas masing-masing','Hantar e-mel kepada pengetua','Daftar secara dalam talian'],
+      ans:1, exp:'Pelajar perlu mendaftarkan diri dengan <strong>guru kelas masing-masing</strong>.' },
+
+    { id:'b106', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Perhatian semua pelajar! Pertandingan melukis peringkat sekolah akan diadakan pada hari Rabu, 15 Mac. Semua pelajar yang berminat boleh mendaftarkan diri dengan guru kelas masing-masing sebelum hari Isnin. Hadiah-hadiah menarik menanti para peserta.',
+      eng:'[Listen] Attention all students! The school-level drawing competition will be held on Wednesday, 15 March. Interested students may register with their class teacher before Monday. Attractive prizes await all participants.',
+      q:'Apakah yang menanti peserta-peserta pertandingan itu?',
+      opts:['Sijil sahaja','Hadiah-hadiah menarik','Wang tunai','Buku cerita'],
+      ans:1, exp:'Pengumuman menyatakan <strong>hadiah-hadiah menarik</strong> menanti para peserta.' },
+
+    // Petikan 4: Arahan — cara buat kek cawan (pm_p4)
+    { id:'b107', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Untuk membuat kek cawan, anda memerlukan tepung, gula, telur, dan mentega. Pertama, campurkan semua bahan dalam mangkuk. Kemudian, kacau sehingga sebati. Selepas itu, tuangkan adunan ke dalam acuan kertas. Akhirnya, bakar dalam ketuhar selama 20 minit.',
+      eng:'[Listen] To make cupcakes, you need flour, sugar, eggs, and butter. First, mix all the ingredients in a bowl. Then, stir until well-combined. After that, pour the batter into paper cups. Finally, bake in the oven for 20 minutes.',
+      q:'Apakah langkah pertama untuk membuat kek cawan?',
+      opts:['Bakar dalam ketuhar','Tuangkan ke dalam acuan','Campurkan semua bahan','Hiaskan kek'],
+      ans:2, exp:'Langkah pertama ialah <strong>campurkan semua bahan dalam mangkuk</strong>.' },
+
+    { id:'b108', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Untuk membuat kek cawan, anda memerlukan tepung, gula, telur, dan mentega. Pertama, campurkan semua bahan dalam mangkuk. Kemudian, kacau sehingga sebati. Selepas itu, tuangkan adunan ke dalam acuan kertas. Akhirnya, bakar dalam ketuhar selama 20 minit.',
+      eng:'[Listen] To make cupcakes, you need flour, sugar, eggs, and butter. First, mix all the ingredients in a bowl. Then, stir until well-combined. After that, pour the batter into paper cups. Finally, bake in the oven for 20 minutes.',
+      q:'Berapa lama kek cawan itu perlu dibakar?',
+      opts:['10 minit','15 minit','20 minit','30 minit'],
+      ans:2, exp:'Kek cawan perlu dibakar dalam ketuhar selama <strong>20 minit</strong>.' },
+
+    // Petikan 5: Narasi — Rasyid membantu ayah (pm_p5)
+    { id:'b109', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Setiap petang selepas sekolah, Rasyid membantu ayahnya di kedai runcit. Dia menyusun barangan di rak dan melayan pelanggan dengan mesra. Jiran-jiran sering memuji Rasyid kerana sikapnya yang rajin dan sopan santun.',
+      eng:'[Listen] Every afternoon after school, Rasyid helped his father at the grocery shop. He arranged items on the shelves and served customers warmly. Neighbours often praised Rasyid for his diligence and polite manners.',
+      q:'Di manakah Rasyid membantu ayahnya?',
+      opts:['Di sekolah','Di taman','Di kedai runcit','Di pejabat'],
+      ans:2, exp:'Rasyid membantu ayahnya di <strong>kedai runcit</strong>.' },
+
+    { id:'b110', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Setiap petang selepas sekolah, Rasyid membantu ayahnya di kedai runcit. Dia menyusun barangan di rak dan melayan pelanggan dengan mesra. Jiran-jiran sering memuji Rasyid kerana sikapnya yang rajin dan sopan santun.',
+      eng:'[Listen] Every afternoon after school, Rasyid helped his father at the grocery shop. He arranged items on the shelves and served customers warmly. Neighbours often praised Rasyid for his diligence and polite manners.',
+      q:'Mengapa jiran-jiran memuji Rasyid?',
+      opts:['Kerana dia pandai memasak','Kerana dia rajin dan sopan santun','Kerana dia seorang atlet','Kerana dia kaya'],
+      ans:1, exp:'Jiran-jiran memuji Rasyid kerana sikapnya yang <strong>rajin dan sopan santun</strong>.' },
+
+    // Petikan 6: Dialog — rancangan hujung minggu (pm_p6)
+    { id:'b111', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Nadia: Syafiq, kita nak buat apa hujung minggu ini? / Syafiq: Jom kita pergi taman permainan! / Nadia: Eh, ayah saya kata dia nak bawa kita ke muzium. / Syafiq: Muzium? Seronok juga tu! Apa yang ada di sana? / Nadia: Ada pameran haiwan purba. Mesti menarik!',
+      eng:'[Listen] Nadia: Syafiq, what shall we do this weekend? / Syafiq: Let's go to the playground! / Nadia: Oh, my dad wants to take us to the museum. / Syafiq: A museum? That sounds fun too! What is there? / Nadia: There is an exhibition on ancient animals. It must be interesting!',
+      q:'Ke manakah ayah Nadia mahu membawa mereka?',
+      opts:['Taman permainan','Muzium','Pawagam','Pantai'],
+      ans:1, exp:'Ayah Nadia mahu membawa mereka ke <strong>muzium</strong>.' },
+
+    { id:'b112', topic:'Pemahaman Mendengar', section:'Pemahaman Mendengar', tag:'pm',
+      passage:'🎧 [Dengar] Nadia: Syafiq, kita nak buat apa hujung minggu ini? / Syafiq: Jom kita pergi taman permainan! / Nadia: Eh, ayah saya kata dia nak bawa kita ke muzium. / Syafiq: Muzium? Seronok juga tu! Apa yang ada di sana? / Nadia: Ada pameran haiwan purba. Mesti menarik!',
+      eng:'[Listen] Nadia: Syafiq, what shall we do this weekend? / Syafiq: Let's go to the playground! / Nadia: Oh, my dad wants to take us to the museum. / Syafiq: A museum? That sounds fun too! What is there? / Nadia: There is an exhibition on ancient animals. It must be interesting!',
+      q:'Apakah yang ada di muzium itu?',
+      opts:['Pameran lukisan','Pameran haiwan purba','Pertunjukan sains','Pameran buku'],
+      ans:1, exp:'Nadia berkata di muzium ada <strong>pameran haiwan purba</strong>.' },
+
 };
