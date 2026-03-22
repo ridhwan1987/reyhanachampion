@@ -143,8 +143,6 @@ const QB = {
     { id:'e108', section:'Comprehension', tag:'comp', passage:'The residents of Block 45 started a community garden on the rooftop. They planted herbs, vegetables, and flowers together. Old and young took turns watering the plants each day. Mr Ali, aged 70, said it was the highlight of his week. "When we tend to the garden, we also tend to each other," he said with a smile.', q:'What did the residents plant?', opts:['Only vegetables','Fruits and berries','Herbs, vegetables and flowers','Trees and grass'], ans:2, exp:'"They planted <strong>herbs, vegetables, and flowers</strong>."' },
     { id:'e109', section:'Comprehension', tag:'comp', passage:'The residents of Block 45 started a community garden on the rooftop. They planted herbs, vegetables, and flowers together. Old and young took turns watering the plants each day. Mr Ali, aged 70, said it was the highlight of his week. "When we tend to the garden, we also tend to each other," he said with a smile.', q:'Who is Mr Ali?', opts:['A young boy','A gardener by trade','A 70-year-old resident','The block manager'], ans:2, exp:'"Mr Ali, <strong>aged 70</strong>" — a resident of the block.' },
     { id:'e110', section:'Comprehension', tag:'comp', passage:'The residents of Block 45 started a community garden on the rooftop. They planted herbs, vegetables, and flowers together. Old and young took turns watering the plants each day. Mr Ali, aged 70, said it was the highlight of his week. "When we tend to the garden, we also tend to each other," he said with a smile.', q:'"Tend to each other" in this passage means ___', opts:['To avoid each other','To compete with each other','To look after and care for each other','To watch from a distance'], ans:2, exp:'"When we tend to the garden, we also tend to each other" → <strong>to care for and look after</strong> one another.' },
-  ],
-
     // ── Listening Comprehension (MOE P3 English) ─────────────────────────────
     // P01 — Narrative: Mrs Chen at the market
     { id:'e111', section:'Listening Comprehension', tag:'lc',
@@ -445,6 +443,8 @@ const QB = {
       passage:'🎧 Ryan: I am so nervous about the English test tomorrow. / Emma: Me too! But I have been revising every evening. / Ryan: Really? What do you focus on? / Emma: Mostly grammar and vocabulary. Those always come up. / Ryan: Good tip. Let us study together this afternoon! / Emma: Sure! Two heads are better than one.',
       q:'What does "Two heads are better than one" mean?', opts:['You need two people to pass a test','Working together is more effective than working alone','Two books are needed','Having two teachers is helpful'], ans:1,
       exp:'"Two heads are better than one" means <strong>working together is more effective than working alone</strong>.' },
+
+  ],
 
   math: [
     // Section A: MCQ
