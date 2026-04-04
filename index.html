@@ -996,7 +996,8 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
     if (!inputVal.trim() || selected !== null) return;
     const userVal = inputVal.trim().toLowerCase().replace(/\s/g, '');
     const ansVal = String(q.ans).toLowerCase().replace(/\s/g, '');
-    const correct = userVal === ansVal;
+    const numUser = parseFloat(userVal), numAns = parseFloat(ansVal);
+    const correct = (!isNaN(numUser) && !isNaN(numAns)) ? numUser === numAns : userVal === ansVal;
     setSel(inputVal.trim());
     answersRef.current = [...answersRef.current, { q, chosen: inputVal.trim(), correct }];
     speakEncouragement(correct);
@@ -1269,7 +1270,8 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
     if (!inputVal.trim() || selected !== null) return;
     const userVal = inputVal.trim().toLowerCase().replace(/\s/g, '');
     const ansVal = String(q.ans).toLowerCase().replace(/\s/g, '');
-    const correct = userVal === ansVal;
+    const numUser = parseFloat(userVal), numAns = parseFloat(ansVal);
+    const correct = (!isNaN(numUser) && !isNaN(numAns)) ? numUser === numAns : userVal === ansVal;
     setSel(inputVal.trim());
     speakEncouragement(correct);
 
