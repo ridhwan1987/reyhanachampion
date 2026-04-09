@@ -1179,11 +1179,11 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
   const [questions] = useState(() => {
     // Exclude quiz-only questions from drill
     const filtered = QB[subject].filter(q => (q.topic || q.section) === topic && (!q.pool || q.pool !== 'quiz'));
-    return shuffle(filtered).slice(0, 10).map(q => ({
+    return shuffle(filtered).slice(0, 20).map(q => ({
       ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [], originalIdx: QB[subject].indexOf(q)
     }));
   });
-  const [queue, setQueue] = useState([...Array(10).keys()]);
+  const [queue, setQueue] = useState([...Array(20).keys()]);
   const [idx, setIdx] = useState(0);
   const [selected, setSel] = useState(null);
   const [inputVal, setInputVal] = useState('');
@@ -1191,7 +1191,7 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
   const [playsLeft, setPlaysLeft] = useState(2);
   const [speaking, setSpeaking] = useState(false);
   const [lcCorrect, setLcCorrect] = useState(0);  // LC only: correct answers so far
-  const lcAnswered = isLC ? 10 - queue.length : 0; // questions answered so far
+  const lcAnswered = isLC ? 20 - queue.length : 0; // questions answered so far
   const cfg = CFG[subject];
   const qIdx = queue[idx];
   const q = questions[qIdx];
@@ -1344,13 +1344,13 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
               Start Questions &#8594;
             </button>
           </div>
-          <p className="text-xs text-gray-400">{10 - queue.length}/10 answered correctly so far</p>
+          <p className="text-xs text-gray-400">{20 - queue.length}/20 answered correctly so far</p>
         </div>
       </div>
     );
   }
 
-  const pct = ((10 - queue.length) / 10) * 100;
+  const pct = ((20 - queue.length) / 20) * 100;
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
@@ -1359,7 +1359,7 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
         <div className="flex-1">
           <div className="flex justify-between text-xs mb-1.5 text-white/80">
             <span>{isLC ? "\U0001F3A7 Listening Comprehension" : cfg.emoji + " Drill: " + topic}</span>
-            <span>{isLC ? (lcAnswered + "/10 answered") : ((10 - queue.length) + "/10 correct")}</span>
+            <span>{isLC ? (lcAnswered + "/20 answered") : ((20 - queue.length) + "/20 correct")}</span>
           </div>
           <div className="w-full bg-white/30 rounded-full h-2">
             <div className="bg-white h-2 rounded-full transition-all duration-500" style={{ width:`${pct}%` }} />
@@ -1369,7 +1369,7 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
 
       <div className="flex-1 p-5 flex flex-col gap-4 max-w-lg mx-auto w-full pop">
         <div className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full w-fit" style={{ backgroundColor: cfg.sky + '20', color: cfg.hdr }}>
-          {isLC ? (lcAnswered + "/10 — " + lcCorrect + " correct") : ((10 - queue.length) + "/10 Correct")}
+          {isLC ? (lcAnswered + "/20 — " + lcCorrect + " correct") : ((20 - queue.length) + "/20 Correct")}
         </div>
 
         <div className="bg-white rounded-2xl p-5 shadow-sm">
