@@ -692,14 +692,14 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
             className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
             <div className="text-5xl mb-2">⚡</div>
             <h3 className="text-xl font-bold text-gray-800">Drill Mode</h3>
-            <p className="text-xs text-gray-500 mt-1">Master one topic until 10/10! Earn $2 for perfection</p>
+            <p className="text-xs text-gray-500 mt-1">Master one topic until 20/20! Earn $2 for perfection</p>
           </button>
           {(subject === 'english' || subject === 'malay') && (
             <button onClick={() => onMode('lc')}
               className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95" style={{borderTop:'3px solid #1a2744'}}>
               <div className="text-5xl mb-2">🎧</div>
               <h3 className="text-xl font-bold text-gray-800">Listening Comprehension</h3>
-              <p className="text-xs text-gray-500 mt-1">Practise passages — earn $0.50 for 10/10!</p>
+              <p className="text-xs text-gray-500 mt-1">Practise passages — earn $0.50 for 20/20!</p>
             </button>
           )}
         </div>
