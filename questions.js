@@ -549,6 +549,53 @@ const QB = {
     { id:'m92', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A garden is 8m long and 5m wide. What is its area?', ans:'40', unit:'m²', exp:'8 × 5 = <strong>40 m²</strong>' },
     { id:'m93', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A class of 32 students sits in 4 equal rows. How many students are in each row?', ans:'8', exp:'32 ÷ 4 = <strong>8</strong>' },
     { id:'m94', section:'Section C: Word Problems', tag:'laq', type:'text', q:'Nadia reads 12 pages a day. How many pages does she read in 9 days?', ans:'108', exp:'12 × 9 = <strong>108</strong>' },
+
+  // ── SECTION A: MCQ expansion (m95–m106) ──
+  { id:'m95',  section:'Section A: MCQ', tag:'mcq', q:'What is 7 × 8?', opts:['54','56','63','72'], ans:1 },
+  { id:'m96',  section:'Section A: MCQ', tag:'mcq', q:'What is 9 × 6?', opts:['45','52','54','56'], ans:2 },
+  { id:'m97',  section:'Section A: MCQ', tag:'mcq', q:'Which fraction is equivalent to 1/2?', opts:['2/6','3/6','4/10','5/8'], ans:1 },
+  { id:'m98',  section:'Section A: MCQ', tag:'mcq', q:'Round 3 847 to the nearest hundred.', opts:['3 700','3 800','3 900','4 000'], ans:1 },
+  { id:'m99',  section:'Section A: MCQ', tag:'mcq', q:'What is the value of the digit 6 in the number 6 412?', opts:['6','60','600','6 000'], ans:3 },
+  { id:'m100', section:'Section A: MCQ', tag:'mcq', q:'Mary has $10. She spends $3.85. How much does she have left?', opts:['$6.05','$6.15','$6.25','$7.15'], ans:1 },
+  { id:'m101', section:'Section A: MCQ', tag:'mcq', q:'A rectangle has length 9 cm and width 4 cm. What is its perimeter?', opts:['13 cm','26 cm','36 cm','72 cm'], ans:1 },
+  { id:'m102', section:'Section A: MCQ', tag:'mcq', q:'Which of the following is equivalent to 2/3?', opts:['4/9','6/9','4/6','Both 6/9 and 4/6'], ans:3 },
+  { id:'m103', section:'Section A: MCQ', tag:'mcq', q:'48 ÷ 6 = ?', opts:['6','7','8','9'], ans:2 },
+  { id:'m104', section:'Section A: MCQ', tag:'mcq', q:'What is 5 009 rounded to the nearest thousand?', opts:['4 000','5 000','5 100','6 000'], ans:1 },
+  { id:'m105', section:'Section A: MCQ', tag:'mcq', q:'A square has side 7 cm. What is its area?', opts:['14 cm²','28 cm²','49 cm²','56 cm²'], ans:2 },
+  { id:'m106', section:'Section A: MCQ', tag:'mcq', q:'3/8 + 3/8 = ?', opts:['6/16','6/8','3/4','1/2'], ans:2 },
+
+  // ── SECTION B: Short Answer expansion (m107–m118) ──
+  { id:'m107', section:'Section B: Short Answer', tag:'saq', type:'text', q:'6 × 9 = ___', ans:'54' },
+  { id:'m108', section:'Section B: Short Answer', tag:'saq', type:'text', q:'63 ÷ 7 = ___', ans:'9' },
+  { id:'m109', section:'Section B: Short Answer', tag:'saq', type:'text', q:'Write a fraction equivalent to 3/4 with denominator 8.', ans:'6/8' },
+  { id:'m110', section:'Section B: Short Answer', tag:'saq', type:'text', q:'What is 2 500 + 1 750?', ans:'4250' },
+  { id:'m111', section:'Section B: Short Answer', tag:'saq', type:'text', q:'A bag of rice costs $4.60. How much do 3 bags cost?', ans:'13.80', unitPre:'$' },
+  { id:'m112', section:'Section B: Short Answer', tag:'saq', type:'text', q:'The area of a rectangle is 56 cm². Its length is 8 cm. What is its width?', ans:'7', unit:'cm' },
+  { id:'m113', section:'Section B: Short Answer', tag:'saq', type:'text', q:'Round 7 362 to the nearest ten.', ans:'7360' },
+  { id:'m114', section:'Section B: Short Answer', tag:'saq', type:'text', q:'5/9 − 2/9 = ___', ans:'3/9', hint:'Subtract the numerators only' },
+  { id:'m115', section:'Section B: Short Answer', tag:'saq', type:'text', q:'How many minutes are in 2 hours and 15 minutes?', ans:'135', unit:'minutes' },
+  { id:'m116', section:'Section B: Short Answer', tag:'saq', type:'text', q:'What is the perimeter of a square with side 6 cm?', ans:'24', unit:'cm' },
+  { id:'m117', section:'Section B: Short Answer', tag:'saq', type:'text', q:'8 × 7 = ___', ans:'56' },
+  { id:'m118', section:'Section B: Short Answer', tag:'saq', type:'text', q:'A rope is 9 m long. It is cut into pieces of 6 cm each. How many pieces are there? (Convert 9 m to cm first)', ans:'150', hint:'9 m = 900 cm. 900 ÷ 6 = ?' },
+
+  // ── SECTION C: Word Problems expansion (m119–m134) ──
+  { id:'m119', section:'Section C: Word Problems', tag:'laq', type:'text', q:'Tom collects stamps. He has 6 rows of 9 stamps each. How many stamps does he have altogether?', ans:'54', unit:'stamps' },
+  { id:'m120', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A bookshop sells pens at $1.35 each. Ali buys 6 pens. How much does he pay in total?', ans:'8.10', unitPre:'$' },
+  { id:'m121', section:'Section C: Word Problems', tag:'laq', type:'text', q:'Siti has $20. She buys a ruler for $2.50 and a notebook for $5.80. How much money does she have left?', ans:'11.70', unitPre:'$' },
+  { id:'m122', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A garden is 8 m long and 5 m wide. What is the area of the garden?', ans:'40', unit:'m²' },
+  { id:'m123', section:'Section C: Word Problems', tag:'laq', type:'text', q:'There are 72 children going on a trip. They are put into groups of 9. How many groups are there?', ans:'8', unit:'groups' },
+  { id:'m124', section:'Section C: Word Problems', tag:'laq', type:'text', q:'Raju saved $45 in January and $38 in February. He spent $27 in March. How much money does he have left?', ans:'56', unitPre:'$' },
+  { id:'m125', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A bag of flour weighs 2 kg. A shopkeeper has 8 such bags. What is the total mass of flour?', ans:'16', unit:'kg' },
+  { id:'m126', section:'Section C: Word Problems', tag:'laq', type:'text', q:'Aishah has 3/7 of a pizza. She eats 1/7 more. What fraction of the pizza has she eaten in total?', ans:'4/7', hint:'Add the fractions' },
+  { id:'m127', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A rectangle has a perimeter of 36 cm. Its width is 6 cm. What is its length?', ans:'12', unit:'cm', exp:'Perimeter = 2 × (l + w). 36 = 2 × (l + 6). l + 6 = 18. l = 12.' },
+  { id:'m128', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A school library has 4 839 books. It buys 1 256 more books. How many books are there now?', ans:'6095', unit:'books' },
+  { id:'m129', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A movie starts at 3:45 p.m. and lasts 1 hour 40 minutes. What time does it end?', ans:'5:25 p.m.' },
+  { id:'m130', section:'Section C: Word Problems', tag:'laq', type:'text', q:'Nadia has $50. She buys 4 books at $7.50 each. How much money does she have left?', ans:'20', unitPre:'$', exp:'4 × $7.50 = $30. $50 − $30 = $20.' },
+  { id:'m131', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A farmer plants 6 rows of corn with 8 plants in each row. He also plants 9 rows of beans with 7 plants in each row. How many plants does he have altogether?', ans:'111', unit:'plants', exp:'6×8 = 48. 9×7 = 63. 48+63 = 111.' },
+  { id:'m132', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A tank holds 7 000 mL of water. After watering plants, only 2 850 mL is left. How much water was used?', ans:'4150', unit:'mL' },
+  { id:'m133', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A box of chocolates costs $8.90. Mrs Tan buys 3 boxes and pays with a $30 note. How much change does she receive?', ans:'3.30', unitPre:'$', exp:'3 × $8.90 = $26.70. $30 − $26.70 = $3.30.' },
+  { id:'m134', section:'Section C: Word Problems', tag:'laq', type:'text', q:'A rectangle has length 12 cm. Its area is 84 cm². What is the perimeter of the rectangle?', ans:'38', unit:'cm', exp:'Width = 84 ÷ 12 = 7 cm. Perimeter = 2 × (12 + 7) = 38 cm.' },
+
   ],
 
   gepmath: [
