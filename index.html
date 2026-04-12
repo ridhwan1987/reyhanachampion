@@ -396,6 +396,399 @@ function saveResult(subject, mode, score, total, breakdown, difficulty) {
 
 function getResults() { return JSON.parse(localStorage.getItem(RC_PREFIX + 'results') || '[]'); }
 
+// ═══════════════════════════════════════════════════════════════
+// PERSONALIZED PRACTICE ENGINE (Phase 3)
+// ═══════════════════════════════════════════════════════════════
+
+// Manage revision queue for spaced repetition
+function getRevisionQueue() {
+  return JSON.parse(localStorage.getItem(RC_PREFIX + 'revision_queue') || '[]');
+}
+
+function addToRevisionQueue(qId, subject, skill, stage = 'again', lastCorrect = false, reason = 'wrong') {
+  const queue = getRevisionQueue();
+  // Allow same question with different reasons (wrong vs hint-used vs reveal-used)
+  if (!queue.find(r => r.qId === qId && r.subject === subject && r.reason === reason)) {
+    const now = new Date().getTime();
+    // Explicit millisecond scheduling to avoid unit errors
+    const scheduleMs = {
+      'again': 15 * 60 * 1000,       // 15 minutes
+      'hint_review': 12 * 60 * 60 * 1000,   // 12 hours
+      'reveal_review': 12 * 60 * 60 * 1000, // 12 hours
+      '1d': 24 * 60 * 60 * 1000,    // 1 day
+      '3d': 3 * 24 * 60 * 60 * 1000, // 3 days
+      '7d': 7 * 24 * 60 * 60 * 1000  // 7 days
+    };
+    queue.push({
+      qId, subject, skill, stage: stage || 'again', reason,
+      createdAt: now,
+      scheduledFor: now + (scheduleMs[stage] || 60 * 60 * 1000), // Default: 1 hour
+      attempts: 0,
+      lastCorrect
+    });
+    localStorage.setItem(RC_PREFIX + 'revision_queue', JSON.stringify(queue));
+  }
+}
+
+function clearRevisionItem(qId, subject) {
+  let queue = getRevisionQueue();
+  queue = queue.filter(r => !(r.qId === qId && r.subject === subject));
+  localStorage.setItem(RC_PREFIX + 'revision_queue', JSON.stringify(queue));
+}
+
+// Identify weak skills from result history
+function identifyWeakSkills(subject) {
+  const stat = subjectStats(subject);
+  if (!stat || !stat.skillAvgs) return [];
+  const weak = [];
+  Object.entries(stat.skillAvgs).forEach(([skill, pct]) => {
+    if (pct !== null && pct < 70) {
+      weak.push({ skill, score: pct });
+    }
+  });
+  return weak.sort((a, b) => a.score - b.score); // Lowest first
+}
+
+// Build recommended practice set for Reyhana
+function getRecommendedDrill(subject) {
+  const revisionQueue = getRevisionQueue().filter(r => r.subject === subject);
+  const now = new Date().getTime();
+  
+  // Get overdue revision items
+  const overdueRevision = revisionQueue
+    .filter(r => r.scheduledFor <= now)
+    .sort((a, b) => a.scheduledFor - b.scheduledFor)
+    .slice(0, 3); // Max 3 revision items
+  
+  // Get weak skills
+  const weakSkills = identifyWeakSkills(subject);
+  
+  // Get some confidence builders (questions from strong skills)
+  const stat = subjectStats(subject);
+  const strongSkills = stat && stat.skillAvgs 
+    ? Object.entries(stat.skillAvgs)
+        .filter(([s, p]) => p !== null && p >= 80)
+        .map(([s]) => s)
+    : [];
+  
+  // Return recommendation
+  return {
+    hasOverdue: overdueRevision.length > 0,
+    overdueCount: overdueRevision.length,
+    weakSkills: weakSkills.slice(0, 2), // Top 2 weakest
+    strongSkills: strongSkills.slice(0, 1),
+    revisionItems: overdueRevision
+  };
+}
+
+// Get questions for recommended drill (5-8 questions max, with robust fallback)
+function buildRecommendedQuestions(subject) {
+  const rec = getRecommendedDrill(subject);
+  const allQs = QB[subject] || [];
+  const chosen = [];
+  
+  // First: pick revision items (all reasons: wrong, hint-used, reveal-used)
+  rec.revisionItems.forEach(item => {
+    const q = allQs.find(q => q.id === item.qId);
+    if (q && !chosen.find(c => c.id === q.id)) chosen.push(q);
+  });
+  
+  // Second: pick from weak skills (up to 3-4 more)
+  if (chosen.length < 7) {
+    rec.weakSkills.forEach(weak => {
+      const qs = allQs.filter(q => {
+        const skill = getSkill(q);
+        return skill === weak.skill && !chosen.find(c => c.id === q.id);
+      });
+      const toAdd = Math.min(2, 7 - chosen.length);
+      shuffle(qs).slice(0, toAdd).forEach(q => chosen.push(q));
+    });
+  }
+  
+  // Third: add confidence builders (strong skills)
+  if (chosen.length < 6 && rec.strongSkills.length > 0) {
+    const qs = allQs.filter(q => {
+      const skill = getSkill(q);
+      return skill === rec.strongSkills[0] && !chosen.find(c => c.id === q.id);
+    });
+    const toAdd = Math.min(1, 8 - chosen.length);
+    shuffle(qs).slice(0, toAdd).forEach(q => chosen.push(q));
+  }
+  
+  // FALLBACK: If still not enough questions, add from any practiced skill
+  if (chosen.length < 5) {
+    const results = getResults();
+    const subjectResults = results.filter(r => r.subject === subject);
+    const practicedSkills = new Set();
+    subjectResults.forEach(r => {
+      if (r.breakdown) {
+        Object.keys(r.breakdown).forEach(key => {
+          // Normalize old breakdown keys (section names, topics) using getSkillFromKey
+          const normalizedSkill = getSkillFromKey(key, subject);
+          practicedSkills.add(normalizedSkill);
+        });
+      }
+    });
+    
+    for (let skill of practicedSkills) {
+      if (chosen.length >= 5) break;
+      const qs = allQs.filter(q => {
+        const qSkill = getSkill(q);
+        return qSkill === skill && !chosen.find(c => c.id === q.id);
+      });
+      const toAdd = Math.min(1, 5 - chosen.length);
+      shuffle(qs).slice(0, toAdd).forEach(q => chosen.push(q));
+    }
+  }
+  
+  // FINAL FALLBACK: If still not enough, add any available questions
+  if (chosen.length < 5) {
+    const unused = allQs.filter(q => !chosen.find(c => c.id === q.id));
+    const toAdd = Math.min(unused.length, 5 - chosen.length);
+    shuffle(unused).slice(0, toAdd).forEach(q => chosen.push(q));
+  }
+  
+  return shuffle(chosen.slice(0, 8)).map(q => ({
+    ...q,
+    shuffledOpts: q.opts ? shuffle(q.opts) : []
+  }));
+}
+
+// Check if there's a meaningful recommendation
+function hasRecommendation(subject) {
+  // Only show when there's actionable practice:
+  // 1. Overdue revision items (mistakes to fix)
+  // 2. Weak skills (score < 70%)
+  // 3. Hint/reveal-dependent items (need reinforcement without aids)
+  
+  const rec = getRecommendedDrill(subject);
+  const hasOverdueOrWeak = rec.hasOverdue || rec.weakSkills.length > 0;
+  
+  const revisionQueue = getRevisionQueue().filter(r => r.subject === subject);
+  const hasHintReveal = revisionQueue.some(r => r.reason === 'hint_used' || r.reason === 'reveal_used');
+  
+  // Return true only if there's a meaningful learning opportunity
+  return hasOverdueOrWeak || hasHintReveal;
+}
+
+// Advance spaced repetition stage for revision items after successful practice
+function advanceRevisionStages(revisionIds, scorePercent) {
+  if (!revisionIds || revisionIds.length === 0) return;
+  
+  // Stage progression map for all supported stages
+  const stageProgression = {
+    'again': '1d',
+    'hint_review': '1d',      // hint-used items advance to 1-day review
+    'reveal_review': '1d',    // reveal-used items advance to 1-day review
+    '1d': '3d',
+    '3d': '7d',
+    '7d': null  // Completed - remove from queue
+  };
+  
+  // Explicit millisecond delays for each stage
+  const scheduleMs = {
+    '1d': 24 * 60 * 60 * 1000,
+    '3d': 3 * 24 * 60 * 60 * 1000,
+    '7d': 7 * 24 * 60 * 60 * 1000
+  };
+  
+  let queue = getRevisionQueue();
+  const now = new Date().getTime();
+  
+  revisionIds.forEach(rId => {
+    const item = queue.find(r => r.qId === rId.qId && r.subject === rId.subject);
+    if (!item) return;
+    
+    if (scorePercent >= 80) {
+      // Good score - advance to next stage
+      const nextStage = stageProgression[item.stage];
+      if (nextStage === null) {
+        // Completed all stages - remove from queue
+        queue = queue.filter(r => !(r.qId === item.qId && r.subject === item.subject));
+      } else if (nextStage) {
+        // Advance to next stage
+        item.stage = nextStage;
+        item.scheduledFor = now + (scheduleMs[nextStage] || 0);
+        item.lastCorrect = true;
+        item.attempts = (item.attempts || 0) + 1;
+      }
+    } else {
+      // Poor score - reschedule for quick retry (1 hour)
+      item.scheduledFor = now + (60 * 60 * 1000); // 1 hour
+      item.lastCorrect = false;
+      item.attempts = (item.attempts || 0) + 1;
+    }
+  });
+  
+  localStorage.setItem(RC_PREFIX + 'revision_queue', JSON.stringify(queue));
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE 4: ADAPTIVE LEARNING ENGINE
+// ═══════════════════════════════════════════════════════════════
+
+// Get recent performance on a specific skill (last N quiz results)
+function getRecentSkillPerformance(subject, skill, numRecent = 5) {
+  const results = getResults()
+    .filter(r => r.subject === subject && r.mode === 'quiz')
+    .sort((a, b) => new Date(b.iso) - new Date(a.iso))
+    .slice(0, numRecent);
+  
+  const skillResults = [];
+  results.forEach(r => {
+    if (r.breakdown) {
+      Object.entries(r.breakdown).forEach(([key, data]) => {
+        const normalizedSkill = getSkillFromKey(key, subject);
+        if (normalizedSkill === skill) {
+          const skillPct = Math.round((data.correct / data.total) * 100);
+          skillResults.push({ pct: skillPct, iso: r.iso, difficulty: r.difficulty });
+        }
+      });
+    }
+  });
+  
+  return skillResults;
+}
+
+// Get adaptive difficulty suggestion based on recent performance
+function getAdaptiveDifficulty(subject, skill, currentDifficulty = 'easy') {
+  const recent = getRecentSkillPerformance(subject, skill, 5);
+  if (recent.length === 0) return currentDifficulty; // No history, keep current
+  
+  const avgPct = Math.round(recent.reduce((a, b) => a + b.pct, 0) / recent.length);
+  
+  // Adaptive logic: Gradual difficulty adjustment
+  if (avgPct >= 85) {
+    // Consistent high performance - suggest bump up
+    if (currentDifficulty === 'easy') return 'medium';
+    if (currentDifficulty === 'medium') return 'hard';
+  } else if (avgPct < 60 && recent.length >= 2) {
+    // Consistent struggle - suggest drop down
+    if (currentDifficulty === 'hard') return 'medium';
+    if (currentDifficulty === 'medium') return 'easy';
+  }
+  
+  return currentDifficulty; // Stay at current level
+}
+
+// Check if guided practice is recommended (skill shows struggle pattern)
+function shouldTriggerGuidedPractice(subject, skill) {
+  const recent = getRecentSkillPerformance(subject, skill, 3);
+  if (recent.length < 2) return false; // Need at least 2 recent attempts
+  
+  // Trigger if: last 2 quizzes both <70%, or average <60%
+  const recentScores = recent.slice(0, 2).map(r => r.pct);
+  const bothLow = recentScores.length === 2 && recentScores.every(s => s < 70);
+  const avgLow = recent.reduce((a, b) => a + b.pct, 0) / recent.length < 60;
+  
+  return bothLow || avgLow;
+}
+
+// Get a coaching message based on performance
+function getAdaptiveCoachingMessage(subject, skill, skillAvg = null) {
+  const avgScore = skillAvg || Math.round(getRecentSkillPerformance(subject, skill, 5)
+    .reduce((a, b) => a + b.pct, 0) / Math.max(1, getRecentSkillPerformance(subject, skill, 5).length));
+  
+  if (avgScore >= 85) return '🌟 Excellent! You\'ve got this skill down. Ready for a bigger challenge?';
+  if (avgScore >= 70) return '👍 Good progress! Let\'s keep practicing to master this.';
+  if (avgScore >= 50) return '💪 Keep trying! This skill needs a bit more practice. Want a guide?';
+  return '🤝 Let\'s learn this together with some help. I\'ll show you the key idea first!';
+}
+
+function getSkill(q) {
+  if (q.skill) return q.skill;
+  if (q.section) {
+    const section = q.section;
+    if (section === 'Grammar MCQ') return 'grammar';
+    if (section === 'Vocabulary') return 'vocabulary';
+    if (section === 'Visual Text') return 'visual text';
+    if (section === 'Grammar Cloze') return 'grammar cloze';
+    if (section === 'Editing') return 'editing';
+    if (section === 'Comprehension') return 'comprehension';
+    if (section === 'Listening Comprehension') return 'listening comprehension';
+    // Math sections - use tag for finer skill categorization
+    if (section === 'Section A: MCQ' || section === 'Section B: Short Answer' || section === 'Section C: Word Problems') {
+      if (q.tag) {
+        const tag = q.tag;
+        if (tag === 'numbers') return 'numbers';
+        if (tag === 'fractions') return 'fractions';
+        if (tag === 'time') return 'time';
+        if (tag === 'measurement') return 'measurement';
+        if (tag === 'money') return 'money';
+        if (tag === 'geometry') return 'geometry';
+        if (tag === 'laq') return 'word problems';
+      }
+      // Fallback for old questions without tag
+      if (section === 'Section A: MCQ' || section === 'Section B: Short Answer') return 'arithmetic';
+      if (section === 'Section C: Word Problems') return 'word problems';
+    }
+    if (section === 'Perbendaharaan Kata') return 'perbendaharaan kata';
+    if (section === 'Tatabahasa') return 'tatabahasa';
+    if (section === 'Pemahaman') return 'kefahaman';
+    if (section === 'Isi Tempat Kosong') return 'isi tempat kosong';
+    if (section === 'Pemahaman Mendengar') return 'pemahaman mendengar';
+    if (section === 'Number Patterns') return 'number patterns';
+    if (section === 'Clever Problem Sums') return 'clever problem sums';
+    if (section === 'Logic & Spatial') return 'logic & spatial';
+    if (section === 'Mental Maths') return 'mental maths';
+    if (section === 'Fractions & Measurement') return 'fractions & measurement';
+  }
+  if (q.topic) {
+    const topic = q.topic;
+    if (topic === 'Diversity of Living Things') return 'diversity';
+    if (topic === 'Materials') return 'materials';
+    if (topic === 'Magnets') return 'magnets';
+    if (topic === 'Life Cycles') return 'life cycles';
+    if (topic === 'Mixed Review') return 'mixed review';
+  }
+  return q.section || q.topic || 'General';
+}
+
+function getSkillFromKey(key, subject) {
+  if (subject === 'english') {
+    if (key === 'Grammar MCQ') return 'grammar';
+    if (key === 'Vocabulary') return 'vocabulary';
+    if (key === 'Visual Text') return 'visual text';
+    if (key === 'Grammar Cloze') return 'grammar cloze';
+    if (key === 'Editing') return 'editing';
+    if (key === 'Comprehension') return 'comprehension';
+    if (key === 'Listening Comprehension') return 'listening comprehension';
+  } else if (subject === 'math') {
+    // Handle section names (very old stored breakdowns)
+    if (key === 'Section A: MCQ' || key === 'Section B: Short Answer') return 'arithmetic';
+    if (key === 'Section C: Word Problems') return 'word problems';
+    // Handle granular math skills from new tag-based mapping
+    if (key === 'numbers') return 'numbers';
+    if (key === 'fractions') return 'fractions';
+    if (key === 'time') return 'time';
+    if (key === 'measurement') return 'measurement';
+    if (key === 'money') return 'money';
+    if (key === 'geometry') return 'geometry';
+    // Handle old coarse skills (for backward compatibility)
+    if (key === 'arithmetic') return 'arithmetic';
+    if (key === 'word problems') return 'word problems';
+  } else if (subject === 'science') {
+    if (key === 'Diversity of Living Things') return 'diversity';
+    if (key === 'Materials') return 'materials';
+    if (key === 'Magnets') return 'magnets';
+    if (key === 'Life Cycles') return 'life cycles';
+    if (key === 'Mixed Review') return 'mixed review';
+  } else if (subject === 'malay') {
+    if (key === 'Perbendaharaan Kata') return 'perbendaharaan kata';
+    if (key === 'Tatabahasa') return 'tatabahasa';
+    if (key === 'Pemahaman') return 'kefahaman';
+    if (key === 'Isi Tempat Kosong') return 'isi tempat kosong';
+    if (key === 'Pemahaman Mendengar') return 'pemahaman mendengar';
+  } else if (subject === 'gepmath') {
+    if (key === 'Number Patterns') return 'number patterns';
+    if (key === 'Clever Problem Sums') return 'clever problem sums';
+    if (key === 'Logic & Spatial') return 'logic & spatial';
+    if (key === 'Mental Maths') return 'mental maths';
+    if (key === 'Fractions & Measurement') return 'fractions & measurement';
+  }
+  return key; // fallback for unmapped keys
+}
+
 // Track drill attempts per subject (how many drill runs before first perfect)
 function getDrillAttempts() {
   return JSON.parse(localStorage.getItem(RC_PREFIX + 'drillAttempts') || '{}');
@@ -436,7 +829,23 @@ function subjectStats(sub) {
     const drs = rs.filter(r => r.mode === 'quiz' && r.difficulty === d);
     diffAvgs[d] = drs.length ? Math.round(drs.reduce((a,b) => a + b.pct, 0) / drs.length) : null;
   });
-  return { avg, best, count, perfectDrills, quizAvg, drillAvg, drillAttemptData, diffAvgs };
+  const skillStats = {};
+  rs.forEach(r => {
+    if (r.breakdown) {
+      Object.entries(r.breakdown).forEach(([key, d]) => {
+        const skill = getSkillFromKey(key, sub);
+        if (!skillStats[skill]) skillStats[skill] = { totalCorrect:0, totalTotal:0, count:0 };
+        skillStats[skill].totalCorrect += d.correct;
+        skillStats[skill].totalTotal += d.total;
+        skillStats[skill].count++;
+      });
+    }
+  });
+  const skillAvgs = {};
+  Object.entries(skillStats).forEach(([skill, s]) => {
+    skillAvgs[skill] = s.count > 0 ? Math.round((s.totalCorrect / s.totalTotal) * 100) : null;
+  });
+  return { avg, best, count, perfectDrills, quizAvg, drillAvg, drillAttemptData, diffAvgs, skillAvgs };
 }
 
 function getWallet() {
@@ -470,7 +879,8 @@ async function syncToFirebase() {
       body: JSON.stringify({
         results: getResults(),
         wallet: getWallet(),
-        rewards: JSON.parse(localStorage.getItem(RC_PREFIX + 'rewards') || '[]')
+        rewards: JSON.parse(localStorage.getItem(RC_PREFIX + 'rewards') || '[]'),
+        revision_queue: getRevisionQueue()
       })
     });
   } catch(e) { console.warn('Firebase sync failed', e); }
@@ -485,6 +895,7 @@ async function loadFromFirebase() {
     if (data.results) localStorage.setItem(RC_PREFIX + 'results', JSON.stringify(data.results));
     if (data.wallet)  localStorage.setItem(RC_PREFIX + 'wallet',  JSON.stringify(data.wallet));
     if (data.rewards) localStorage.setItem(RC_PREFIX + 'rewards', JSON.stringify(data.rewards));
+    if (data.revision_queue) localStorage.setItem(RC_PREFIX + 'revision_queue', JSON.stringify(data.revision_queue));
     return true;
   } catch(e) { console.warn('Firebase load failed', e); return false; }
 }
@@ -510,6 +921,108 @@ function Confetti() {
         }} />
       ))}
     </>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SCREEN: RECOMMENDED DRILL (Phase 3)
+// ═══════════════════════════════════════════════════════════════
+function RecommendedDrillScreen({ onDone, onBack, onHome }) {
+  const [selectedSubject, setSelectedSubject] = React.useState(null);
+  
+  // Show subject selection if none selected yet
+  if (!selectedSubject) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 flex flex-col items-center justify-center p-6">
+        <div className="text-center mb-8">
+          <div className="text-6xl mb-3">✨</div>
+          <h1 className="text-3xl font-bold text-purple-700 mb-2">Recommended for Reyhana</h1>
+          <p className="text-gray-600 text-sm">Practice your weaker skills first, then review what you've mastered!</p>
+        </div>
+
+        <div className="w-full max-w-sm space-y-3">
+          {['english', 'math', 'science', 'malay', 'gepmath'].map(subj => {
+            const cfg = CFG[subj];
+            const hasRec = hasRecommendation(subj);
+            const rec = getRecommendedDrill(subj);
+            if (!hasRec) return null;
+            return (
+              <button key={subj}
+                onClick={() => setSelectedSubject(subj)}
+                className="w-full rounded-2xl p-4 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 text-left"
+                style={{ backgroundColor: cfg.bg, borderLeft: `4px solid ${cfg.hdr}` }}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 flex-1">
+                    <span className="text-3xl">{cfg.emoji}</span>
+                    <div>
+                      <div className="font-bold text-gray-800">{cfg.label}</div>
+                      <div className="text-xs text-gray-600 mt-1">
+                        {rec.overdueCount > 0 && <span>🔄 {rec.overdueCount} review items • </span>}
+                        {rec.weakSkills.length > 0 && <span>📚 {rec.weakSkills.length} skills to strengthen</span>}
+                      </div>
+                    </div>
+                  </div>
+                  <span className="text-2xl">→</span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {['english', 'math', 'science', 'malay', 'gepmath'].every(s => !hasRecommendation(s)) && (
+          <div className="text-center mt-8">
+            <p className="text-gray-600 text-sm mb-4">No recommendations yet! Complete some quizzes first.</p>
+            <button onClick={onBack} className="bg-white px-6 py-2 rounded-xl text-gray-700 font-semibold hover:shadow-md transition-all">
+              Back
+            </button>
+          </div>
+        )}
+
+        {['english', 'math', 'science', 'malay', 'gepmath'].some(s => hasRecommendation(s)) && (
+          <button onClick={onBack} className="mt-6 text-sm text-gray-400 hover:text-gray-600">
+            ← Back to Home
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  // Show recommended drill for selected subject
+  const rec = getRecommendedDrill(selectedSubject);
+  const questions = buildRecommendedQuestions(selectedSubject);
+  const cfg = CFG[selectedSubject];
+  
+  return (
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
+      <div className="p-4 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
+        <button onClick={() => setSelectedSubject(null)} className="text-white/70 hover:text-white text-xl">←</button>
+        <div className="flex-1">
+          <div className="text-lg font-bold">✨ Recommended Practice</div>
+          <div className="text-xs text-white/70 mt-1">{cfg.emoji} {cfg.label} • {questions.length} questions</div>
+        </div>
+      </div>
+
+      <div className="flex-1 p-5 flex flex-col items-center justify-center max-w-lg mx-auto w-full">
+        <div className="bg-white rounded-2xl p-6 shadow-md text-center w-full mb-6">
+          <div className="text-5xl mb-3">🎯</div>
+          <h2 className="text-xl font-bold text-gray-800 mb-2">Ready to practise?</h2>
+          <div className="text-sm text-gray-600 mb-4 space-y-1">
+            {rec.overdueCount > 0 && <p>• {rec.overdueCount} questions to review</p>}
+            {rec.weakSkills.length > 0 && <p>• Focus on: {rec.weakSkills.map(w => w.skill).join(', ')}</p>}
+            {rec.strongSkills.length > 0 && <p>• Plus a confidence builder!</p>}
+          </div>
+          <button onClick={() => onDone(selectedSubject, questions, rec.revisionItems.map(r => ({qId: r.qId, subject: r.subject})))}
+            className={`w-full ${cfg.btn} text-white font-bold py-3 rounded-xl transition-all hover:opacity-90 mt-4`}>
+            Start Practice ({questions.length} Q)
+          </button>
+        </div>
+
+        <button onClick={() => setSelectedSubject(null)}
+          className="text-sm text-gray-500 hover:text-gray-700 underline">
+          Choose different subject
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -598,6 +1111,10 @@ function HomeScreen({ onSelect, onProgress, onParent }) {
           <div className="text-2xl">📊</div>
           <div className="text-xs font-semibold text-gray-700">My Progress</div>
         </button>
+        <button onClick={() => onSelect('recommended')} className="flex-1 bg-gradient-to-br from-blue-400 to-purple-500 shadow rounded-xl p-3 text-center hover:shadow-md transition-all text-white">
+          <div className="text-2xl">✨</div>
+          <div className="text-xs font-semibold">Recommended</div>
+        </button>
       </div>
 
       <button onClick={onParent} className="mt-6 text-sm text-gray-400 hover:text-gray-600 underline">
@@ -613,6 +1130,26 @@ function HomeScreen({ onSelect, onProgress, onParent }) {
 function SubjectSelectScreen({ subject, onMode, onBack }) {
   const cfg = CFG[subject];
   const [pickingDiff, setPickingDiff] = useState(false);
+  
+  const stat = subjectStats(subject);
+  const adaptiveInsight = React.useMemo(() => {
+    if (!stat || !stat.skillAvgs) return null;
+    const skills = Object.entries(stat.skillAvgs).filter(([_, avg]) => avg !== null);
+    if (skills.length === 0) return null;
+
+    const weakest = skills.slice().sort((a, b) => a[1] - b[1])[0];
+    const strongest = skills.slice().sort((a, b) => b[1] - a[1])[0];
+    const focusSkill = weakest[1] < 75 ? weakest[0] : strongest[0];
+    const focusAvg = weakest[1] < 75 ? weakest[1] : strongest[1];
+    const baselineDifficulty = weakest[1] < 60 ? 'medium' : 'easy';
+
+    return {
+      focusSkill,
+      focusAvg,
+      suggestion: getAdaptiveDifficulty(subject, focusSkill, baselineDifficulty),
+      coaching: getAdaptiveCoachingMessage(subject, focusSkill, focusAvg)
+    };
+  }, [subject, stat]);
 
   if (pickingDiff) {
     return (
@@ -626,6 +1163,19 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
             <div className="text-6xl mb-2">{cfg.emoji}</div>
             <h2 className="text-2xl font-bold text-gray-800 mb-1">Quiz Difficulty</h2>
             <p className="text-gray-500 text-sm">Pick your challenge level!</p>
+            {adaptiveInsight ? (
+              <div className="text-left mt-3 bg-violet-50 border border-violet-200 rounded-xl p-3">
+                <p className="text-xs text-violet-700 font-semibold">
+                  Practice suggestion: {adaptiveInsight.suggestion === 'hard' ? 'Hard' : adaptiveInsight.suggestion === 'medium' ? 'Medium' : 'Easy'} is a good next step for {adaptiveInsight.focusSkill}.
+                </p>
+                <p className="text-[11px] text-violet-600 mt-1">{adaptiveInsight.coaching}</p>
+                <p className="text-[11px] text-violet-500 mt-1">You can still choose any level you like.</p>
+              </div>
+            ) : (
+              <p className="text-xs text-gray-400 mt-2">
+                Start with Easy or Medium, then we will learn what feels best for you.
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-4 w-full max-w-sm">
             <button onClick={() => onMode('quiz', 'easy')}
@@ -867,7 +1417,7 @@ function launchCoinPop() {
   setTimeout(() => el.remove(), 900);
 }
 
-function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) {
+function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef, prebuiltQuestions }) {
   // For Malay reveal-English tracking
   const localMalayHintCount = useRef(0);
   const hintRef = malayHintCountRef || localMalayHintCount;
@@ -882,6 +1432,14 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
   }
 
   const [questions] = useState(() => {
+    // If prebuilt questions provided (from recommended), use those with shuffled options
+    if (prebuiltQuestions && prebuiltQuestions.length > 0) {
+      return prebuiltQuestions.map(q => ({
+        ...q,
+        shuffledOpts: q.opts ? shuffle(q.opts) : (q.shuffledOpts || [])
+      }));
+    }
+
     function pickNoRepeat(pool, n, key) {
       let seen = JSON.parse(localStorage.getItem(key)||'[]');
       let avail = pool.filter(q=>!seen.includes(q.id));
@@ -986,7 +1544,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
     if (selected !== null) return;
     setSel(opt);
     const _qCorrect = opt === q.ans || (typeof q.ans === 'number' && q.opts[q.ans] === opt);
-    answersRef.current = [...answersRef.current, { q, chosen: opt, correct: _qCorrect }];
+    answersRef.current = [...answersRef.current, { q, chosen: opt, correct: _qCorrect, hintUsed: showHint, revealUsed: showMalayEng }];
     speakEncouragement(_qCorrect);
     if (_qCorrect) { streakRef.current += 1; setStreak(streakRef.current); launchConfetti(); launchCoinPop(); }
     else { streakRef.current = 0; setStreak(0); }
@@ -999,7 +1557,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
     const numUser = parseFloat(userVal), numAns = parseFloat(ansVal);
     const correct = (!isNaN(numUser) && !isNaN(numAns)) ? numUser === numAns : userVal === ansVal;
     setSel(inputVal.trim());
-    answersRef.current = [...answersRef.current, { q, chosen: inputVal.trim(), correct }];
+    answersRef.current = [...answersRef.current, { q, chosen: inputVal.trim(), correct, hintUsed: showHint, revealUsed: showMalayEng }];
     speakEncouragement(correct);
     if (correct) { streakRef.current += 1; setStreak(streakRef.current); launchConfetti(); launchCoinPop(); }
     else { streakRef.current = 0; setStreak(0); }
@@ -1011,10 +1569,24 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef }) 
       const score = allA.filter(a => a.correct).length;
       const bd = {};
       allA.forEach(a => {
-        const section = a.q.section || a.q.topic || 'General';
-        if (!bd[section]) bd[section] = { correct:0, total:0 };
-        bd[section].total++;
-        if (a.correct) bd[section].correct++;
+        const skill = getSkill(a.q);
+        if (!bd[skill]) bd[skill] = { correct:0, total:0 };
+        bd[skill].total++;
+        if (a.correct) bd[skill].correct++;
+      });
+      // Track wrong answers for revision queue (Phase 3)
+      allA.forEach(a => {
+        const skill = getSkill(a.q);
+        if (!a.correct) {
+          // Wrong answer - needs practice soon
+          addToRevisionQueue(a.q.id, subject, skill, 'again', false, 'wrong');
+        } else if (a.hintUsed) {
+          // Correct but hint-dependent - schedule for hint-less practice
+          addToRevisionQueue(a.q.id, subject, skill, 'hint_review', true, 'hint_used');
+        } else if (a.revealUsed && subject === 'malay') {
+          // Correct but reveal-dependent (Malay) - schedule for reveal-less practice
+          addToRevisionQueue(a.q.id, subject, skill, 'reveal_review', true, 'reveal_used');
+        }
       });
       onDone(score, questions.length, bd, hintRef.current);
     } else {
@@ -1455,10 +2027,40 @@ function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, di
   const msg = pct >= 90 ? 'Outstanding!' : pct >= 70 ? 'Great job!' : pct >= 50 ? 'Good effort!' : 'Keep going!';
   const isPerfect = pct === 100;
   const showConf = pct >= 70 || isPerfect;
+  const weakestSkillEntry = React.useMemo(() => {
+    const entries = Object.entries(breakdown || {});
+    if (entries.length === 0) return null;
+    return entries
+      .map(([skill, data]) => ({
+        skill,
+        pct: Math.round((data.correct / data.total) * 100),
+        data
+      }))
+      .sort((a, b) => a.pct - b.pct)[0];
+  }, [breakdown]);
+  const recentWeakHistory = weakestSkillEntry
+    ? getRecentSkillPerformance(subject, weakestSkillEntry.skill, 2).filter(r => r.pct < 70).length
+    : 0;
+  const showGuidedPanel =
+    mode !== 'recommended' &&
+    weakestSkillEntry &&
+    pct < 75 &&
+    weakestSkillEntry.pct < 70 &&
+    (
+      shouldTriggerGuidedPractice(subject, weakestSkillEntry.skill) ||
+      recentWeakHistory >= 1 ||
+      pct < 50
+    );
+  const coachingMessage = weakestSkillEntry
+    ? getAdaptiveCoachingMessage(subject, weakestSkillEntry.skill, weakestSkillEntry.pct)
+    : null;
+  const guidedLabel = weakestSkillEntry ? weakestSkillEntry.skill : 'this skill';
 
   useEffect(() => {
     saveResult(subject, mode, score, total, breakdown, difficulty);
     if (isPerfect) {
+      // Award rewards for perfect scores on ALL modes including recommended practice
+      // Phase 3: Recommended practice counts as valid practice work
       addReward(subject, mode);
     }
     syncToFirebase();
@@ -1475,7 +2077,9 @@ function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, di
         </p>
         {isPerfect && (
           <div className="mt-3 bg-yellow-100 rounded-lg p-2">
-            <p className="text-sm font-bold text-yellow-800">🎉 Perfect {mode === 'quiz' ? 'Quiz' : mode === 'lc' ? 'Listening Comprehension' : 'Drill'}! +{mode === 'lc' ? '$0.50' : '$2'} to your wallet</p>
+            <p className="text-sm font-bold text-yellow-800">
+              🎉 Perfect {mode === 'quiz' ? 'Quiz' : mode === 'recommended' ? 'Recommended Practice' : mode === 'lc' ? 'Listening Comprehension' : 'Drill'}! +{mode === 'lc' ? '$0.50' : '$2'} to your wallet
+            </p>
           </div>
         )}
         {subject === 'malay' && revealCount > 0 && (
@@ -1486,7 +2090,7 @@ function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, di
         <p className="text-gray-400 text-xs mt-2 mb-5">Score saved automatically ✓</p>
 
         <div className="text-left mb-5">
-          <p className="font-semibold text-gray-600 text-xs uppercase tracking-wide mb-2">Topic Breakdown</p>
+          <p className="font-semibold text-gray-600 text-xs uppercase tracking-wide mb-2">Skill Breakdown</p>
           {Object.entries(breakdown || {}).map(([topic, d]) => {
             const p = Math.round((d.correct / d.total) * 100);
             const col = p >= 80 ? 'bg-emerald-500' : p >= 60 ? 'bg-amber-400' : 'bg-red-400';
@@ -1502,6 +2106,19 @@ function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, di
             );
           })}
         </div>
+
+        {showGuidedPanel && (
+          <div className="mb-5 bg-blue-50 border-l-4 border-blue-400 rounded-lg p-4">
+            <p className="text-sm font-bold text-blue-900 mb-2">Want some help?</p>
+            <p className="text-xs text-gray-600 mb-2">{coachingMessage}</p>
+            <p className="text-xs text-gray-500 mb-3">
+              {guidedLabel.charAt(0).toUpperCase() + guidedLabel.slice(1)} could use a gentler next step. Try Easy mode or Recommended practice and we will keep building confidence.
+            </p>
+            <button onClick={() => { alert('Guided practice is warming up! For now, try Easy mode or Recommended practice to build confidence in ' + guidedLabel + '. You\'ve got this!'); }} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-lg text-sm">
+              Get Guided Practice
+            </button>
+          </div>
+        )}
 
         <div className="flex gap-3">
           <button onClick={onRetry} className={`flex-1 ${cfg.btn} text-white font-semibold py-3 rounded-xl`}>Try Again</button>
@@ -1576,6 +2193,22 @@ function ProgressScreen({ onBack }) {
                   <div className="text-xs text-gray-500 mt-0.5">⭐ Perfect Drills</div>
                 </div>
               </div>
+
+              {st.skillAvgs && Object.keys(st.skillAvgs).length > 0 && (
+                <div className="mb-4">
+                  <p className="font-semibold text-gray-600 text-xs uppercase tracking-wide mb-2">Skill Performance</p>
+                  {Object.entries(st.skillAvgs).map(([skill, pct]) => pct !== null && (
+                    <div key={skill} className="mb-2">
+                      <div className="flex justify-between text-xs text-gray-500 mb-1">
+                        <span>{skill.charAt(0).toUpperCase() + skill.slice(1)}</span><span>{pct}%</span>
+                      </div>
+                      <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div className={`h-2 rounded-full transition-all`} style={{ width:`${pct}%`, backgroundColor: pct >= 80 ? '#10b981' : pct >= 60 ? '#f59e0b' : '#ef4444' }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {st.drillAttemptData && (
                 <div className="bg-orange-50 rounded-xl p-3 text-sm text-orange-800 border border-orange-100">
@@ -1821,6 +2454,8 @@ function App() {
   const [topic, setTopic] = useState(null);
   const [result, setResult] = useState(null);
   const [difficulty, setDiff] = useState('easy');
+  const [recommendedQuestions, setRecommendedQuestions] = useState(null);
+  const [practiceRevisionIds, setPracticeRevisionIds] = useState(null);
 
   React.useEffect(() => {
     const DEFAULT_URL = 'https://reyhana-quiz-default-rtdb.asia-southeast1.firebasedatabase.app';
@@ -1831,8 +2466,12 @@ function App() {
   }, []);
 
   function onSubjectSelect(s) {
-    setSubj(s);
-    setScreen('subject-select');
+    if (s === 'recommended') {
+      setScreen('recommended');
+    } else {
+      setSubj(s);
+      setScreen('subject-select');
+    }
   }
 
   function onMode(m, diff = 'easy') {
@@ -1857,25 +2496,46 @@ function App() {
 
   function onDone(score, total, breakdown, revealCount = 0) {
     setResult({ score, total, breakdown, revealCount, difficulty });
+    // If this was recommended practice, advance spaced repetition
+    if (mode === 'recommended' && practiceRevisionIds) {
+      const scorePercent = (score / total) * 100;
+      advanceRevisionStages(practiceRevisionIds, scorePercent);
+      setRecommendedQuestions(null);
+      setPracticeRevisionIds(null);
+    }
     setScreen('result');
   }
 
   function onDrillPerfect(score) {
     const s = (mode === 'lc' && typeof score === 'number') ? score : 10;
-    setResult({ score: s, total: 10, breakdown: { [topic]: { correct: s, total: 10 } }, isLC: mode === 'lc' });
+    const t = mode === 'lc' ? 20 : 10;
+    setResult({ score: s, total: t, breakdown: { [topic]: { correct: s, total: t } }, isLC: mode === 'lc' });
     setScreen('result');
   }
 
   return (
     <>
       {screen === 'home' && <HomeScreen onSelect={onSubjectSelect} onProgress={() => setScreen('progress')} onParent={() => setScreen('parent')} />}
+      {screen === 'recommended' && (
+        <RecommendedDrillScreen 
+          onDone={(subj, qs, revisionIds) => {
+            setSubj(subj);
+            setRecommendedQuestions(qs);
+            setPracticeRevisionIds(revisionIds || []);
+            setMode('recommended');
+            setScreen('quiz');
+          }}
+          onBack={() => setScreen('home')}
+          onHome={() => setScreen('home')}
+        />
+      )}
       {screen === 'subject-select' && (
         <SubjectSelectScreen subject={subject} onMode={onMode} onBack={() => setScreen('home')} />
       )}
       {screen === 'select-topic' && (
         <TopicSelectScreen subject={subject} onSelect={onSelectTopic} onBack={() => setScreen('subject-select')} />
       )}
-      {screen === 'quiz' && <QuizScreen subject={subject} onDone={onDone} onBack={() => setScreen('home')} difficulty={difficulty} />}
+      {screen === 'quiz' && <QuizScreen subject={subject} onDone={onDone} onBack={() => setScreen('home')} difficulty={difficulty} prebuiltQuestions={recommendedQuestions} />}
       {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => mode === 'lc' ? setScreen('subject-select') : setScreen('select-topic')} onHome={() => setScreen('home')} isLC={mode === 'lc'} />}
       {screen === 'result' && result && (
         <ResultsScreen
@@ -1933,3 +2593,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
 </body>
 </html>
+

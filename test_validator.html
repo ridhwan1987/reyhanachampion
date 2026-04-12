@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Validator Test</title>
+</head>
+<body>
+    <h1>Question Bank Validation Report</h1>
+    <pre id="output"></pre>
+
+    <!-- Include validator and questions -->
+    <script src="validator.js"></script>
+    <script src="questions.js"></script>
+    
+    <script>
+        // Run validation
+        const report = validateQuestionBank(QB);
+        
+        // Display results
+        const output = document.getElementById('output');
+        
+        // Access issues from the wrapper object
+        const issues = report.issues;
+        
+        // Show all issues
+        output.textContent = 'DUPLICATE IDS:\n';
+        issues.duplicates.forEach(dup => {
+            output.textContent += dup + '\n';
+        });
+        
+        output.textContent += '\nMISSING FIELDS:\n';
+        issues.missingFields.slice(0, 50).forEach(issue => {
+            output.textContent += issue + '\n';
+        });
+        
+        output.textContent += '\nINVALID ANSWERS:\n';
+        issues.invalidAnswers.slice(0, 20).forEach(issue => {
+            output.textContent += issue + '\n';
+        });
+        
+        output.textContent += '\nINVALID DIFFICULTY:\n';
+        issues.invalidDifficulty.slice(0, 20).forEach(issue => {
+            output.textContent += issue + '\n';
+        });
+        
+        output.textContent += '\nINVALID POOL:\n';
+        issues.invalidPool.forEach(issue => {
+            output.textContent += issue + '\n';
+        });
+        
+        output.textContent += '\nMALFORMED:\n';
+        issues.malformedQuestions.forEach(issue => {
+            output.textContent += issue + '\n';
+        });
+        
+        output.textContent += '\n\n=== SUMMARY ===\n';
+        output.textContent += 'Total questions: ' + report.totalQuestions + '\n';
+        output.textContent += 'Total issues: ' + report.totalIssues + '\n';
+        output.textContent += 'Duplicates: ' + issues.duplicates.length + '\n';
+        output.textContent += 'Missing fields: ' + issues.missingFields.length + '\n';
+        output.textContent += 'Invalid answers: ' + issues.invalidAnswers.length + '\n';
+        output.textContent += 'Invalid difficulty: ' + issues.invalidDifficulty.length + '\n';
+        output.textContent += 'Invalid pool: ' + issues.invalidPool.length + '\n';
+        output.textContent += 'Malformed: ' + issues.malformedQuestions.length + '\n';
+        
+        // Print to console as well
+        console.log('=== VALIDATION REPORT ===');
+        printValidationReport(QB);
+    </script>
+</body>
+</html>
