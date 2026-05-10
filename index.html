@@ -900,10 +900,6 @@ function getWallet() {
   return wallet;
 }
 
-function rewardDateKey() {
-  return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Singapore' });
-}
-
 function getRewardTopic(mode, breakdown) {
   if (mode === 'drill') return Object.keys(breakdown || {})[0] || 'Drill';
   if (mode === 'lc') return 'Listening Comprehension';
@@ -915,12 +911,6 @@ function getPerfectReward(subject, mode, breakdown) {
   const amount = PERFECT_REWARDS[mode] || 0;
   const topic = getRewardTopic(mode, breakdown);
   if (!amount || mode === 'guided') return { amount: 0, topic, eligible: false, reason: 'No reward for guided practice' };
-  if (mode === 'drill') {
-    const key = `${rewardDateKey()}|${subject}|${topic}`;
-    const paid = JSON.parse(localStorage.getItem(RC_PREFIX + 'dailyDrillRewards') || '{}');
-    if (paid[key]) return { amount, topic, eligible: false, reason: 'Drill reward already earned for this topic today', key };
-    return { amount, topic, eligible: true, key };
-  }
   return { amount, topic, eligible: true };
 }
 
@@ -933,11 +923,6 @@ function addReward(subject, mode, breakdown) {
   const rewards = JSON.parse(localStorage.getItem(RC_PREFIX + 'rewards') || '[]');
   rewards.push({ iso: new Date().toISOString(), date: new Date().toLocaleDateString('en-SG'), subject, topic: reward.topic, mode, amount: reward.amount });
   localStorage.setItem(RC_PREFIX + 'rewards', JSON.stringify(rewards));
-  if (reward.key) {
-    const paid = JSON.parse(localStorage.getItem(RC_PREFIX + 'dailyDrillRewards') || '{}');
-    paid[reward.key] = true;
-    localStorage.setItem(RC_PREFIX + 'dailyDrillRewards', JSON.stringify(paid));
-  }
   return reward;
 }
 
@@ -959,7 +944,6 @@ async function syncToFirebase() {
         results: getResults(),
         wallet: getWallet(),
         rewards: JSON.parse(localStorage.getItem(RC_PREFIX + 'rewards') || '[]'),
-        dailyDrillRewards: JSON.parse(localStorage.getItem(RC_PREFIX + 'dailyDrillRewards') || '{}'),
         revision_queue: getRevisionQueue()
       })
     });
@@ -975,7 +959,6 @@ async function loadFromFirebase() {
     if (data.results) localStorage.setItem(RC_PREFIX + 'results', JSON.stringify(data.results));
     if (data.wallet)  localStorage.setItem(RC_PREFIX + 'wallet',  JSON.stringify(data.wallet));
     if (data.rewards) localStorage.setItem(RC_PREFIX + 'rewards', JSON.stringify(data.rewards));
-    if (data.dailyDrillRewards) localStorage.setItem(RC_PREFIX + 'dailyDrillRewards', JSON.stringify(data.dailyDrillRewards));
     if (data.revision_queue) localStorage.setItem(RC_PREFIX + 'revision_queue', JSON.stringify(data.revision_queue));
     return true;
   } catch(e) { console.warn('Firebase load failed', e); return false; }
@@ -1364,7 +1347,7 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
             className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
             <div className="text-5xl mb-2">⚡</div>
             <h3 className="text-xl font-bold text-gray-800">Drill Mode</h3>
-            <p className="text-xs text-gray-500 mt-1">Master one topic until 20/20! Earn $0.50 once per topic each day</p>
+            <p className="text-xs text-gray-500 mt-1">Master one topic until 20/20! Earn $0.50 for each perfect drill</p>
           </button>
           {(subject === 'english' || subject === 'malay') && (
             <button onClick={() => onMode('lc')}
@@ -2248,13 +2231,6 @@ function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, di
           <div className="mt-3 bg-yellow-100 rounded-lg p-2">
             <p className="text-sm font-bold text-yellow-800">
               Perfect Drill! +$0.50 to your wallet
-            </p>
-          </div>
-        )}
-        {isPerfect && mode === 'drill' && !perfectReward.eligible && (
-          <div className="mt-3 bg-gray-100 rounded-lg p-2">
-            <p className="text-sm font-bold text-gray-600">
-              Perfect Drill! Reward already earned for this topic today.
             </p>
           </div>
         )}
