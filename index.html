@@ -1499,6 +1499,46 @@ function launchCoinPop() {
   setTimeout(() => el.remove(), 900);
 }
 
+function VisualTextPassage({ passage, cfg, isVisual }) {
+  if (!isVisual) {
+    return (
+      <div className="bg-white rounded-2xl p-4 shadow-sm border-l-4" style={{ borderColor: cfg.hdr }}>
+        <p className="text-xs text-gray-600 italic">{passage}</p>
+      </div>
+    );
+  }
+
+  const parts = String(passage || '').split('|').map(p => p.trim()).filter(Boolean);
+  const heading = parts[0] || 'Notice';
+  const details = parts.slice(1).map(part => {
+    const splitAt = part.indexOf(':');
+    if (splitAt === -1) return { label: '', value: part };
+    return {
+      label: part.slice(0, splitAt).trim(),
+      value: part.slice(splitAt + 1).trim()
+    };
+  });
+
+  return (
+    <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-blue-100">
+      <div className="p-4 text-white" style={{ background: `linear-gradient(135deg, ${cfg.hdr}, ${cfg.sky})` }}>
+        <div className="text-[10px] font-bold uppercase tracking-wider opacity-80">Visual Text</div>
+        <div className="text-xl font-black leading-tight mt-1">{heading}</div>
+      </div>
+      <div className="p-4 bg-sky-50/60">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {details.map((item, i) => (
+            <div key={i} className="bg-white rounded-xl border border-sky-100 p-3 shadow-sm">
+              {item.label && <div className="text-[10px] font-bold uppercase text-sky-700 mb-1">{item.label}</div>}
+              <div className="text-sm font-semibold text-gray-800 leading-snug">{item.value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef, prebuiltQuestions }) {
   // For Malay reveal-English tracking
   const localMalayHintCount = useRef(0);
@@ -1724,9 +1764,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef, pr
         )}
 
         {q.passage && (
-          <div className="bg-white rounded-2xl p-4 shadow-sm border-l-4" style={{ borderColor: cfg.hdr }}>
-            <p className="text-xs text-gray-600 italic">{q.passage}</p>
-          </div>
+          <VisualTextPassage passage={q.passage} cfg={cfg} isVisual={q.section === 'Visual Text' || q.tag === 'visual'} />
         )}
 
         {streak >= 3 && (
@@ -2022,6 +2060,9 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
       </div>
 
       <div className="flex-1 p-5 flex flex-col gap-4 max-w-lg mx-auto w-full pop">
+        {q.passage && !isLC && (
+          <VisualTextPassage passage={q.passage} cfg={cfg} isVisual={q.section === 'Visual Text' || q.tag === 'visual' || topic === 'Visual Text'} />
+        )}
         <div className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full w-fit" style={{ backgroundColor: cfg.sky + '20', color: cfg.hdr }}>
           {isLC ? (lcAnswered + "/20 — " + lcCorrect + " correct") : ((20 - queue.length) + "/20 Correct")}
         </div>
