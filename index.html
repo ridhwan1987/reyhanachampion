@@ -763,6 +763,7 @@ function getSkill(q) {
         if (tag === 'measurement') return 'measurement';
         if (tag === 'money') return 'money';
         if (tag === 'geometry') return 'geometry';
+        if (tag === 'guess-check') return 'guess and check';
         if (tag === 'laq') return 'word problems';
       }
       // Fallback for old questions without tag
@@ -811,6 +812,7 @@ function getSkillFromKey(key, subject) {
     if (key === 'measurement') return 'measurement';
     if (key === 'money') return 'money';
     if (key === 'geometry') return 'geometry';
+    if (key === 'guess-check' || key === 'guess and check') return 'guess and check';
     // Handle old coarse skills (for backward compatibility)
     if (key === 'arithmetic') return 'arithmetic';
     if (key === 'word problems') return 'word problems';
@@ -1893,7 +1895,12 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef, pr
 function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
   const [questions] = useState(() => {
     // Exclude quiz-only questions from drill
-    const filtered = QB[subject].filter(q => (q.topic || q.section) === topic && (!q.pool || q.pool !== 'quiz'));
+    const filtered = QB[subject].filter(q => {
+      if (subject === 'math' && topic === 'Guess and Check') {
+        return q.tag === 'guess-check' && (!q.pool || q.pool !== 'quiz');
+      }
+      return (q.topic || q.section) === topic && (!q.pool || q.pool !== 'quiz');
+    });
     return shuffle(filtered).slice(0, 20).map(q => ({
       ...q, shuffledOpts: q.opts ? shuffle(q.opts) : [], originalIdx: QB[subject].indexOf(q)
     }));
@@ -2737,7 +2744,7 @@ function TopicSelectScreen({ subject, onSelect, onBack }) {
   const cfg = CFG[subject];
   const topics = {
     english: ['Grammar MCQ', 'Vocabulary', 'Visual Text', 'Grammar Cloze', 'Editing', 'Comprehension'],
-    math: ['Section A: MCQ', 'Section B: Short Answer', 'Section C: Word Problems'],
+    math: ['Section A: MCQ', 'Section B: Short Answer', 'Section C: Word Problems', 'Guess and Check'],
     science: ['Diversity of Living Things', 'Materials', 'Magnets', 'Life Cycles', 'Mixed Review'],
     malay: ['Perbendaharaan Kata', 'Tatabahasa', 'Pemahaman', 'Isi Tempat Kosong'],
     gepmath: ['Number Patterns', 'Clever Problem Sums', 'Logic & Spatial', 'Mental Maths', 'Fractions & Measurement'],
