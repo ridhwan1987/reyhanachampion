@@ -403,6 +403,27 @@ function saveResult(subject, mode, score, total, breakdown, difficulty) {
 function getResults() { return JSON.parse(localStorage.getItem(RC_PREFIX + 'results') || '[]'); }
 
 // ═══════════════════════════════════════════════════════════════
+// MALAY FLASHCARDS (word → meaning, spaced repetition)
+// ═══════════════════════════════════════════════════════════════
+function buildFlashcardSession(n) {
+  const state = JSON.parse(localStorage.getItem(RC_PREFIX + 'flashcards_malay') || '{}');
+  const words = (QB.malayFlashcards || []).map(w => {
+    const s = state[w.id];
+    return { ...w, box: s ? s.box : 0, lastSeen: s ? s.lastSeen : '1970-01-01T00:00:00.000Z' };
+  });
+  words.sort((a, b) => (a.box - b.box) || (a.lastSeen < b.lastSeen ? -1 : a.lastSeen > b.lastSeen ? 1 : 0));
+  return shuffle(words.slice(0, n));
+}
+
+function saveFlashcardRating(wordId, knewIt) {
+  const state = JSON.parse(localStorage.getItem(RC_PREFIX + 'flashcards_malay') || '{}');
+  const prevBox = state[wordId] ? state[wordId].box : 0;
+  const newBox = knewIt ? Math.min(prevBox + 1, 2) : 0;
+  state[wordId] = { box: newBox, lastSeen: new Date().toISOString() };
+  localStorage.setItem(RC_PREFIX + 'flashcards_malay', JSON.stringify(state));
+}
+
+// ═══════════════════════════════════════════════════════════════
 // PERSONALIZED PRACTICE ENGINE (Phase 3)
 // ═══════════════════════════════════════════════════════════════
 
@@ -1364,7 +1385,108 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
               <p className="text-xs text-gray-500 mt-1">Practise passages — earn $0.50 for 20/20!</p>
             </button>
           )}
+          {subject === 'malay' && (
+            <button onClick={() => onMode('flashcards')}
+              className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95" style={{borderTop:'3px solid #d97706'}}>
+              <div className="text-5xl mb-2">📇</div>
+              <h3 className="text-xl font-bold text-gray-800">Flashcards</h3>
+              <p className="text-xs text-gray-500 mt-1">20 words a day — quiz words + everyday vocabulary</p>
+            </button>
+          )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SCREEN: MALAY FLASHCARDS
+// ═══════════════════════════════════════════════════════════════
+function MalayFlashcardsScreen({ onBack, onHome }) {
+  const [session] = useState(() => buildFlashcardSession(20));
+  const [idx, setIdx] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+  const [knownCount, setKnownCount] = useState(0);
+  const [done, setDone] = useState(false);
+
+  if (!session.length) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center" style={{ backgroundColor: '#fff7e6' }}>
+        <p className="text-gray-500 mb-4">No flashcards available yet.</p>
+        <button onClick={onBack} className="text-orange-500 underline">← Back</button>
+      </div>
+    );
+  }
+
+  const card = session[idx];
+
+  function rate(knewIt) {
+    saveFlashcardRating(card.id, knewIt);
+    if (knewIt) setKnownCount(c => c + 1);
+    if (idx + 1 >= session.length) {
+      setDone(true);
+    } else {
+      setIdx(i => i + 1);
+      setFlipped(false);
+    }
+  }
+
+  if (done) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center" style={{ backgroundColor: '#fff7e6' }}>
+        <div className="text-6xl mb-4">🌙</div>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">Session Complete!</h2>
+        <p className="text-lg text-gray-600 mb-6">You knew {knownCount} out of {session.length} words</p>
+        <button onClick={onHome} className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl">
+          🏠 Return to Home
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#fff7e6' }}>
+      <div className="p-5 flex items-center gap-3" style={{ backgroundColor: '#d97706', color: 'white' }}>
+        <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+        <div className="flex-1">
+          <h1 className="text-xl font-bold">📇 Malay Flashcards</h1>
+        </div>
+        <div className="text-sm font-semibold">{idx + 1}/{session.length}</div>
+      </div>
+      <div className="w-full h-2 bg-orange-100">
+        <div className="h-2 bg-orange-500 transition-all" style={{ width: `${(idx / session.length) * 100}%` }} />
+      </div>
+      <div className="flex-1 flex flex-col items-center justify-center p-6">
+        <div
+          onClick={() => setFlipped(f => !f)}
+          className="bg-white rounded-2xl shadow-md p-10 w-full max-w-sm text-center cursor-pointer flex flex-col items-center justify-center"
+          style={{ minHeight: '220px' }}
+        >
+          {!flipped ? (
+            <>
+              <div className="text-3xl font-bold text-gray-800 mb-3">{card.word}</div>
+              <p className="text-xs text-gray-400">Tap to reveal meaning</p>
+            </>
+          ) : (
+            <>
+              <div className="text-lg text-gray-500 mb-2">{card.word}</div>
+              <div className="text-2xl font-bold text-orange-600">{card.meaning}</div>
+            </>
+          )}
+        </div>
+
+        {flipped && (
+          <div className="flex gap-4 mt-8 w-full max-w-sm">
+            <button onClick={() => rate(false)}
+              className="flex-1 bg-white border-2 border-red-300 hover:bg-red-50 text-red-600 font-bold py-4 rounded-xl">
+              😅 Didn't know
+            </button>
+            <button onClick={() => rate(true)}
+              className="flex-1 bg-white border-2 border-green-300 hover:bg-green-50 text-green-600 font-bold py-4 rounded-xl">
+              😊 Knew it
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -2653,6 +2775,9 @@ function App() {
       setMode('lc');
       setTopic(subject === 'english' ? 'Listening Comprehension' : 'Pemahaman Mendengar');
       setScreen('drill');
+    } else if (m === 'flashcards') {
+      setMode('flashcards');
+      setScreen('flashcards');
     } else {
       setMode('quiz');
       setScreen('quiz');
@@ -2726,6 +2851,7 @@ function App() {
       )}
       {screen === 'quiz' && <QuizScreen subject={subject} onDone={onDone} onBack={() => setScreen('home')} difficulty={difficulty} prebuiltQuestions={recommendedQuestions} />}
       {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => mode === 'lc' ? setScreen('subject-select') : setScreen('select-topic')} onHome={() => setScreen('home')} isLC={mode === 'lc'} />}
+      {screen === 'flashcards' && <MalayFlashcardsScreen onBack={() => setScreen('subject-select')} onHome={() => setScreen('home')} />}
       {screen === 'result' && result && (
         <ResultsScreen
           subject={subject}
