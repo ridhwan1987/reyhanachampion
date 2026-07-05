@@ -1435,9 +1435,9 @@ function MalayFlashcardsScreen({ onBack, onHome }) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center" style={{ backgroundColor: '#fff7e6' }}>
         <div className="text-6xl mb-4">🌙</div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Session Complete!</h2>
-        <p className="text-lg text-gray-600 mb-6">You knew {knownCount} out of {session.length} words</p>
-        <button onClick={onHome} className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl">
+        <h2 className="text-5xl font-bold text-gray-800 mb-2">Session Complete!</h2>
+        <p className="text-4xl text-gray-600 mb-6">You knew {knownCount} out of {session.length} words</p>
+        <button onClick={onHome} className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-2xl py-3 px-8 rounded-xl">
           🏠 Return to Home
         </button>
       </div>
@@ -1447,11 +1447,11 @@ function MalayFlashcardsScreen({ onBack, onHome }) {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#fff7e6' }}>
       <div className="p-5 flex items-center gap-3" style={{ backgroundColor: '#d97706', color: 'white' }}>
-        <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+        <button onClick={onBack} className="text-white/70 hover:text-white text-4xl">←</button>
         <div className="flex-1">
-          <h1 className="text-xl font-bold">📇 Malay Flashcards</h1>
+          <h1 className="text-4xl font-bold">📇 Malay Flashcards</h1>
         </div>
-        <div className="text-sm font-semibold">{idx + 1}/{session.length}</div>
+        <div className="text-3xl font-semibold">{idx + 1}/{session.length}</div>
       </div>
       <div className="w-full h-2 bg-orange-100">
         <div className="h-2 bg-orange-500 transition-all" style={{ width: `${(idx / session.length) * 100}%` }} />
@@ -1464,13 +1464,13 @@ function MalayFlashcardsScreen({ onBack, onHome }) {
         >
           {!flipped ? (
             <>
-              <div className="text-3xl font-bold text-gray-800 mb-3">{card.word}</div>
-              <p className="text-xs text-gray-400">Tap to reveal meaning</p>
+              <div className="text-6xl font-bold text-gray-800 mb-3">{card.word}</div>
+              <p className="text-2xl text-gray-400">Tap to reveal meaning</p>
             </>
           ) : (
             <>
-              <div className="text-lg text-gray-500 mb-2">{card.word}</div>
-              <div className="text-2xl font-bold text-orange-600">{card.meaning}</div>
+              <div className="text-4xl text-gray-500 mb-2">{card.word}</div>
+              <div className="text-5xl font-bold text-orange-600">{card.meaning}</div>
             </>
           )}
         </div>
@@ -1478,11 +1478,11 @@ function MalayFlashcardsScreen({ onBack, onHome }) {
         {flipped && (
           <div className="flex gap-4 mt-8 w-full max-w-sm">
             <button onClick={() => rate(false)}
-              className="flex-1 bg-white border-2 border-red-300 hover:bg-red-50 text-red-600 font-bold py-4 rounded-xl">
+              className="flex-1 bg-white border-2 border-red-300 hover:bg-red-50 text-red-600 font-bold text-2xl py-4 rounded-xl">
               😅 Didn't know
             </button>
             <button onClick={() => rate(true)}
-              className="flex-1 bg-white border-2 border-green-300 hover:bg-green-50 text-green-600 font-bold py-4 rounded-xl">
+              className="flex-1 bg-white border-2 border-green-300 hover:bg-green-50 text-green-600 font-bold text-2xl py-4 rounded-xl">
               😊 Knew it
             </button>
           </div>
