@@ -871,6 +871,11 @@ function subjectStats(sub) {
   const quizAvg = quizRs.length ? Math.round(quizRs.reduce((a,b) => a + b.pct, 0) / quizRs.length) : null;
   const drillAvg = drillRs.length ? Math.round(drillRs.reduce((a,b) => a + b.pct, 0) / drillRs.length) : null;
   const perfectDrills = rs.filter(r => r.mode === 'drill' && r.pct === 100).length;
+  const perfectQuizByDiff = { easy: 0, medium: 0, hard: 0 };
+  rs.filter(r => r.mode === 'quiz' && r.pct === 100).forEach(r => {
+    const d = r.difficulty || 'easy';
+    if (perfectQuizByDiff[d] !== undefined) perfectQuizByDiff[d]++;
+  });
   const count = rs.length;
   const drillAttemptData = drillAttemptsForSubject(sub);
   const diffAvgs = {};
@@ -894,7 +899,7 @@ function subjectStats(sub) {
   Object.entries(skillStats).forEach(([skill, s]) => {
     skillAvgs[skill] = s.count > 0 ? Math.round((s.totalCorrect / s.totalTotal) * 100) : null;
   });
-  return { avg, best, count, perfectDrills, quizAvg, drillAvg, drillAttemptData, diffAvgs, skillAvgs };
+  return { avg, best, count, perfectDrills, perfectQuizByDiff, quizAvg, drillAvg, drillAttemptData, diffAvgs, skillAvgs };
 }
 
 function getWallet() {
@@ -1574,8 +1579,8 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef, pr
   // Filter by difficulty: if difficulty set, prefer matching questions; untagged questions count as 'easy'
   function filterDiff(qs) {
     if (!difficulty || difficulty === 'easy') return qs.filter(q => !q.difficulty || q.difficulty === 'easy');
-    if (difficulty === 'medium') return qs.filter(q => !q.difficulty || q.difficulty === 'easy' || q.difficulty === 'medium');
-    return qs;
+    if (difficulty === 'medium') return qs.filter(q => q.difficulty === 'medium');
+    return qs.filter(q => q.difficulty === 'hard');
   }
 
   const [questions] = useState(() => {
@@ -2558,7 +2563,12 @@ function ParentDashboard({ onBack }) {
                 <p><strong>Average:</strong> {st.avg}%</p>
                 <p><strong>Best:</strong> {st.best}%</p>
                 <p><strong>Sessions:</strong> {st.count}</p>
-                <p><strong>Perfect Drills:</strong> {st.perfectDrills}</p>
+                <p><strong>Perfect Quiz:</strong></p>
+                <ul className="pl-4 list-disc">
+                  <li>Easy ({st.perfectQuizByDiff.easy})</li>
+                  <li>Medium ({st.perfectQuizByDiff.medium})</li>
+                  <li>Hard ({st.perfectQuizByDiff.hard})</li>
+                </ul>
               </div>
             </div>
           );
