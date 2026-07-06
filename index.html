@@ -64,7 +64,7 @@ const CFG = {
 };
 const PARENT_PIN = '1234';
 const RC_PREFIX = 'rc2_';
-const PERFECT_REWARDS = { quiz: 2, recommended: 2, drill: 0.5, lc: 0.5 };
+const PERFECT_REWARDS = { quiz: 2, drill: 0.5, lc: 0.5 };
 
 // ═══════════════════════════════════════════════════════════════
 // MATH: TEACH → LEARN → PRACTICE PANELS
@@ -951,7 +951,9 @@ function sessionLabel(r) {
 function getPerfectReward(subject, mode, breakdown) {
   const amount = PERFECT_REWARDS[mode] || 0;
   const topic = getRewardTopic(mode, breakdown);
-  if (!amount || mode === 'guided') return { amount: 0, topic, eligible: false, reason: 'No reward for guided practice' };
+  if (mode === 'guided') return { amount: 0, topic, eligible: false, reason: 'No reward for guided practice' };
+  if (mode === 'recommended') return { amount: 0, topic, eligible: false, reason: 'No reward for recommended practice — take the full quiz to earn!' };
+  if (!amount) return { amount: 0, topic, eligible: false, reason: 'No reward for this mode' };
   return { amount, topic, eligible: true };
 }
 
