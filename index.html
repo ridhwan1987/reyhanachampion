@@ -935,6 +935,19 @@ function getRewardTopic(mode, breakdown) {
   return 'Quiz';
 }
 
+// Clear label for the Parent Dashboard session list — shows the real mode + question
+// count instead of a bare difficulty tag, since "difficulty" is only meaningful (and only
+// ever chosen by the child) for mode === 'quiz'. For other modes it can be a stale leftover
+// value and showing it alone (e.g. "Hard") misleadingly implies a full Hard quiz was taken.
+function sessionLabel(r) {
+  if (r.mode === 'recommended') return `Recommended · ${r.total}Q`;
+  if (r.mode === 'drill') return `Drill · ${r.total}Q`;
+  if (r.mode === 'lc') return `Listening · ${r.total}Q`;
+  if (r.mode === 'guided') return `Guided · ${r.total}Q`;
+  const diff = r.difficulty ? r.difficulty.charAt(0).toUpperCase() + r.difficulty.slice(1) : '—';
+  return `${diff} · ${r.total}Q`;
+}
+
 function getPerfectReward(subject, mode, breakdown) {
   const amount = PERFECT_REWARDS[mode] || 0;
   const topic = getRewardTopic(mode, breakdown);
@@ -2702,7 +2715,7 @@ function ParentDashboard({ onBack }) {
             {all.slice().reverse().map((r, i) => (
               <div key={i} className="flex justify-between text-sm py-2 border-b last:border-0">
                 <span className="text-gray-600">{r.date} — {r.subject}</span>
-                <span style={{background:'#eee',borderRadius:'4px',padding:'2px 6px',fontSize:'0.75em',textTransform:'capitalize'}}>{r.difficulty || '—'}</span>
+                <span style={{background:'#eee',borderRadius:'4px',padding:'2px 6px',fontSize:'0.75em',textTransform:'capitalize'}}>{sessionLabel(r)}</span>
                 <span className={`font-bold ${r.pct >= 70 ? 'text-emerald-600' : 'text-red-500'}`}>{r.pct}%</span>
               </div>
             ))}
