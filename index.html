@@ -948,6 +948,22 @@ function sessionLabel(r) {
   return `${diff} · ${r.total}Q`;
 }
 
+// The app only logs a timestamp when a session ENDS (no start time is recorded), so the
+// only way to estimate how long a session took is the gap to the previous session's end
+// time -- valid only when she went straight from one into the next. A large gap just means
+// this was the first session of a new sitting, not a slow one, so we show "—" instead of a
+// misleading multi-hour "duration".
+function attachSessionMinutes(results) {
+  return results.map((r, idx) => {
+    let mins = null;
+    if (idx > 0) {
+      const gapMin = (new Date(r.iso) - new Date(results[idx - 1].iso)) / 60000;
+      if (gapMin > 0 && gapMin < 60) mins = gapMin;
+    }
+    return { ...r, _mins: mins };
+  });
+}
+
 function getPerfectReward(subject, mode, breakdown) {
   const amount = PERFECT_REWARDS[mode] || 0;
   const topic = getRewardTopic(mode, breakdown);
@@ -2713,11 +2729,13 @@ function ParentDashboard({ onBack }) {
 
         <div className="bg-white rounded-2xl p-5 shadow">
           <h3 className="text-lg font-bold text-gray-800 mb-3">Recent Sessions</h3>
+          <p className="text-xs text-gray-400 mb-2">Time = minutes since the previous session ended. "—" means this was the first session of a new sitting, so duration isn't known.</p>
           <div className="space-y-2">
-            {all.slice().reverse().map((r, i) => (
-              <div key={i} className="flex justify-between text-sm py-2 border-b last:border-0">
+            {attachSessionMinutes(all).slice().reverse().map((r, i) => (
+              <div key={i} className="flex justify-between items-center text-sm py-2 border-b last:border-0 gap-2">
                 <span className="text-gray-600">{r.date} — {r.subject}</span>
                 <span style={{background:'#eee',borderRadius:'4px',padding:'2px 6px',fontSize:'0.75em',textTransform:'capitalize'}}>{sessionLabel(r)}</span>
+                <span className="text-xs text-gray-500 whitespace-nowrap">{r._mins !== null ? `${r._mins.toFixed(1)} min` : '—'}</span>
                 <span className={`font-bold ${r.pct >= 70 ? 'text-emerald-600' : 'text-red-500'}`}>{r.score}/{r.total} ({r.pct}%)</span>
               </div>
             ))}
