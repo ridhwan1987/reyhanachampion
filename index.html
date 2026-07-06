@@ -382,7 +382,7 @@ function generateQuiz(subject, n = 10) {
   }));
 }
 
-function saveResult(subject, mode, score, total, breakdown, difficulty) {
+function saveResult(subject, mode, score, total, breakdown, difficulty, durationMin) {
   const resultLabel = mode === 'drill'
     ? 'drill'
     : mode === 'lc'
@@ -395,7 +395,8 @@ function saveResult(subject, mode, score, total, breakdown, difficulty) {
     subject, mode, score, total,
     pct: Math.round((score / total) * 100),
     breakdown,
-    difficulty: resultLabel
+    difficulty: resultLabel,
+    ...(typeof durationMin === 'number' ? { durationMin } : {})
   });
   localStorage.setItem(RC_PREFIX + 'results', JSON.stringify(all));
 }
@@ -955,6 +956,10 @@ function sessionLabel(r) {
 // misleading multi-hour "duration".
 function attachSessionMinutes(results) {
   return results.map((r, idx) => {
+    // Prefer the real recorded duration (captured from quiz start to submission).
+    // Older sessions saved before this was tracked fall back to the gap-to-previous-session
+    // estimate, which only works when she went straight from one session into the next.
+    if (typeof r.durationMin === 'number') return { ...r, _mins: r.durationMin };
     let mins = null;
     if (idx > 0) {
       const gapMin = (new Date(r.iso) - new Date(results[idx - 1].iso)) / 60000;
@@ -1723,6 +1728,10 @@ function VisualTextPassage({ passage, cfg, isVisual }) {
 }
 
 function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef, prebuiltQuestions }) {
+  // Recorded the instant this screen mounts (questions are already chosen by then),
+  // so we can log actual time-on-quiz instead of guessing from gaps between sessions.
+  const [startTime] = useState(() => Date.now());
+
   // For Malay reveal-English tracking
   const localMalayHintCount = useRef(0);
   const hintRef = malayHintCountRef || localMalayHintCount;
@@ -1893,7 +1902,7 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef, pr
           addToRevisionQueue(a.q.id, subject, skill, 'reveal_review', true, 'reveal_used');
         }
       });
-      onDone(score, questions.length, bd, hintRef.current);
+      onDone(score, questions.length, bd, hintRef.current, (Date.now() - startTime) / 60000);
     } else {
       const nextQ = questions[idx + 1];
       const nextKey = nextQ?.section || nextQ?.topic;
@@ -2331,7 +2340,7 @@ function DrillScreen({ subject, topic, onDone, onBack, onHome, isLC }) {
 // ═══════════════════════════════════════════════════════════════
 // SCREEN: RESULTS
 // ═══════════════════════════════════════════════════════════════
-function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, difficulty, onHome, onRetry, onGuided }) {
+function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, difficulty, durationMin, onHome, onRetry, onGuided }) {
   const cfg = CFG[subject];
   const pct = Math.round((score / total) * 100);
   const star = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '👍' : '💪';
@@ -2369,7 +2378,7 @@ function ResultsScreen({ subject, score, total, breakdown, mode, revealCount, di
   const perfectReward = isPerfect ? getPerfectReward(subject, mode, breakdown) : { amount: 0, eligible: false };
 
   useEffect(() => {
-    saveResult(subject, mode, score, total, breakdown, difficulty);
+    saveResult(subject, mode, score, total, breakdown, difficulty, durationMin);
     if (isPerfect && mode !== 'guided') {
       addReward(subject, mode, breakdown);
     }
@@ -2729,7 +2738,7 @@ function ParentDashboard({ onBack }) {
 
         <div className="bg-white rounded-2xl p-5 shadow">
           <h3 className="text-lg font-bold text-gray-800 mb-3">Recent Sessions</h3>
-          <p className="text-xs text-gray-400 mb-2">Time = minutes since the previous session ended. "—" means this was the first session of a new sitting, so duration isn't known.</p>
+          <p className="text-xs text-gray-400 mb-2">Time = actual minutes spent on the quiz. Older sessions (before this was tracked) show an estimate based on the gap to the previous session instead, or "—" if that gap isn't known.</p>
           <div className="space-y-2">
             {attachSessionMinutes(all).slice().reverse().map((r, i) => (
               <div key={i} className="flex justify-between items-center text-sm py-2 border-b last:border-0 gap-2">
@@ -2827,8 +2836,8 @@ function App() {
     setScreen('drill');
   }
 
-  function onDone(score, total, breakdown, revealCount = 0) {
-    setResult({ score, total, breakdown, revealCount, difficulty });
+  function onDone(score, total, breakdown, revealCount = 0, durationMin = null) {
+    setResult({ score, total, breakdown, revealCount, difficulty, durationMin });
     // If this was recommended practice, advance spaced repetition
     if (mode === 'recommended' && practiceRevisionIds) {
       const scorePercent = (score / total) * 100;
@@ -2894,6 +2903,7 @@ function App() {
           mode={mode}
           revealCount={result.revealCount || 0}
           difficulty={result.difficulty}
+          durationMin={result.durationMin}
           onHome={() => setScreen('home')}
           onRetry={() => {
             if (mode === 'guided') setScreen('guided');
