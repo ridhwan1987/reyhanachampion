@@ -2716,7 +2716,7 @@ function ParentDashboard({ onBack }) {
               <div key={i} className="flex justify-between text-sm py-2 border-b last:border-0">
                 <span className="text-gray-600">{r.date} — {r.subject}</span>
                 <span style={{background:'#eee',borderRadius:'4px',padding:'2px 6px',fontSize:'0.75em',textTransform:'capitalize'}}>{sessionLabel(r)}</span>
-                <span className={`font-bold ${r.pct >= 70 ? 'text-emerald-600' : 'text-red-500'}`}>{r.pct}%</span>
+                <span className={`font-bold ${r.pct >= 70 ? 'text-emerald-600' : 'text-red-500'}`}>{r.score}/{r.total} ({r.pct}%)</span>
               </div>
             ))}
           </div>
