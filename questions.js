@@ -2301,7 +2301,7 @@ const QB = {
     { id:"fc151", word:"kek", meaning:"cake" },
     { id:"fc152", word:"ais krim", meaning:"ice cream" },
     { id:"fc153", word:"buku", meaning:"book" },
-    { id:"fc154", word:"pensel", meaning:"pencil" },
+    { id:"fc154", word:"pensel", meaning:"pencil", speak:"pensil" },
     { id:"fc155", word:"pemadam", meaning:"eraser" },
     { id:"fc156", word:"pembaris", meaning:"ruler" },
     { id:"fc157", word:"beg sekolah", meaning:"school bag" },

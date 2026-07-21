@@ -1502,7 +1502,7 @@ function MalayFlashcardsScreen({ onBack, onHome }) {
             <>
               <div className="flex items-center gap-3 mb-3">
                 <div className="text-6xl font-bold text-gray-800">{card.word}</div>
-                <button onClick={(e) => { e.stopPropagation(); speakMalayWord(card.word); }}
+                <button onClick={(e) => { e.stopPropagation(); speakMalayWord(card.speak || card.word); }}
                   className="text-4xl hover:scale-110 active:scale-95 transition-transform" aria-label="Hear pronunciation">
                   🔊
                 </button>
@@ -1513,7 +1513,7 @@ function MalayFlashcardsScreen({ onBack, onHome }) {
             <>
               <div className="flex items-center gap-2 mb-2">
                 <div className="text-4xl text-gray-500">{card.word}</div>
-                <button onClick={(e) => { e.stopPropagation(); speakMalayWord(card.word); }}
+                <button onClick={(e) => { e.stopPropagation(); speakMalayWord(card.speak || card.word); }}
                   className="text-3xl hover:scale-110 active:scale-95 transition-transform" aria-label="Hear pronunciation">
                   🔊
                 </button>
