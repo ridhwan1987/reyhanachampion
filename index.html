@@ -1500,12 +1500,24 @@ function MalayFlashcardsScreen({ onBack, onHome }) {
         >
           {!flipped ? (
             <>
-              <div className="text-6xl font-bold text-gray-800 mb-3">{card.word}</div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="text-6xl font-bold text-gray-800">{card.word}</div>
+                <button onClick={(e) => { e.stopPropagation(); speakMalayWord(card.word); }}
+                  className="text-4xl hover:scale-110 active:scale-95 transition-transform" aria-label="Hear pronunciation">
+                  🔊
+                </button>
+              </div>
               <p className="text-2xl text-gray-400">Tap to reveal meaning</p>
             </>
           ) : (
             <>
-              <div className="text-4xl text-gray-500 mb-2">{card.word}</div>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="text-4xl text-gray-500">{card.word}</div>
+                <button onClick={(e) => { e.stopPropagation(); speakMalayWord(card.word); }}
+                  className="text-3xl hover:scale-110 active:scale-95 transition-transform" aria-label="Hear pronunciation">
+                  🔊
+                </button>
+              </div>
               <div className="text-5xl font-bold text-orange-600">{card.meaning}</div>
             </>
           )}
@@ -1637,6 +1649,28 @@ function SubjectTeachPanel({ section, subject, onDone, onHome }) {
       </div>
     </div>
   );
+}
+
+// Speak a single Malay word/phrase aloud, e.g. for flashcard pronunciation.
+// Reuses the same voice-selection approach as Malay Listening Comprehension.
+function speakMalayWord(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  function doSpeak(voices) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'ms-MY';
+    utter.rate = 0.75;
+    utter.pitch = 1.0;
+    const v = voices.find(v => v.lang === 'ms-MY') ||
+              voices.find(v => v.lang.startsWith('ms')) ||
+              voices.find(v => v.lang === 'id-ID') ||
+              voices.find(v => v.lang.startsWith('id'));
+    if (v) utter.voice = v;
+    window.speechSynthesis.speak(utter);
+  }
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length > 0) doSpeak(voices);
+  else window.speechSynthesis.onvoiceschanged = () => doSpeak(window.speechSynthesis.getVoices());
 }
 
 function speakEncouragement(correct) {
