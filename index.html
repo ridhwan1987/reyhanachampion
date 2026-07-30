@@ -945,6 +945,7 @@ function sessionLabel(r) {
   if (r.mode === 'drill') return `Drill · ${r.total}Q`;
   if (r.mode === 'lc') return `Listening · ${r.total}Q`;
   if (r.mode === 'guided') return `Guided · ${r.total}Q`;
+  if (r.mode === 'openended') return `Open Ended · ${r.total}Q`;
   const diff = r.difficulty ? r.difficulty.charAt(0).toUpperCase() + r.difficulty.slice(1) : '—';
   return `${diff} · ${r.total}Q`;
 }
@@ -1429,6 +1430,14 @@ function SubjectSelectScreen({ subject, onMode, onBack }) {
               <p className="text-xs text-gray-500 mt-1">20 words a day — quiz words + everyday vocabulary</p>
             </button>
           )}
+          {subject === 'science' && (
+            <button onClick={() => onMode('openended')}
+              className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95" style={{borderTop:'3px solid #7c3aed'}}>
+              <div className="text-5xl mb-2">✍️</div>
+              <h3 className="text-xl font-bold text-gray-800">Quiz Mode (Open Ended)</h3>
+              <p className="text-xs text-gray-500 mt-1">Pick a topic, type your own answers — 20 questions!</p>
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -1654,8 +1663,7 @@ function SubjectTeachPanel({ section, subject, onDone, onHome }) {
 // Speak a single Malay word/phrase aloud, e.g. for flashcard pronunciation.
 // Reuses the same voice-selection approach as Malay Listening Comprehension.
 function speakMalayWord(text) {
-  if (!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
+  if (!window.speechSynthesis) { console.warn('speakMalayWord: speechSynthesis not supported'); return; }
   function doSpeak(voices) {
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = 'ms-MY';
@@ -1666,7 +1674,16 @@ function speakMalayWord(text) {
               voices.find(v => v.lang === 'id-ID') ||
               voices.find(v => v.lang.startsWith('id'));
     if (v) utter.voice = v;
-    window.speechSynthesis.speak(utter);
+    else console.warn('speakMalayWord: no ms-MY/id-ID voice found, using browser default. Available voices:', voices.map(x => x.lang).join(', '));
+    utter.onerror = (e) => console.warn('speakMalayWord: speech error', e.error);
+    // Chrome has a known bug where calling speak() immediately after cancel() can silently
+    // drop the utterance -- only cancel if something is actually queued, and give it a beat.
+    if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+      window.speechSynthesis.cancel();
+      setTimeout(() => window.speechSynthesis.speak(utter), 60);
+    } else {
+      window.speechSynthesis.speak(utter);
+    }
   }
   const voices = window.speechSynthesis.getVoices();
   if (voices.length > 0) doSpeak(voices);
@@ -2084,6 +2101,124 @@ function QuizScreen({ subject, onDone, onBack, difficulty, malayHintCountRef, pr
           <button onClick={next} className={`${cfg.btn} text-white font-bold py-3 rounded-xl transition-all pop`}>
             {idx + 1 >= questions.length ? 'See Results 🎉' : 'Next →'}
           </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SCREEN: OPEN ENDED QUIZ (science only — free-text, self-marked against a model answer,
+// one chosen topic at a time)
+// ═══════════════════════════════════════════════════════════════
+function OpenEndedQuizScreen({ subject, topic, onDone, onBack }) {
+  const [startTime] = useState(() => Date.now());
+  const [questions] = useState(() => {
+    const n = 20;
+    const pool = QB.scienceOpen.filter(q => q.topic === topic);
+    const usedKey = `af1_seen_openended_${subject}_${topic.replace(/\W+/g, '_')}`;
+    let seen = JSON.parse(localStorage.getItem(usedKey) || '[]');
+    let avail = pool.filter(q => !seen.includes(q.id));
+    if (avail.length < n) { seen = []; avail = pool; localStorage.setItem(usedKey, '[]'); }
+    const picked = shuffle(avail).slice(0, n);
+    localStorage.setItem(usedKey, JSON.stringify([...seen, ...picked.map(q => q.id)]));
+    return picked;
+  });
+
+  const [idx, setIdx] = useState(0);
+  const [answer, setAnswer] = useState('');
+  const [revealed, setRevealed] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+  const answersRef = useRef([]);
+  const cfg = CFG[subject];
+  const q = questions[idx];
+
+  function reveal() {
+    if (revealed || !answer.trim()) return;
+    setRevealed(true);
+  }
+
+  function selfMark(correct) {
+    answersRef.current = [...answersRef.current, { q, userAnswer: answer, correct }];
+    if (idx + 1 >= questions.length) {
+      const allA = answersRef.current;
+      const score = allA.filter(a => a.correct).length;
+      const bd = {};
+      allA.forEach(a => { const t = a.q.topic; if (!bd[t]) bd[t] = { correct: 0, total: 0 }; bd[t].total++; if (a.correct) bd[t].correct++; });
+      onDone(score, questions.length, bd, 0, (Date.now() - startTime) / 60000);
+    } else {
+      setIdx(i => i + 1); setAnswer(''); setRevealed(false); setShowHint(false);
+    }
+  }
+
+  if (!q) return <div className="min-h-screen flex items-center justify-center text-gray-500">No open-ended questions available for this topic.</div>;
+
+  const pct = (idx / questions.length) * 100;
+
+  return (
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
+      <div className="p-4 flex items-center gap-3 text-white" style={{ backgroundColor: cfg.hdr }}>
+        <button onClick={onBack} className="text-white/70 hover:text-white text-xl" title="Return to Home">🏠</button>
+        <div className="flex-1">
+          <div className="flex justify-between text-xs mb-1.5 text-white/80">
+            <span>{cfg.emoji} {topic} · Open Ended</span>
+            <span>Q{idx + 1}/{questions.length}</span>
+          </div>
+          <div className="w-full bg-white/30 rounded-full h-2">
+            <div className="bg-white h-2 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex-1 p-5 flex flex-col gap-4 max-w-lg mx-auto w-full pop">
+        <div className="bg-white rounded-2xl p-5 shadow-sm">
+          <p className="text-base font-semibold text-gray-800 leading-relaxed">{q.q}</p>
+        </div>
+
+        {!revealed && (
+          <>
+            <textarea value={answer} onChange={e => setAnswer(e.target.value)} rows={4}
+              placeholder="Type your answer here..."
+              className="w-full border-2 border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:border-gray-400" />
+            {q.hint && (
+              <button onClick={() => setShowHint(!showHint)} className="text-xs text-blue-600 hover:text-blue-700 font-semibold self-start">
+                {showHint ? '💡 Hide hint' : '💡 Show hint'}
+              </button>
+            )}
+            {showHint && q.hint && (
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-3">
+                <p className="text-xs text-blue-800">{q.hint}</p>
+              </div>
+            )}
+            <button onClick={reveal} disabled={!answer.trim()}
+              className={`${cfg.btn} disabled:opacity-40 text-white font-bold py-3 rounded-xl transition-all pop`}>
+              Show Model Answer
+            </button>
+          </>
+        )}
+
+        {revealed && (
+          <>
+            <div className="bg-gray-50 rounded-xl p-3 border border-gray-200">
+              <p className="text-xs text-gray-500 font-semibold mb-1">Your answer:</p>
+              <p className="text-sm text-gray-700 whitespace-pre-wrap">{answer}</p>
+            </div>
+            <div className="rounded-xl p-4 pop bg-blue-50 border border-blue-200">
+              <p className="font-semibold mb-1 text-sm text-blue-800">📖 Model Answer</p>
+              {q.exp && <p className="text-xs text-gray-600" dangerouslySetInnerHTML={{ __html: q.exp }} />}
+            </div>
+            <p className="text-xs text-gray-500 text-center">Compare your answer with the model answer above — how did you do?</p>
+            <div className="flex gap-3">
+              <button onClick={() => selfMark(true)}
+                className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl transition-all pop">
+                ✅ Got it right
+              </button>
+              <button onClick={() => selfMark(false)}
+                className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl transition-all pop">
+                📚 Need more practice
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
@@ -2854,6 +2989,9 @@ function App() {
     } else if (m === 'flashcards') {
       setMode('flashcards');
       setScreen('flashcards');
+    } else if (m === 'openended') {
+      setMode('openended');
+      setScreen('select-openended-topic');
     } else {
       setMode('quiz');
       setScreen('quiz');
@@ -2868,6 +3006,11 @@ function App() {
   function onSelectTopic(t) {
     setTopic(t);
     setScreen('drill');
+  }
+
+  function onSelectOpenEndedTopic(t) {
+    setTopic(t);
+    setScreen('openended');
   }
 
   function onDone(score, total, breakdown, revealCount = 0, durationMin = null) {
@@ -2925,8 +3068,12 @@ function App() {
       {screen === 'select-topic' && (
         <TopicSelectScreen subject={subject} onSelect={onSelectTopic} onBack={() => setScreen('subject-select')} />
       )}
+      {screen === 'select-openended-topic' && (
+        <OpenEndedTopicSelectScreen subject={subject} onSelect={onSelectOpenEndedTopic} onBack={() => setScreen('subject-select')} />
+      )}
       {screen === 'quiz' && <QuizScreen subject={subject} onDone={onDone} onBack={() => setScreen('home')} difficulty={difficulty} prebuiltQuestions={recommendedQuestions} />}
       {screen === 'drill' && <DrillScreen subject={subject} topic={topic} onDone={onDrillPerfect} onBack={() => mode === 'lc' ? setScreen('subject-select') : setScreen('select-topic')} onHome={() => setScreen('home')} isLC={mode === 'lc'} />}
+      {screen === 'openended' && <OpenEndedQuizScreen subject={subject} topic={topic} onDone={onDone} onBack={() => setScreen('home')} />}
       {screen === 'flashcards' && <MalayFlashcardsScreen onBack={() => setScreen('subject-select')} onHome={() => setScreen('home')} />}
       {screen === 'result' && result && (
         <ResultsScreen
@@ -2971,6 +3118,31 @@ function TopicSelectScreen({ subject, onSelect, onBack }) {
       </div>
 
       <div className="flex-1 p-6 max-w-lg mx-auto w-full space-y-3">
+        {topics.map(t => (
+          <button key={t} onClick={() => onSelect(t)}
+            className="w-full bg-white rounded-2xl p-4 shadow hover:shadow-md transition-all text-left font-semibold text-gray-800 hover:scale-105 active:scale-95"
+            style={{ borderLeft: `4px solid ${cfg.hdr}` }}>
+            {t}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function OpenEndedTopicSelectScreen({ subject, onSelect, onBack }) {
+  const cfg = CFG[subject];
+  const topics = ['Diversity of Living Things', 'Materials', 'Magnets', 'Life Cycles'];
+
+  return (
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: cfg.bg }}>
+      <div className="p-5 flex items-center gap-3" style={{ backgroundColor: cfg.hdr, color: 'white' }}>
+        <button onClick={onBack} className="text-white/70 hover:text-white text-xl">←</button>
+        <h1 className="text-xl font-bold">Choose Topic — Open Ended</h1>
+      </div>
+
+      <div className="flex-1 p-6 max-w-lg mx-auto w-full space-y-3">
+        <p className="text-xs text-gray-500 mb-2">Pick a topic — all 20 questions will be from that topic.</p>
         {topics.map(t => (
           <button key={t} onClick={() => onSelect(t)}
             className="w-full bg-white rounded-2xl p-4 shadow hover:shadow-md transition-all text-left font-semibold text-gray-800 hover:scale-105 active:scale-95"
